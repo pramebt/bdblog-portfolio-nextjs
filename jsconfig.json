@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.js", "**/*.js", "**/*.jsx", ".next/types/**/*.js"],
+  "include": ["next-env.d.js", "**/*.js", "**/*.jsx", ".next/types/**/*.js", "src/components/ui/dropdown-menu.tsx"],
   "exclude": ["node_modules"]
 }
