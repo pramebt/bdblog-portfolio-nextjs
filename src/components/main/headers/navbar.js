@@ -7,42 +7,53 @@ import { Badge } from '@/components/ui/badge'
 import { ModeToggle } from './modetoggle'
 
 const Navbar = ({ user }) => {
+  // Navigation items array
+  const navigationItems = [
+    {
+      href: "/",
+      label: "Home",
+      icon: Home
+    },
+    {
+      href: "/blog",
+      label: "Blog",
+      icon: BookOpen
+    },
+    {
+      href: "/projects",
+      label: "Projects",
+      icon: FolderOpen
+    },
+    {
+      href: "/about",
+      label: "About",
+      icon: User
+    },
+    {
+      href: "/contact",
+      label: "Contact",
+      icon: Mail
+    }
+  ]
+
   return (
     <nav className="flex items-center space-x-6">
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center space-x-4">
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/" className="flex items-center space-x-2">
-            <Home className="w-4 h-4" />
-            <span>Home</span>
-          </Link>
-        </Button>
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/blog" className="flex items-center space-x-2">
-            <BookOpen className="w-4 h-4" />
-            <span>Blog</span>
-          </Link>
-        </Button>
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/projects" className="flex items-center space-x-2">
-            <FolderOpen className="w-4 h-4" />
-            <span>Projects</span>
-          </Link>
-        </Button>
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/about" className="flex items-center space-x-2">
-            <User className="w-4 h-4" />
-            <span>About</span>
-          </Link>
-        </Button>
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/contact" className="flex items-center space-x-2">
-            <Mail className="w-4 h-4" />
-            <span>Contact</span>
-          </Link>
-        </Button>
+        {navigationItems.map((item) => {
+          const IconComponent = item.icon
+          return (
+            <Button key={item.href} variant="ghost" size="sm" asChild>
+              <Link href={item.href} className="flex items-center space-x-2">
+                <IconComponent className="w-4 h-4" />
+                <span>{item.label}</span>
+              </Link>
+            </Button>
+          )
+        })}
       </div>
-        <ModeToggle />
+      
+      <ModeToggle />
 
       {/* User Authentication */}
       <div className="flex items-center space-x-3">
