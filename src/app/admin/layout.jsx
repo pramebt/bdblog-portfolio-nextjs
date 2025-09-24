@@ -1,11 +1,20 @@
 import React from 'react'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { authOptions } from '@/lib/auth'
 import SidebarAdmin from '@/components/admin/headers/sidebar'
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = async ({ children }) => {
+  const session = await getServerSession(authOptions)
+  
+  if (!session || session.user.role !== 'ADMIN') {
+    redirect('/auth/signin')
+  }
+
   return (
     <div className="min-h-screen bg-background flex">
       {/* Sidebar */}
-      <SidebarAdmin />
+      <SidebarAdmin user={session.user} />
       
       {/* Main Content */}
       <main className="flex-1 ml-64">

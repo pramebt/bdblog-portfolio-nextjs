@@ -15,7 +15,12 @@ import {
 import SidebarLink from "./sidebar-link";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+import { signOut } from "next-auth/react";
 const SidebarAdmin = ({ user }) => {
+  const handleLogout = () => {
+    signOut({ callbackUrl: '/' })
+  }
+
   // Admin navigation items
   const adminNavItems = [
     {
@@ -25,7 +30,7 @@ const SidebarAdmin = ({ user }) => {
       badge: null,
     },
     {
-      href: "/admin/posts",
+      href: "/admin/blog",
       label: "Posts",
       icon: BookOpen,
       badge: "12",
@@ -101,6 +106,7 @@ const SidebarAdmin = ({ user }) => {
           variant="ghost"
           size="sm"
           className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
+          onClick={handleLogout}
         >
           <LogOut className="w-4 h-4 mr-2" />
           Logout
