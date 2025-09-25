@@ -84,7 +84,7 @@ const BlogCard = ({ post, selected, onSelect, onAction }) => {
       </div>
 
       {/* Cover Image */}
-      <div className="relative h-48 overflow-hidden rounded-t-lg">
+      <div className="relative h-48 overflow-hidden ">
         {post.coverImage ? (
           <Image
             src={post.coverImage}
@@ -103,7 +103,7 @@ const BlogCard = ({ post, selected, onSelect, onAction }) => {
         )}
         
         {/* Status Badge */}
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 left-3">
           <Badge 
             variant={post.published ? "default" : "secondary"}
             className="bg-background/80 backdrop-blur-sm"
@@ -123,7 +123,7 @@ const BlogCard = ({ post, selected, onSelect, onAction }) => {
         </div>
 
         {/* Action Menu */}
-        <div className="absolute top-3 right-12">
+        <div className="absolute top-3 right-5">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

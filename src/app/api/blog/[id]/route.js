@@ -11,7 +11,7 @@ const blogPostUpdateSchema = blogPostSchema.partial()
 // GET /api/blog/[id] - ดึง blog post เดียว
 export async function GET(request, { params }) {
   try {
-    const { id } = params
+    const { id } = await params
     
     const post = await prisma.post.findUnique({
       where: { id },
@@ -59,7 +59,7 @@ export async function PUT(request, { params }) {
       )
     }
     
-    const { id } = params
+    const { id } = await params
     const body = await request.json()
     
     // Validate data
@@ -158,7 +158,7 @@ export async function DELETE(request, { params }) {
       )
     }
     
-    const { id } = params
+    const { id } = await params
     
     // Check if post exists
     const existingPost = await prisma.post.findUnique({
