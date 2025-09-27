@@ -8,12 +8,13 @@ import { blogPostSchema, createSlugFromTitle } from '@/lib/validators'
 // Schema สำหรับ validate blog post data (สำหรับ update) - ใช้ partial ของ schema เดิม
 const blogPostUpdateSchema = blogPostSchema.partial()
 
-// GET /api/blog/[id] - ดึง blog post เดียว
+// GET /api/blog/[id] - ดึง blog post เดียว (รองรับทั้ง ID และ slug)
 export async function GET(request, { params }) {
   try {
     const { id } = await params
     
-    const post = await prisma.post.findUnique({
+    // Try to find post by ID first, then by slug
+    let post = await prisma.post.findUnique({
       where: { id },
       include: {
         author: {
@@ -25,6 +26,22 @@ export async function GET(request, { params }) {
         }
       }
     })
+    
+    // If not found by ID, try to find by slug
+    if (!post) {
+      post = await prisma.post.findUnique({
+        where: { slug: id },
+        include: {
+          author: {
+            select: {
+              id: true,
+              name: true,
+              email: true
+            }
+          }
+        }
+      })
+    }
     
     if (!post) {
       return NextResponse.json(
