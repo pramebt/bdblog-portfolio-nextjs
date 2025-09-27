@@ -119,7 +119,7 @@ const BlogActions = ({
     <>
       <Card className="border-primary/20 bg-primary/5">
         <CardContent className="p-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             {/* Selection Info */}
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
@@ -127,19 +127,20 @@ const BlogActions = ({
                   checked={allSelected}
                   onCheckedChange={handleSelectAll}
                   disabled={isProcessing}
+                  className="h-4 w-4"
                 />
                 <span className="text-sm font-medium">
                   {allSelected ? 'All' : selectedCount} selected
                 </span>
               </div>
               
-              <Badge variant="secondary" className="text-xs">
+              <Badge variant="secondary" className="text-xs px-2 py-1">
                 {selectedCount} of {totalCount} posts
               </Badge>
             </div>
 
             {/* Bulk Actions */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {/* Quick Actions */}
               <Button
                 variant="outline"
@@ -211,7 +212,7 @@ const BlogActions = ({
                 size="sm"
                 onClick={() => onSelectAll(false)}
                 disabled={isProcessing}
-                className="text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground ml-auto sm:ml-0"
               >
                 Clear Selection
               </Button>
@@ -220,7 +221,7 @@ const BlogActions = ({
 
           {/* Processing Indicator */}
           {isProcessing && (
-            <div className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground bg-muted/30 rounded-lg py-2 px-3">
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
               Processing {selectedCount} post{selectedCount > 1 ? 's' : ''}...
             </div>

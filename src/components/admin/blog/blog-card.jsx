@@ -74,17 +74,8 @@ const BlogCard = ({ post, selected, onSelect, onAction }) => {
     <Card className={`group hover:shadow-md transition-all duration-200 ${
       selected ? 'ring-2 ring-primary' : ''
     }`}>
-      {/* Selection Checkbox */}
-      <div className="absolute top-3 left-3 z-10">
-        <Checkbox
-          checked={selected}
-          onCheckedChange={handleSelect}
-          className="bg-background/80 backdrop-blur-sm"
-        />
-      </div>
-
       {/* Cover Image */}
-      <div className="relative h-48 overflow-hidden ">
+      <div className="relative h-48 overflow-hidden">
         {post.coverImage ? (
           <Image
             src={post.coverImage}
@@ -102,8 +93,17 @@ const BlogCard = ({ post, selected, onSelect, onAction }) => {
           </div>
         )}
         
+        {/* Selection Checkbox */}
+        <div className="absolute top-3 left-3 z-10">
+          <Checkbox
+            checked={selected}
+            onCheckedChange={handleSelect}
+            className="h-4 w-4 bg-background/80 backdrop-blur-sm"
+          />
+        </div>
+        
         {/* Status Badge */}
-        <div className="absolute top-3 left-3">
+        <div className="absolute top-3 right-12 z-10">
           <Badge 
             variant={post.published ? "default" : "secondary"}
             className="bg-background/80 backdrop-blur-sm"
@@ -123,7 +123,7 @@ const BlogCard = ({ post, selected, onSelect, onAction }) => {
         </div>
 
         {/* Action Menu */}
-        <div className="absolute top-3 right-5">
+        <div className="absolute top-3 right-3 z-10">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -205,6 +205,22 @@ const BlogCard = ({ post, selected, onSelect, onAction }) => {
             <User className="h-4 w-4" />
             <span>{post.author?.name || 'Unknown Author'}</span>
           </div>
+
+          {/* Tags */}
+          {post.tags && post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {post.tags.slice(0, 3).map((tag) => (
+                <Badge key={tag} variant="outline" className="text-xs">
+                  #{tag}
+                </Badge>
+              ))}
+              {post.tags.length > 3 && (
+                <Badge variant="outline" className="text-xs">
+                  +{post.tags.length - 3} more
+                </Badge>
+              )}
+            </div>
+          )}
 
           {/* Dates */}
           <div className="space-y-1">

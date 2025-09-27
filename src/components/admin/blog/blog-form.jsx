@@ -24,6 +24,7 @@ import {
 import CloudinaryUpload from '@/components/admin/media/CloudinaryUpload'
 import BlockEditor from './block-editor'
 import BlockPreview from './block-preview'
+import TagSelector from './tag-selector'
 
 const BlogForm = ({ 
   post = null, 
@@ -37,6 +38,7 @@ const BlogForm = ({
   const [success, setSuccess] = useState('')
   const [showPreview, setShowPreview] = useState(false)
   const [coverImage, setCoverImage] = useState(post?.coverImage || '')
+  const [selectedTags, setSelectedTags] = useState(post?.tags || [])
 
   // Form setup
   const {
@@ -52,7 +54,8 @@ const BlogForm = ({
       content: post?.content || '',
       excerpt: post?.excerpt || '',
       coverImage: post?.coverImage || '',
-      published: post?.published || false
+      published: post?.published || false,
+      tags: post?.tags || []
     }
   })
 
@@ -64,6 +67,11 @@ const BlogForm = ({
     setValue('coverImage', coverImage, { shouldDirty: true })
   }, [coverImage, setValue])
 
+  // Update tags when changed
+  useEffect(() => {
+    setValue('tags', selectedTags, { shouldDirty: true })
+  }, [selectedTags, setValue])
+
   // Handle form submission
   const onSubmitForm = async (data) => {
     try {
@@ -73,7 +81,8 @@ const BlogForm = ({
 
       const formData = {
         ...data,
-        coverImage: coverImage
+        coverImage: coverImage,
+        tags: selectedTags
       }
       
       let response
@@ -252,6 +261,15 @@ const BlogForm = ({
                     <p className="text-sm text-destructive">{errors.content.message}</p>
                   )}
                 </div>
+
+                <Separator />
+
+                {/* Tags */}
+                <TagSelector
+                  selectedTags={selectedTags}
+                  onTagsChange={setSelectedTags}
+                  disabled={isSubmitting}
+                />
 
                 <Separator />
 
