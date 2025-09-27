@@ -249,34 +249,39 @@ const ProjectList = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => (
-              <Card key={project.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+              <Card key={project.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col h-full">
                 {/* Cover Image */}
-                {project.coverImage && (
-                  <div className="aspect-video overflow-hidden">
-                    <img
-                      src={project.coverImage}
-                      alt={project.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                )}
-                
-                <CardHeader className="relative">
+                <div className="relative aspect-video overflow-hidden bg-muted">
+                  {project.coverImage ? (
+                    <>
+                      <img
+                        src={project.coverImage}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                    </>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-muted">
+                      <FolderOpen className="h-12 w-12 text-muted-foreground" />
+                    </div>
+                  )}
+                  
                   {/* Status Badge */}
-                  <div className="absolute top-4 right-4">
-                    <Badge variant={project.published ? "default" : "secondary"}>
+                  <div className="absolute top-3 right-3">
+                    <Badge variant={project.published ? "default" : "secondary"} className="shadow-md">
                       {project.published ? 'Published' : 'Draft'}
                     </Badge>
                   </div>
 
                   {/* Action Menu */}
-                  <div className="absolute top-4 left-4 z-10">
+                  <div className="absolute top-3 left-3 z-10">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-8 w-8 p-0 bg-background/80 backdrop-blur-sm hover:bg-background/90"
+                          className="h-8 w-8 p-0 bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-md"
                         >
                           <MoreVertical className="h-4 w-4" />
                         </Button>
@@ -329,78 +334,74 @@ const ProjectList = () => {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
+                </div>
+                
+                {/* Content */}
+                <div className="flex flex-col flex-1">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="line-clamp-2 text-lg group-hover:text-primary transition-colors">
+                      {project.title}
+                    </CardTitle>
+                    <CardDescription className="line-clamp-3 text-sm leading-relaxed mt-2">
+                      {(() => {
+                        try {
+                          const blocks = JSON.parse(project.description)
+                          return blocks
+                            .filter(block => ['paragraph', 'heading1', 'heading2', 'heading3'].includes(block.type))
+                            .map(block => block.content || '')
+                            .join(' ')
+                            .substring(0, 120) + '...'
+                        } catch {
+                          return project.description.substring(0, 120) + '...'
+                        }
+                      })()}
+                    </CardDescription>
+                  </CardHeader>
 
-                  <CardTitle className="line-clamp-2 pr-16">{project.title}</CardTitle>
-                  <CardDescription className="line-clamp-3">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="space-y-4">
-                  {/* Links */}
-                  <div className="flex gap-2">
-                    {project.githubUrl && (
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => window.open(project.githubUrl, '_blank')}
-                      >
-                        <Github className="h-4 w-4 mr-1" />
-                        Code
-                      </Button>
-                    )}
-                    {project.liveUrl && (
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => window.open(project.liveUrl, '_blank')}
-                      >
-                        <ExternalLink className="h-4 w-4 mr-1" />
-                        Demo
-                      </Button>
-                    )}
-                  </div>
-
-                  {/* Meta Info */}
-                  <div className="text-sm text-muted-foreground">
-                    <p>Created {formatDate(project.createdAt)}</p>
-                    {project.updatedAt !== project.createdAt && (
-                      <p>Updated {formatDate(project.updatedAt)}</p>
-                    )}
-                  </div>
-
-                  {/* Quick Actions */}
-                  <div className="flex gap-2 pt-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleProjectAction('edit', project.id)}
-                      className="flex-1"
-                    >
-                      <Edit className="h-4 w-4 mr-1" />
-                      Edit
-                    </Button>
+                  <CardContent className="flex flex-col flex-1 pt-0 space-y-4">
                     
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleProjectAction('togglePublish', project.id)}
-                      className="flex-1"
-                    >
-                      {project.published ? (
-                        <>
-                          <EyeOff className="h-4 w-4 mr-1" />
-                          Unpublish
-                        </>
-                      ) : (
-                        <>
-                          <Eye className="h-4 w-4 mr-1" />
-                          Publish
-                        </>
+
+                    {/* Meta Info */}
+                    <div className="text-xs text-muted-foreground space-y-1">
+                      <p>Created {formatDate(project.createdAt)}</p>
+                      {project.updatedAt !== project.createdAt && (
+                        <p>Updated {formatDate(project.updatedAt)}</p>
                       )}
-                    </Button>
-                  </div>
-                </CardContent>
+                    </div>
+
+                    {/* Quick Actions */}
+                    <div className="flex gap-2 pt-2 mt-auto">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleProjectAction('edit', project.id)}
+                        className="flex-1"
+                      >
+                        <Edit className="h-3 w-3 mr-1" />
+                        Edit
+                      </Button>
+                      
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleProjectAction('togglePublish', project.id)}
+                        className="flex-1"
+                      >
+                        {project.published ? (
+                          <>
+                            <EyeOff className="h-3 w-3 mr-1" />
+                            Unpublish
+                          </>
+                        ) : (
+                          <>
+                            <Eye className="h-3 w-3 mr-1" />
+                            Publish
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </div>
               </Card>
             ))}
           </div>

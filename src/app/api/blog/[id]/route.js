@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { blogPostSchema, createSlugFromTitle } from '@/lib/validators'
+import { cleanupBlogImages } from '@/lib/image-cleanup'
 
 // Schema สำหรับ validate blog post data (สำหรับ update) - ใช้ partial ของ schema เดิม
 const blogPostUpdateSchema = blogPostSchema.partial()
@@ -195,6 +196,14 @@ export async function DELETE(request, { params }) {
         { success: false, error: 'You can only delete your own posts' },
         { status: 403 }
       )
+    }
+    
+    // Cleanup associated images from Cloudinary
+    try {
+      await cleanupBlogImages(existingPost)
+    } catch (error) {
+      console.error('Error cleaning up images:', error)
+      // Continue with deletion even if image cleanup fails
     }
     
     // Delete post

@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { projectSchema, createSlugFromTitle } from '@/lib/validators'
+import { cleanupProjectImages } from '@/lib/image-cleanup'
 
 // Schema สำหรับ validate project data (สำหรับ update) - ใช้ partial ของ schema เดิม
 const projectUpdateSchema = projectSchema.partial()
@@ -195,6 +196,14 @@ export async function DELETE(request, { params }) {
         { success: false, error: 'You can only delete your own projects' },
         { status: 403 }
       )
+    }
+    
+    // Cleanup associated images from Cloudinary
+    try {
+      await cleanupProjectImages(existingProject)
+    } catch (error) {
+      console.error('Error cleaning up images:', error)
+      // Continue with deletion even if image cleanup fails
     }
     
     // Delete project

@@ -10,6 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import BlockEditor from '@/components/admin/blog/block-editor'
+import BlockPreview from '@/components/admin/blog/block-preview'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
@@ -215,12 +217,9 @@ const ProjectForm = ({
                 {/* Description */}
                 <div className="space-y-2">
                   <Label htmlFor="description">Description *</Label>
-                  <Textarea
-                    id="description"
-                    {...register('description')}
-                    placeholder="Describe your project..."
-                    rows={4}
-                    disabled={isSubmitting}
+                  <BlockEditor
+                    content={watchedValues.description || ''}
+                    onChange={(content) => setValue('description', content, { shouldDirty: true })}
                   />
                   {errors.description && (
                     <p className="text-sm text-destructive">{errors.description.message}</p>
@@ -404,9 +403,23 @@ const ProjectForm = ({
                   </h1>
                   
                   {/* Description Preview */}
-                  <p className="text-muted-foreground">
-                    {watchedValues.description || 'No description provided...'}
-                  </p>
+                  <div className="prose prose-sm max-w-none">
+                    {watchedValues.description ? (
+                      <BlockPreview 
+                        blocks={(() => {
+                          try {
+                            return JSON.parse(watchedValues.description)
+                          } catch {
+                            return [{ id: '1', type: 'paragraph', content: watchedValues.description }]
+                          }
+                        })()} 
+                      />
+                    ) : (
+                      <div className="text-muted-foreground italic">
+                        No description yet...
+                      </div>
+                    )}
+                  </div>
                   
                   {/* Links Preview */}
                   <div className="flex gap-2">
