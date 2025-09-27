@@ -75,7 +75,7 @@ const BlogForm = ({
         ...data,
         coverImage: coverImage
       }
-
+      
       let response
       if (isEdit && post?.id) {
         // Update existing post
