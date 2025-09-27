@@ -1,6 +1,7 @@
 'use client'
 
 const BlockPreview = ({ blocks }) => {
+  console.log(blocks)
   // Render individual block preview
   const renderBlock = (block) => {
     switch (block.type) {

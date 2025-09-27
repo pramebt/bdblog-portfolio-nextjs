@@ -9,6 +9,7 @@ export const blogPostSchema = z.object({
     excerpt: z.string().optional(),
     coverImage: OptionalUrlOrEmpty,
     published: z.boolean().optional(),
+    tags: z.array(z.string()).optional(),
 })
 
 export function parsePositiveInt(value,fallback,min=1,max=100) {

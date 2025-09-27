@@ -120,11 +120,24 @@ const BlogList = () => {
           break
           
         case 'togglePublish':
+        case 'publish':
+        case 'unpublish':
           const post = posts.find(p => p.id === postId)
+          let publishStatus
+          
+          if (action === 'publish') {
+            publishStatus = true
+          } else if (action === 'unpublish') {
+            publishStatus = false
+          } else {
+            // togglePublish
+            publishStatus = !post.published
+          }
+          
           response = await fetch(`/api/blog/${postId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ published: !post.published })
+            body: JSON.stringify({ published: publishStatus })
           })
           break
           
@@ -132,14 +145,64 @@ const BlogList = () => {
           router.push(`/admin/blog/${postId}`)
           return
           
+        case 'duplicate':
+          // Create a copy of the post
+          const originalPost = posts.find(p => p.id === postId)
+          if (originalPost) {
+            const duplicateData = {
+              title: `${originalPost.title} (Copy)`,
+              content: originalPost.content,
+              excerpt: originalPost.excerpt,
+              coverImage: originalPost.coverImage,
+              published: false // Always create as draft
+            }
+            
+            response = await fetch('/api/blog', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(duplicateData)
+            })
+          }
+          break
+          
+        case 'export':
+          // Export single post (for now, just log it)
+          const exportPost = posts.find(p => p.id === postId)
+          if (exportPost) {
+            const exportData = {
+              title: exportPost.title,
+              content: exportPost.content,
+              excerpt: exportPost.excerpt,
+              published: exportPost.published,
+              createdAt: exportPost.createdAt,
+              updatedAt: exportPost.updatedAt
+            }
+            
+            // Create and download JSON file
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' })
+            const url = URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
+            a.download = `${exportPost.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.json`
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+            URL.revokeObjectURL(url)
+            
+            return // No API call needed for export
+          }
+          break
+          
         default:
-          throw new Error('Unknown action')
+          throw new Error(`Unknown action: ${action}`)
       }
       
-      const result = await response.json()
-      
-      if (!response.ok) {
-        throw new Error(result.error || 'Action failed')
+      if (response) {
+        const result = await response.json()
+        
+        if (!response.ok) {
+          throw new Error(result.error || 'Action failed')
+        }
       }
       
       // Refresh posts after successful action
@@ -161,6 +224,34 @@ const BlogList = () => {
     if (selectedPosts.length === 0) return
     
     try {
+      // Handle bulk export separately
+      if (action === 'export') {
+        const selectedPostsData = posts.filter(post => selectedPosts.includes(post.id))
+        const exportData = selectedPostsData.map(post => ({
+          title: post.title,
+          content: post.content,
+          excerpt: post.excerpt,
+          published: post.published,
+          createdAt: post.createdAt,
+          updatedAt: post.updatedAt
+        }))
+        
+        // Create and download JSON file
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `blog_posts_export_${new Date().toISOString().split('T')[0]}.json`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+        
+        setSelectedPosts([])
+        return
+      }
+      
+      // Handle other bulk actions
       const promises = selectedPosts.map(postId => 
         handlePostAction(action, postId)
       )
@@ -259,6 +350,7 @@ const BlogList = () => {
           onBulkAction={handleBulkAction}
           onSelectAll={handleSelectAll}
           allSelected={selectedPosts.length === posts.length}
+          totalCount={posts.length}
         />
       )}
 
