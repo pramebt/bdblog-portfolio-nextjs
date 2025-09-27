@@ -12,6 +12,16 @@ export const blogPostSchema = z.object({
     tags: z.array(z.string()).optional(),
 })
 
+export const projectSchema = z.object({
+    title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
+    description: z.string().min(1, 'Description is required'),
+    coverImage: OptionalUrlOrEmpty,
+    images: z.array(z.string()).optional(),
+    githubUrl: OptionalUrlOrEmpty,
+    liveUrl: OptionalUrlOrEmpty,
+    published: z.boolean().optional(),
+})
+
 export function parsePositiveInt(value,fallback,min=1,max=100) {
     const n = Number.parseInt(value ?? '')
     if (Number.isNaN(n)) return fallback

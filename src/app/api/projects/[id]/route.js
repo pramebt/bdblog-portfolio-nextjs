@@ -3,19 +3,19 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
-import { blogPostSchema, createSlugFromTitle } from '@/lib/validators'
-import { cleanupBlogImages } from '@/lib/image-cleanup'
+import { projectSchema, createSlugFromTitle } from '@/lib/validators'
+import { cleanupProjectImages } from '@/lib/image-cleanup'
 
-// Schema สำหรับ validate blog post data (สำหรับ update) - ใช้ partial ของ schema เดิม
-const blogPostUpdateSchema = blogPostSchema.partial()
+// Schema สำหรับ validate project data (สำหรับ update) - ใช้ partial ของ schema เดิม
+const projectUpdateSchema = projectSchema.partial()
 
-// GET /api/blog/[id] - ดึง blog post เดียว (รองรับทั้ง ID และ slug)
+// GET /api/projects/[id] - ดึง project เดียว (รองรับทั้ง ID และ slug)
 export async function GET(request, { params }) {
   try {
     const { id } = await params
     
-    // Try to find post by ID first, then by slug
-    let post = await prisma.post.findUnique({
+    // Try to find project by ID first, then by slug
+    let project = await prisma.project.findUnique({
       where: { id },
       include: {
         author: {
@@ -29,8 +29,8 @@ export async function GET(request, { params }) {
     })
     
     // If not found by ID, try to find by slug
-    if (!post) {
-      post = await prisma.post.findUnique({
+    if (!project) {
+      project = await prisma.project.findUnique({
         where: { slug: id },
         include: {
           author: {
@@ -44,28 +44,28 @@ export async function GET(request, { params }) {
       })
     }
     
-    if (!post) {
+    if (!project) {
       return NextResponse.json(
-        { success: false, error: 'Post not found' },
+        { success: false, error: 'Project not found' },
         { status: 404 }
       )
     }
     
     return NextResponse.json({
       success: true,
-      data: post
+      data: project
     })
     
   } catch (error) {
-    console.error('Error fetching blog post:', error)
+    console.error('Error fetching project:', error)
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch blog post' },
+      { success: false, error: 'Failed to fetch project' },
       { status: 500 }
     )
   }
 }
 
-// PUT /api/blog/[id] - แก้ไข blog post
+// PUT /api/projects/[id] - แก้ไข project
 export async function PUT(request, { params }) {
   try {
     // Check authentication
@@ -81,35 +81,35 @@ export async function PUT(request, { params }) {
     const body = await request.json()
     
     // Validate data
-    const validatedData = blogPostUpdateSchema.parse(body)
+    const validatedData = projectUpdateSchema.parse(body)
     
-    // Check if post exists
-    const existingPost = await prisma.post.findUnique({
+    // Check if project exists
+    const existingProject = await prisma.project.findUnique({
       where: { id }
     })
     
-    if (!existingPost) {
+    if (!existingProject) {
       return NextResponse.json(
-        { success: false, error: 'Post not found' },
+        { success: false, error: 'Project not found' },
         { status: 404 }
       )
     }
     
-    // Check if user owns this post or is admin
-    if (existingPost.authorId !== session.user.id) {
+    // Check if user owns this project or is admin
+    if (existingProject.authorId !== session.user.id) {
       return NextResponse.json(
-        { success: false, error: 'You can only edit your own posts' },
+        { success: false, error: 'You can only edit your own projects' },
         { status: 403 }
       )
     }
     
     // Generate new slug if title is being updated
     let updateData = { ...validatedData }
-    if (validatedData.title && validatedData.title !== existingPost.title) {
+    if (validatedData.title && validatedData.title !== existingProject.title) {
       const newSlug = createSlugFromTitle(validatedData.title)
       
-      // Check if new slug already exists (excluding current post)
-      const slugExists = await prisma.post.findFirst({
+      // Check if new slug already exists (excluding current project)
+      const slugExists = await prisma.project.findFirst({
         where: {
           slug: newSlug,
           id: { not: id }
@@ -118,7 +118,7 @@ export async function PUT(request, { params }) {
       
       if (slugExists) {
         return NextResponse.json(
-          { success: false, error: 'A post with this title already exists' },
+          { success: false, error: 'A project with this title already exists' },
           { status: 400 }
         )
       }
@@ -126,8 +126,8 @@ export async function PUT(request, { params }) {
       updateData.slug = newSlug
     }
     
-    // Update post
-    const updatedPost = await prisma.post.update({
+    // Update project
+    const updatedProject = await prisma.project.update({
       where: { id },
       data: updateData,
       include: {
@@ -143,12 +143,12 @@ export async function PUT(request, { params }) {
     
     return NextResponse.json({
       success: true,
-      data: updatedPost,
-      message: 'Blog post updated successfully'
+      data: updatedProject,
+      message: 'Project updated successfully'
     })
     
   } catch (error) {
-    console.error('Error updating blog post:', error)
+    console.error('Error updating project:', error)
     
     if (error instanceof z.ZodError) {
       return NextResponse.json(
@@ -158,13 +158,13 @@ export async function PUT(request, { params }) {
     }
     
     return NextResponse.json(
-      { success: false, error: 'Failed to update blog post' },
+      { success: false, error: 'Failed to update project' },
       { status: 500 }
     )
   }
 }
 
-// DELETE /api/blog/[id] - ลบ blog post
+// DELETE /api/projects/[id] - ลบ project
 export async function DELETE(request, { params }) {
   try {
     // Check authentication
@@ -178,48 +178,48 @@ export async function DELETE(request, { params }) {
     
     const { id } = await params
     
-    // Check if post exists
-    const existingPost = await prisma.post.findUnique({
+    // Check if project exists
+    const existingProject = await prisma.project.findUnique({
       where: { id }
     })
     
-    if (!existingPost) {
+    if (!existingProject) {
       return NextResponse.json(
-        { success: false, error: 'Post not found' },
+        { success: false, error: 'Project not found' },
         { status: 404 }
       )
     }
     
-    // Check if user owns this post or is admin
-    if (existingPost.authorId !== session.user.id) {
+    // Check if user owns this project or is admin
+    if (existingProject.authorId !== session.user.id) {
       return NextResponse.json(
-        { success: false, error: 'You can only delete your own posts' },
+        { success: false, error: 'You can only delete your own projects' },
         { status: 403 }
       )
     }
     
     // Cleanup associated images from Cloudinary
     try {
-      await cleanupBlogImages(existingPost)
+      await cleanupProjectImages(existingProject)
     } catch (error) {
       console.error('Error cleaning up images:', error)
       // Continue with deletion even if image cleanup fails
     }
     
-    // Delete post
-    await prisma.post.delete({
+    // Delete project
+    await prisma.project.delete({
       where: { id }
     })
     
     return NextResponse.json({
       success: true,
-      message: 'Blog post deleted successfully'
+      message: 'Project deleted successfully'
     })
     
   } catch (error) {
-    console.error('Error deleting blog post:', error)
+    console.error('Error deleting project:', error)
     return NextResponse.json(
-      { success: false, error: 'Failed to delete blog post' },
+      { success: false, error: 'Failed to delete project' },
       { status: 500 }
     )
   }
