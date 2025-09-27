@@ -1,12 +1,16 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Calendar, User, ArrowRight, FolderOpen, Github, ExternalLink } from 'lucide-react'
+import { Calendar, User, ArrowRight, FolderOpen, Github, ExternalLink, Eye } from 'lucide-react'
+import ImageModal from '@/components/shared/ImageModal'
 
 const ProjectCard = ({ project }) => {
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
+
   // Format date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('th-TH', {
@@ -33,15 +37,33 @@ const ProjectCard = ({ project }) => {
   return (
     <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col h-full">
       {/* Cover Image */}
-      <div className="relative aspect-video overflow-hidden bg-muted">
+      <div className="relative aspect-video overflow-hidden bg-muted group/image rounded-lg m-4">
         {project.coverImage ? (
           <>
             <img
               src={project.coverImage}
               alt={project.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-cover transition-transform duration-300 cursor-pointer rounded-lg"
+              onClick={() => setIsImageModalOpen(true)}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+            
+            {/* Image View Button */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-300">
+              <Button
+                size="sm"
+                variant="secondary"
+                className="bg-white/90 hover:bg-white text-black shadow-lg"
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setIsImageModalOpen(true)
+                }}
+              >
+                <Eye className="h-4 w-4 mr-1" />
+                ดูรูป
+              </Button>
+            </div>
           </>
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-muted">
@@ -114,6 +136,17 @@ const ProjectCard = ({ project }) => {
           </div>
         </CardContent>
       </div>
+
+      {/* Image Modal */}
+      {project.coverImage && (
+        <ImageModal
+          src={project.coverImage}
+          alt={project.title}
+          title={project.title}
+          isOpen={isImageModalOpen}
+          onClose={() => setIsImageModalOpen(false)}
+        />
+      )}
     </Card>
   )
 }

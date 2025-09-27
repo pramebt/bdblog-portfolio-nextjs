@@ -1,13 +1,17 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Calendar, User, ArrowRight } from 'lucide-react'
+import { Calendar, User, ArrowRight, Eye } from 'lucide-react'
+import ImageModal from '@/components/shared/ImageModal'
 
 const BlogCard = ({ post }) => {
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
+
   // Format date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('th-TH', {
@@ -35,12 +39,30 @@ const BlogCard = ({ post }) => {
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       {/* Cover Image */}
       {post.coverImage && (
-        <div className="aspect-video overflow-hidden">
+        <div className="relative aspect-video overflow-hidden group/image rounded-lg m-4">
           <img
             src={post.coverImage}
             alt={post.title}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer rounded-lg"
+            onClick={() => setIsImageModalOpen(true)}
           />
+          
+          {/* Image View Button */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-300">
+            <Button
+              size="sm"
+              variant="secondary"
+              className="bg-white/90 hover:bg-white text-black shadow-lg"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                setIsImageModalOpen(true)
+              }}
+            >
+              <Eye className="h-4 w-4 mr-1" />
+              ดูรูป
+            </Button>
+          </div>
         </div>
       )}
       
@@ -98,6 +120,17 @@ const BlogCard = ({ post }) => {
           </Link>
         </Button>
       </CardContent>
+
+      {/* Image Modal */}
+      {post.coverImage && (
+        <ImageModal
+          src={post.coverImage}
+          alt={post.title}
+          title={post.title}
+          isOpen={isImageModalOpen}
+          onClose={() => setIsImageModalOpen(false)}
+        />
+      )}
     </Card>
   )
 }
