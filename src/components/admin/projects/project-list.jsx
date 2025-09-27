@@ -1,0 +1,467 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator
+} from '@/components/ui/dropdown-menu'
+import { 
+  Plus, 
+  Search, 
+  MoreVertical, 
+  Edit, 
+  Trash2, 
+  Eye, 
+  EyeOff,
+  ExternalLink,
+  Github,
+  FolderOpen,
+  Loader2,
+  AlertCircle
+} from 'lucide-react'
+import { formatDistanceToNow } from 'date-fns'
+
+const ProjectList = () => {
+  const router = useRouter()
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [totalProjects, setTotalProjects] = useState(0)
+
+  // Fetch projects
+  const fetchProjects = async (page = 1, search = '') => {
+    try {
+      setLoading(true)
+      setError('')
+      
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: '12'
+      })
+      
+      if (search) {
+        params.append('search', search)
+      }
+      
+      const response = await fetch(`/api/projects?${params}`)
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch projects')
+      }
+      
+      if (data.success) {
+        setProjects(data.data.projects)
+        setCurrentPage(data.data.pagination.page)
+        setTotalPages(data.data.pagination.pages)
+        setTotalProjects(data.data.pagination.total)
+      }
+      
+    } catch (err) {
+      console.error('Error fetching projects:', err)
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Initial load
+  useEffect(() => {
+    fetchProjects(1, searchTerm)
+  }, [])
+
+  // Handle search
+  const handleSearch = (e) => {
+    e.preventDefault()
+    fetchProjects(1, searchTerm)
+  }
+
+  // Handle project actions
+  const handleProjectAction = async (action, projectId) => {
+    try {
+      let response
+      
+      switch (action) {
+        case 'delete':
+          if (!confirm('Are you sure you want to delete this project?')) {
+            return
+          }
+          response = await fetch(`/api/projects/${projectId}`, {
+            method: 'DELETE'
+          })
+          break
+          
+        case 'togglePublish':
+          const project = projects.find(p => p.id === projectId)
+          response = await fetch(`/api/projects/${projectId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ published: !project.published })
+          })
+          break
+          
+        case 'edit':
+          router.push(`/admin/projects/${projectId}`)
+          return
+          
+        default:
+          return
+      }
+      
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Action failed')
+      }
+      
+      // Refresh the list
+      fetchProjects(currentPage, searchTerm)
+      
+    } catch (err) {
+      console.error('Error performing action:', err)
+      setError(err.message)
+    }
+  }
+
+  // Handle page change
+  const handlePageChange = (page) => {
+    fetchProjects(page, searchTerm)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Format date
+  const formatDate = (dateString) => {
+    return formatDistanceToNow(new Date(dateString), { addSuffix: true })
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
+          <p className="text-muted-foreground">
+            Manage your project portfolio
+          </p>
+        </div>
+        <Button onClick={() => router.push('/admin/projects/create')}>
+          <Plus className="h-4 w-4 mr-2" />
+          New Project
+        </Button>
+      </div>
+
+      {/* Search */}
+      <Card>
+        <CardContent className="pt-6">
+          <form onSubmit={handleSearch} className="flex gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search projects..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Button type="submit" disabled={loading}>
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Search'}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-2">
+              <FolderOpen className="h-5 w-5 text-muted-foreground" />
+              <div>
+                <p className="text-2xl font-bold">{totalProjects}</p>
+                <p className="text-sm text-muted-foreground">Total Projects</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-2">
+              <Eye className="h-5 w-5 text-green-600" />
+              <div>
+                <p className="text-2xl font-bold">
+                  {projects.filter(p => p.published).length}
+                </p>
+                <p className="text-sm text-muted-foreground">Published</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-2">
+              <EyeOff className="h-5 w-5 text-orange-600" />
+              <div>
+                <p className="text-2xl font-bold">
+                  {projects.filter(p => !p.published).length}
+                </p>
+                <p className="text-sm text-muted-foreground">Drafts</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Error State */}
+      {error && (
+        <Card className="border-destructive">
+          <CardContent className="flex items-center gap-2 p-4">
+            <AlertCircle className="h-5 w-5 text-destructive" />
+            <p className="text-destructive">{error}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Loading State */}
+      {loading && (
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" />
+            <p className="text-muted-foreground">Loading projects...</p>
+          </div>
+        </div>
+      )}
+
+      {/* Projects Grid */}
+      {!loading && projects.length > 0 && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project) => (
+              <Card key={project.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                {/* Cover Image */}
+                {project.coverImage && (
+                  <div className="aspect-video overflow-hidden">
+                    <img
+                      src={project.coverImage}
+                      alt={project.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
+                
+                <CardHeader className="relative">
+                  {/* Status Badge */}
+                  <div className="absolute top-4 right-4">
+                    <Badge variant={project.published ? "default" : "secondary"}>
+                      {project.published ? 'Published' : 'Draft'}
+                    </Badge>
+                  </div>
+
+                  {/* Action Menu */}
+                  <div className="absolute top-4 left-4 z-10">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 bg-background/80 backdrop-blur-sm hover:bg-background/90"
+                        >
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuItem onClick={() => handleProjectAction('edit', project.id)}>
+                          <Edit className="h-4 w-4 mr-2" />
+                          Edit Project
+                        </DropdownMenuItem>
+                        
+                        {project.published && project.liveUrl && (
+                          <DropdownMenuItem onClick={() => window.open(project.liveUrl, '_blank')}>
+                            <ExternalLink className="h-4 w-4 mr-2" />
+                            View Live
+                          </DropdownMenuItem>
+                        )}
+                        
+                        {project.githubUrl && (
+                          <DropdownMenuItem onClick={() => window.open(project.githubUrl, '_blank')}>
+                            <Github className="h-4 w-4 mr-2" />
+                            View Code
+                          </DropdownMenuItem>
+                        )}
+                        
+                        <DropdownMenuSeparator />
+                        
+                        <DropdownMenuItem onClick={() => handleProjectAction('togglePublish', project.id)}>
+                          {project.published ? (
+                            <>
+                              <EyeOff className="h-4 w-4 mr-2" />
+                              Unpublish
+                            </>
+                          ) : (
+                            <>
+                              <Eye className="h-4 w-4 mr-2" />
+                              Publish
+                            </>
+                          )}
+                        </DropdownMenuItem>
+                        
+                        <DropdownMenuSeparator />
+                        
+                        <DropdownMenuItem 
+                          onClick={() => handleProjectAction('delete', project.id)}
+                          className="text-destructive focus:text-destructive"
+                        >
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          Delete Project
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+
+                  <CardTitle className="line-clamp-2 pr-16">{project.title}</CardTitle>
+                  <CardDescription className="line-clamp-3">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+                  {/* Links */}
+                  <div className="flex gap-2">
+                    {project.githubUrl && (
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => window.open(project.githubUrl, '_blank')}
+                      >
+                        <Github className="h-4 w-4 mr-1" />
+                        Code
+                      </Button>
+                    )}
+                    {project.liveUrl && (
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => window.open(project.liveUrl, '_blank')}
+                      >
+                        <ExternalLink className="h-4 w-4 mr-1" />
+                        Demo
+                      </Button>
+                    )}
+                  </div>
+
+                  {/* Meta Info */}
+                  <div className="text-sm text-muted-foreground">
+                    <p>Created {formatDate(project.createdAt)}</p>
+                    {project.updatedAt !== project.createdAt && (
+                      <p>Updated {formatDate(project.updatedAt)}</p>
+                    )}
+                  </div>
+
+                  {/* Quick Actions */}
+                  <div className="flex gap-2 pt-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleProjectAction('edit', project.id)}
+                      className="flex-1"
+                    >
+                      <Edit className="h-4 w-4 mr-1" />
+                      Edit
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleProjectAction('togglePublish', project.id)}
+                      className="flex-1"
+                    >
+                      {project.published ? (
+                        <>
+                          <EyeOff className="h-4 w-4 mr-1" />
+                          Unpublish
+                        </>
+                      ) : (
+                        <>
+                          <Eye className="h-4 w-4 mr-1" />
+                          Publish
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage <= 1}
+              >
+                Previous
+              </Button>
+              
+              <div className="flex items-center gap-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <Button
+                    key={page}
+                    variant={currentPage === page ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => handlePageChange(page)}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </div>
+
+              <Button
+                variant="outline"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage >= totalPages}
+              >
+                Next
+              </Button>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Empty State */}
+      {!loading && projects.length === 0 && !error && (
+        <div className="text-center py-12">
+          <FolderOpen className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+          <h3 className="text-xl font-semibold mb-2">
+            {searchTerm ? 'No projects found' : 'No projects yet'}
+          </h3>
+          <p className="text-muted-foreground mb-6">
+            {searchTerm 
+              ? 'Try adjusting your search terms'
+              : 'Create your first project to get started'
+            }
+          </p>
+          <Button onClick={() => router.push('/admin/projects/create')}>
+            <Plus className="h-4 w-4 mr-2" />
+            Create Project
+          </Button>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default ProjectList
