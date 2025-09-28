@@ -36,8 +36,7 @@ const ProjectCard = ({ project }) => {
   }
 
   return (
-    <HoverLift>
-      <Card className="group overflow-hidden h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80 transition-all duration-300">
+    <Card className="group overflow-hidden h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80 hover:shadow-lg transition-all duration-300">
         {/* Cover Image */}
         <div className="relative aspect-video overflow-hidden bg-muted">
           {project.coverImage ? (
@@ -45,7 +44,7 @@ const ProjectCard = ({ project }) => {
               <img
                 src={project.coverImage}
                 alt={project.title}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 cursor-pointer"
+                className="w-full h-full object-cover transition-transform duration-500 cursor-pointer"
                 onClick={() => setIsImageModalOpen(true)}
               />
               
@@ -166,7 +165,6 @@ const ProjectCard = ({ project }) => {
           />
         )}
       </Card>
-    </HoverLift>
   )
 }
 

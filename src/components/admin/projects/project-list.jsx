@@ -257,7 +257,7 @@ const ProjectList = () => {
                 className="animate-in fade-in slide-in-from-bottom-4 duration-500"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <Card className="group overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80">
+                <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80">
                 {/* Cover Image */}
                 <div className="relative aspect-video overflow-hidden bg-muted">
                   {project.coverImage ? (

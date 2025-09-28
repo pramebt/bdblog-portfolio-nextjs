@@ -5,7 +5,7 @@ import { FadeIn, LoadingSpinner } from '@/components/ui/animations'
 
 const ProjectLoadingState = ({ 
   loading = false, 
-  text = "กำลังโหลดโปรเจค...", 
+  text = "Loading projects...", 
   count = 6,
   useSkeletons = true 
 }) => {

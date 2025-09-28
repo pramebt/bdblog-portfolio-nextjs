@@ -37,15 +37,14 @@ const BlogCard = ({ post }) => {
   }
 
   return (
-    <HoverLift>
-      <Card className="overflow-hidden group h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80 transition-all duration-300">
+    <Card className="overflow-hidden group h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80 hover:shadow-lg transition-all duration-300">
         {/* Cover Image */}
         {post.coverImage && (
           <div className="relative aspect-video overflow-hidden rounded-lg m-4">
             <img
               src={post.coverImage}
               alt={post.title}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 cursor-pointer rounded-lg"
+              className="w-full h-full object-cover  transition-transform duration-500 cursor-pointer rounded-lg"
               onClick={() => setIsImageModalOpen(true)}
             />
             
@@ -148,7 +147,6 @@ const BlogCard = ({ post }) => {
           />
         )}
       </Card>
-    </HoverLift>
   )
 }
 

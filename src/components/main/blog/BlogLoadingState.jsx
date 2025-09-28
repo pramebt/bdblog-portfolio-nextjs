@@ -5,7 +5,7 @@ import { FadeIn, LoadingSpinner } from '@/components/ui/animations'
 
 const BlogLoadingState = ({ 
   loading = false, 
-  text = "กำลังโหลดบทความ...", 
+  text = "Loading blog posts...", 
   count = 6,
   useSkeletons = true 
 }) => {
