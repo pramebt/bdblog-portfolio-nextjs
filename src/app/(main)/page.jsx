@@ -13,8 +13,11 @@ const HomePage = () => {
           <h1 className="text-5xl md:text-7xl font-semibold tracking-tight mb-8 text-foreground">
             BD Blog
           </h1>
-          <p className="text-2xl md:text-3xl text-muted-foreground mb-12 max-w-3xl mx-auto font-light leading-relaxed">
+          <p className="text-2xl md:text-3xl text-muted-foreground mb-8 max-w-3xl mx-auto font-light leading-relaxed">
             Thoughts, experiences, and projects from a developer's journey.
+          </p>
+          <p className="text-lg text-muted-foreground/80 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+            ความคิด ประสบการณ์ และโปรเจกต์จากการเดินทางของนักพัฒนา
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Button 
