@@ -53,7 +53,7 @@ const Navbar = ({ user }) => {
         })}
       </div>
       
-      <ModeToggle />
+      
 
       {/* User Authentication */}
       <div className="flex items-center space-x-3">
@@ -80,7 +80,7 @@ const Navbar = ({ user }) => {
           </Button>
         )}
       </div>
-
+      
       {/* Mobile menu button */}
       <div className="md:hidden">
         <Button variant="ghost" size="sm">

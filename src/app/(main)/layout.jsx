@@ -1,6 +1,7 @@
 import React from 'react'
 import Footer from '@/components/main/headers/footer'
 import HeaderMain from '@/components/main/headers/header'
+import { ModeToggle } from '@/components/main/headers/modetoggle'
 
 const MainLayout = ({ children }) => {
   return (
@@ -12,6 +13,10 @@ const MainLayout = ({ children }) => {
           {children}
         </div>
       </main>
+      {/* Absolute positioned ModeToggle */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <ModeToggle />
+      </div>
 
       {/* Footer */}
       <Footer />

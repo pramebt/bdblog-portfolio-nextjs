@@ -10,6 +10,20 @@ import BlogCard from './blog-card'
 import BlogFilters from './blog-filter'
 import BlogPagination from './blog-pagination'
 import BlogActions from './blog-action'
+import { 
+  fetchBlogPosts,
+  deleteBlogPost,
+  publishPost,
+  unpublishPost,
+  togglePublishPost,
+  createBlogPost,
+  deleteMultiplePosts,
+  publishMultiplePosts,
+  unpublishMultiplePosts,
+  duplicateMultiplePosts,
+  exportMultiplePosts,
+  exportSinglePost
+} from '@/actions/blog'
 
 const BlogList = () => {
   const router = useRouter()
@@ -39,27 +53,22 @@ const BlogList = () => {
       setLoading(true)
       setError('')
       
-      const searchParams = new URLSearchParams({
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-        ...(filters.search && { search: filters.search }),
-        ...(filters.published !== undefined && { published: filters.published.toString() }),
+      const params = {
+        page: currentPage,
+        limit: itemsPerPage,
+        search: filters.search,
+        published: filters.published,
         sort: filters.sort
-      })
-      
-      const response = await fetch(`/api/blog?${searchParams}`)
-      const data = await response.json()
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to fetch posts')
       }
       
-      if (data.success) {
-        setPosts(data.data.posts)
-        setTotalPosts(data.data.pagination.total)
-        setTotalPages(data.data.pagination.pages)
+      const result = await fetchBlogPosts(params)
+      
+      if (result.success) {
+        setPosts(result.posts)
+        setTotalPosts(result.pagination.total)
+        setTotalPages(result.pagination.pages)
       } else {
-        throw new Error(data.error || 'Failed to fetch posts')
+        throw new Error(result.error || 'Failed to fetch posts')
       }
     } catch (err) {
       console.error('Error fetching posts:', err)
@@ -110,35 +119,26 @@ const BlogList = () => {
   // Handle post actions
   const handlePostAction = async (action, postId, data = {}) => {
     try {
-      let response
+      let result
       
       switch (action) {
         case 'delete':
-          response = await fetch(`/api/blog/${postId}`, {
-            method: 'DELETE'
-          })
+          result = await deleteBlogPost(postId)
           break
           
         case 'togglePublish':
-        case 'publish':
-        case 'unpublish':
           const post = posts.find(p => p.id === postId)
-          let publishStatus
-          
-          if (action === 'publish') {
-            publishStatus = true
-          } else if (action === 'unpublish') {
-            publishStatus = false
-          } else {
-            // togglePublish
-            publishStatus = !post.published
+          if (post) {
+            result = await togglePublishPost(postId, post.published)
           }
+          break
           
-          response = await fetch(`/api/blog/${postId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ published: publishStatus })
-          })
+        case 'publish':
+          result = await publishPost(postId)
+          break
+          
+        case 'unpublish':
+          result = await unpublishPost(postId)
           break
           
         case 'edit':
@@ -146,7 +146,6 @@ const BlogList = () => {
           return
           
         case 'duplicate':
-          // Create a copy of the post
           const originalPost = posts.find(p => p.id === postId)
           if (originalPost) {
             const duplicateData = {
@@ -154,42 +153,19 @@ const BlogList = () => {
               content: originalPost.content,
               excerpt: originalPost.excerpt,
               coverImage: originalPost.coverImage,
-              published: false // Always create as draft
+              published: false
             }
-            
-            response = await fetch('/api/blog', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(duplicateData)
-            })
+            result = await createBlogPost(duplicateData)
           }
           break
           
         case 'export':
-          // Export single post (for now, just log it)
           const exportPost = posts.find(p => p.id === postId)
           if (exportPost) {
-            const exportData = {
-              title: exportPost.title,
-              content: exportPost.content,
-              excerpt: exportPost.excerpt,
-              published: exportPost.published,
-              createdAt: exportPost.createdAt,
-              updatedAt: exportPost.updatedAt
+            result = await exportSinglePost(exportPost)
+            if (result.success) {
+              return // No need to refresh posts for export
             }
-            
-            // Create and download JSON file
-            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' })
-            const url = URL.createObjectURL(blob)
-            const a = document.createElement('a')
-            a.href = url
-            a.download = `${exportPost.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.json`
-            document.body.appendChild(a)
-            a.click()
-            document.body.removeChild(a)
-            URL.revokeObjectURL(url)
-            
-            return // No API call needed for export
           }
           break
           
@@ -197,12 +173,8 @@ const BlogList = () => {
           throw new Error(`Unknown action: ${action}`)
       }
       
-      if (response) {
-        const result = await response.json()
-        
-        if (!response.ok) {
-          throw new Error(result.error || 'Action failed')
-        }
+      if (!result || !result.success) {
+        throw new Error(result?.error || 'Action failed')
       }
       
       // Refresh posts after successful action
@@ -224,39 +196,45 @@ const BlogList = () => {
     if (selectedPosts.length === 0) return
     
     try {
-      // Handle bulk export separately
-      if (action === 'export') {
-        const selectedPostsData = posts.filter(post => selectedPosts.includes(post.id))
-        const exportData = selectedPostsData.map(post => ({
-          title: post.title,
-          content: post.content,
-          excerpt: post.excerpt,
-          published: post.published,
-          createdAt: post.createdAt,
-          updatedAt: post.updatedAt
-        }))
-        
-        // Create and download JSON file
-        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' })
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = `blog_posts_export_${new Date().toISOString().split('T')[0]}.json`
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(url)
-        
-        setSelectedPosts([])
-        return
+      let result
+      
+      switch (action) {
+        case 'delete':
+          result = await deleteMultiplePosts(selectedPosts)
+          break
+          
+        case 'publish':
+          result = await publishMultiplePosts(selectedPosts)
+          break
+          
+        case 'unpublish':
+          result = await unpublishMultiplePosts(selectedPosts)
+          break
+          
+        case 'duplicate':
+          const selectedPostsData = posts.filter(post => selectedPosts.includes(post.id))
+          result = await duplicateMultiplePosts(selectedPostsData)
+          break
+          
+        case 'export':
+          const exportPostsData = posts.filter(post => selectedPosts.includes(post.id))
+          result = await exportMultiplePosts(exportPostsData)
+          if (result.success) {
+            setSelectedPosts([])
+            return // No need to refresh posts for export
+          }
+          break
+          
+        default:
+          throw new Error(`Unknown bulk action: ${action}`)
       }
       
-      // Handle other bulk actions
-      const promises = selectedPosts.map(postId => 
-        handlePostAction(action, postId)
-      )
+      if (!result || !result.success) {
+        throw new Error(result?.error || 'Bulk action failed')
+      }
       
-      await Promise.all(promises)
+      // Refresh posts after successful action
+      await fetchPosts()
       setSelectedPosts([])
       
     } catch (err) {
