@@ -38,18 +38,18 @@ const ProjectCard = ({ project }) => {
   return (
     <Card className="group overflow-hidden h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80 hover:shadow-lg transition-all duration-300">
         {/* Cover Image */}
-        <div className="relative aspect-video overflow-hidden bg-muted">
+        <div className="relative aspect-video overflow-hidden m-4">
           {project.coverImage ? (
             <>
               <img
                 src={project.coverImage}
                 alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-500 cursor-pointer"
+                className="w-full h-full object-cover rounded-lg transition-transform duration-500 cursor-pointer"
                 onClick={() => setIsImageModalOpen(true)}
               />
               
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 rounded-lg group-hover:opacity-100 transition-opacity duration-300" />
               
               {/* Image View Button */}
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-95">
