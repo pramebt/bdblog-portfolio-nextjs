@@ -137,7 +137,7 @@ const BlogFilters = ({ filters, onFilterChange, loading }) => {
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   disabled={loading}
-                  className="pl-10"
+                  className="pl-10 ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none "
                 />
                 {searchInput && (
                   <Button

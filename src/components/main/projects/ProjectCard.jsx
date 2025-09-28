@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Calendar, User, ArrowRight, FolderOpen, Github, ExternalLink, Eye } from 'lucide-react'
 import ImageModal from '@/components/shared/ImageModal'
+import { HoverLift } from '@/components/ui/animations'
 
 const ProjectCard = ({ project }) => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
@@ -35,61 +36,64 @@ const ProjectCard = ({ project }) => {
   }
 
   return (
-    <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col h-full">
-      {/* Cover Image */}
-      <div className="relative aspect-video overflow-hidden bg-muted group/image rounded-lg m-4">
-        {project.coverImage ? (
-          <>
-            <img
-              src={project.coverImage}
-              alt={project.title}
-              className="w-full h-full object-cover transition-transform duration-300 cursor-pointer rounded-lg"
-              onClick={() => setIsImageModalOpen(true)}
-            />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-            
-            {/* Image View Button */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-300">
-              <Button
-                size="sm"
-                variant="secondary"
-                className="bg-white/90 hover:bg-white text-black shadow-lg"
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  setIsImageModalOpen(true)
-                }}
-              >
-                <Eye className="h-4 w-4 mr-1" />
-                ดูรูป
-              </Button>
+    <HoverLift>
+      <Card className="group overflow-hidden h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80 transition-all duration-300">
+        {/* Cover Image */}
+        <div className="relative aspect-video overflow-hidden bg-muted">
+          {project.coverImage ? (
+            <>
+              <img
+                src={project.coverImage}
+                alt={project.title}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 cursor-pointer"
+                onClick={() => setIsImageModalOpen(true)}
+              />
+              
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              {/* Image View Button */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-95">
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="bg-white/95 hover:bg-white text-black shadow-xl backdrop-blur-sm border-0 transform hover:scale-105 transition-transform"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setIsImageModalOpen(true)
+                  }}
+                >
+                  <Eye className="h-4 w-4 mr-1" />
+                  ดูรูป
+                </Button>
+              </div>
+            </>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-muted group-hover:bg-muted/80 transition-colors">
+              <FolderOpen className="h-12 w-12 text-muted-foreground group-hover:text-foreground transition-colors" />
             </div>
-          </>
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-muted">
-            <FolderOpen className="h-12 w-12 text-muted-foreground" />
-          </div>
-        )}
-      </div>
+          )}
+        </div>
       
       {/* Content - เพิ่ม flex-1 เพื่อให้ขยายเต็มพื้นที่ */}
       <div className="flex flex-col flex-1">
         <CardHeader className="pb-3">
-          <CardTitle className="line-clamp-2 text-lg group-hover:text-primary transition-colors">
-            <Link href={`/projects/${project.slug}`} className="block">
+          <CardTitle className="line-clamp-2 text-lg font-semibold group-hover:text-primary transition-colors duration-200 leading-tight">
+            <Link href={`/projects/${project.slug}`} className="hover:underline">
               {project.title}
             </Link>
           </CardTitle>
           
           {/* Meta Info */}
-          <div className="flex items-center gap-3 text-xs text-muted-foreground mt-2">
-            <div className="flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
-              <span>{formatDate(project.createdAt)}</span>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground mt-2">
+            <div className="flex items-center gap-1.5 hover:text-foreground transition-colors">
+              <Calendar className="h-3.5 w-3.5" />
+              <span className="font-medium">{formatDate(project.createdAt)}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <User className="h-3 w-3" />
-              <span>{project.author.name}</span>
+            <div className="flex items-center gap-1.5 hover:text-foreground transition-colors">
+              <User className="h-3.5 w-3.5" />
+              <span className="font-medium">{project.author?.name || 'Unknown'}</span>
             </div>
           </div>
         </CardHeader>
@@ -104,50 +108,65 @@ const ProjectCard = ({ project }) => {
           <div className="space-y-3 mt-auto">
             {/* Links */}
             {(project.githubUrl || project.liveUrl) && (
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2">
                 {project.githubUrl && (
-                  <Button size="sm" variant="outline" className="flex-1 min-w-0" asChild>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="flex-1 hover:bg-primary hover:text-primary-foreground transition-colors" 
+                    asChild
+                  >
                     <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github className="h-3 w-3 mr-1" />
-                      <span className="truncate">Code</span>
+                      <Github className="h-3 w-3 mr-1.5" />
+                      <span>Code</span>
                     </a>
                   </Button>
                 )}
                 {project.liveUrl && (
-                  <Button size="sm" variant="outline" className="flex-1 min-w-0" asChild>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="flex-1 hover:bg-primary hover:text-primary-foreground transition-colors" 
+                    asChild
+                  >
                     <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-3 w-3 mr-1" />
-                      <span className="truncate">Demo</span>
+                      <ExternalLink className="h-3 w-3 mr-1.5" />
+                      <span>Demo</span>
                     </a>
                   </Button>
                 )}
               </div>
             )}
 
-            <Separator />
+            <Separator className="my-2" />
 
             {/* View More Button */}
-            <Button asChild variant="ghost" className="w-full justify-between h-8 px-0 hover:bg-muted/50">
-              <Link href={`/projects/${project.slug}`}>
-                <span>ดูรายละเอียด</span>
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <Button 
+              asChild 
+              variant="ghost" 
+              className="w-full justify-between p-3 h-auto group-hover:bg-primary/5 transition-colors duration-200 mt-auto"
+            >
+              <Link href={`/projects/${project.slug}`} className="flex items-center justify-between w-full">
+                <span className="font-medium">ดูรายละเอียด</span>
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
             </Button>
           </div>
         </CardContent>
-      </div>
+        </div>
 
-      {/* Image Modal */}
-      {project.coverImage && (
-        <ImageModal
-          src={project.coverImage}
-          alt={project.title}
-          title={project.title}
-          isOpen={isImageModalOpen}
-          onClose={() => setIsImageModalOpen(false)}
-        />
-      )}
-    </Card>
+        {/* Image Modal */}
+        {project.coverImage && (
+          <ImageModal
+            src={project.coverImage}
+            alt={project.title}
+            title={project.title}
+            isOpen={isImageModalOpen}
+            onClose={() => setIsImageModalOpen(false)}
+          />
+        )}
+      </Card>
+    </HoverLift>
   )
 }
 

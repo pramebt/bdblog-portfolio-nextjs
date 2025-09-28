@@ -9,8 +9,8 @@ const BlogSearch = ({
   onSearchChange, 
   onSubmit, 
   loading = false,
-  placeholder = "ค้นหาบทความ...",
-  buttonText = "ค้นหา"
+  placeholder = "Search for blog posts...",
+  buttonText = "Search"
 }) => {
   return (
     <div className="max-w-md mx-auto mb-8">
@@ -22,7 +22,7 @@ const BlogSearch = ({
             placeholder={placeholder}
             value={searchTerm}
             onChange={onSearchChange}
-            className="pl-10"
+            className="pl-10 ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none border-0 focus:border-0 focus-visible:border-0"
           />
         </div>
         <Button type="submit" disabled={loading}>

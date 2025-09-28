@@ -2,7 +2,7 @@
 
 import { BookOpen } from 'lucide-react'
 
-const BlogHeader = ({ title = "Blog", description = "เรียนรู้เทคโนโลยีใหม่ๆ แบ่งปันประสบการณ์ และเคล็ดลับการพัฒนาเว็บ" }) => {
+const BlogHeader = ({ title = "Blog", description = "Learn new technologies, share experiences, and tips for web development" }) => {
   return (
     <div className="text-center mb-12">
       <div className="flex items-center justify-center gap-2 mb-4">

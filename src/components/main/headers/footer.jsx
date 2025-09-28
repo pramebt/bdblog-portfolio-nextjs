@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { Monitor, Github, Twitter, Linkedin, Mail } from 'lucide-react'
+import { Github, Twitter, Linkedin, Mail } from 'lucide-react'
 
 const Footer = () => {
   return (
@@ -10,12 +11,17 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Monitor className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold text-primary">BD Blog</span>
-            </div>
+            <Button variant="ghost" size="sm" asChild className="p-0 h-auto hover:bg-transparent justify-start">
+              <Link href="/" className="flex items-center space-x-3">
+                <Image 
+                  src="/images/common/terminal-box-fill.svg" 
+                  alt="BD Blog" 
+                  width={24} 
+                  height={24} 
+                />
+                <span className="text-xl font-bold text-foreground">BD Blog</span>
+              </Link>
+            </Button>
             <p className="text-muted-foreground leading-relaxed">
               Personal blog and project showcase. Sharing knowledge and experiences in web development.
             </p>

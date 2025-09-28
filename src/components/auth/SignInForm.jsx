@@ -76,6 +76,7 @@ export default function SignInForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={isLoading}
+              className="ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
             />
           </div>
           
@@ -90,6 +91,7 @@ export default function SignInForm() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 disabled={isLoading}
+                className="ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
               />
               <Button
                 type="button"

@@ -142,6 +142,7 @@ export default function SignUpForm() {
               onChange={handleChange}
               required
               disabled={isLoading}
+              className="ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
             />
           </div>
           
@@ -156,6 +157,7 @@ export default function SignUpForm() {
               onChange={handleChange}
               required
               disabled={isLoading}
+              className="ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
             />
           </div>
           

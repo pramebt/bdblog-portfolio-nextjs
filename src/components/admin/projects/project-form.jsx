@@ -236,7 +236,7 @@ const ProjectForm = ({
                         id="githubUrl"
                         {...register('githubUrl')}
                         placeholder="https://github.com/username/repo"
-                        className="pl-10"
+                        className="pl-10 ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none "
                         disabled={isSubmitting}
                       />
                     </div>
@@ -253,7 +253,7 @@ const ProjectForm = ({
                         id="liveUrl"
                         {...register('liveUrl')}
                         placeholder="https://your-project.com"
-                        className="pl-10"
+                        className="pl-10 ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none "
                         disabled={isSubmitting}
                       />
                     </div>

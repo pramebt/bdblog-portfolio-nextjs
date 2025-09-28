@@ -9,20 +9,20 @@ const ProjectSearch = ({
   onSearchChange, 
   onSubmit, 
   loading = false,
-  placeholder = "ค้นหาโปรเจค...",
-  buttonText = "ค้นหา"
+  placeholder = "Search for projects...",
+  buttonText = "Search"
 }) => {
   return (
     <div className="max-w-md mx-auto mb-8">
       <form onSubmit={onSubmit} className="flex gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className=" absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
             placeholder={placeholder}
             value={searchTerm}
             onChange={onSearchChange}
-            className="pl-10"
+            className="pl-10 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none  "
           />
         </div>
         <Button type="submit" disabled={loading}>

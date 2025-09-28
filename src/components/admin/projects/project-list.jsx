@@ -32,6 +32,8 @@ import {
   fetchProjects,
   deleteProject
 } from '@/actions/projects'
+import { GridSkeleton, ProjectCardSkeleton } from '@/components/ui/skeletons'
+import { FadeIn } from '@/components/ui/animations'
 
 const ProjectList = () => {
   const router = useRouter()
@@ -171,7 +173,7 @@ const ProjectList = () => {
                 placeholder="Search projects..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none border-0 focus:border-0 focus-visible:border-0"
               />
             </div>
             <Button type="submit" disabled={loading}>
@@ -236,25 +238,13 @@ const ProjectList = () => {
 
       {/* Loading State */}
       {loading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Card key={i} className="overflow-hidden animate-pulse">
-              <div className="aspect-video bg-muted" />
-              <CardContent className="p-4 space-y-3">
-                <div className="h-4 bg-muted rounded w-3/4" />
-                <div className="h-3 bg-muted rounded w-1/2" />
-                <div className="space-y-2">
-                  <div className="h-3 bg-muted rounded w-full" />
-                  <div className="h-3 bg-muted rounded w-2/3" />
-                </div>
-                <div className="flex gap-2 pt-2">
-                  <div className="h-8 bg-muted rounded flex-1" />
-                  <div className="h-8 bg-muted rounded flex-1" />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <FadeIn>
+          <GridSkeleton 
+            count={6}
+            component={ProjectCardSkeleton}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          />
+        </FadeIn>
       )}
 
       {/* Projects Grid */}

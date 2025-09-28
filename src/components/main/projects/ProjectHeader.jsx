@@ -4,7 +4,7 @@ import { FolderOpen } from 'lucide-react'
 
 const ProjectHeader = ({ 
   title = "Projects", 
-  description = "สำรวจโปรเจคต่างๆ ที่ผมได้พัฒนา ตั้งแต่เว็บแอปพลิเคชันไปจนถึงเครื่องมือต่างๆ" 
+  description = "Explore my projects from web applications to tools and experiments" 
 }) => {
   return (
     <div className="text-center mb-12">
