@@ -81,49 +81,69 @@ const ProjectsPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <ProjectHeader />
+      {/* Hero Section */}
+      <section className="py-16 md:py-24 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight mb-6 text-foreground">
+            Projects
+          </h1>
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+            A collection of web applications and development projects I've built.
+          </p>
+          
+          {/* Search */}
+          <div className="max-w-md mx-auto">
+            <ProjectSearch 
+              searchTerm={searchTerm}
+              onSearchChange={(e) => setSearchTerm(e.target.value)}
+              onSubmit={handleSearch}
+              loading={loading}
+            />
+          </div>
+        </div>
+      </section>
 
-        {/* Search */}
-        <ProjectSearch 
-          searchTerm={searchTerm}
-          onSearchChange={(e) => setSearchTerm(e.target.value)}
-          onSubmit={handleSearch}
-          loading={loading}
-        />
+      {/* Content Section */}
+      <section className="pb-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Results Info */}
+          {!loading && totalProjects > 0 && (
+            <div className="text-center mb-12">
+              <p className="text-lg text-muted-foreground">
+                {searchTerm ? `Found ${totalProjects} projects for "${searchTerm}"` : `${totalProjects} projects`}
+              </p>
+            </div>
+          )}
 
-        {/* Results Info */}
-        <ProjectResultsInfo 
-          searchTerm={searchTerm}
-          totalProjects={totalProjects}
-          loading={loading}
-        />
+          {/* Error State */}
+          <ProjectErrorState error={error} />
 
-        {/* Error State */}
-        <ProjectErrorState error={error} />
+          {/* Loading State */}
+          <ProjectLoadingState loading={loading} />
 
-        {/* Loading State */}
-        <ProjectLoadingState loading={loading} />
+          {/* Projects Grid */}
+          <ProjectGrid projects={projects} loading={loading} />
 
-        {/* Projects Grid */}
-        <ProjectGrid projects={projects} loading={loading} />
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="mt-16">
+              <ProjectPagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
 
-        {/* Pagination */}
-        <ProjectPagination 
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-
-        {/* Empty State */}
-        {!loading && projects.length === 0 && !error && (
-          <ProjectEmptyState 
-            searchTerm={searchTerm}
-            onClearSearch={handleClearSearch}
-          />
-        )}
-      </div>
+          {/* Empty State */}
+          {!loading && projects.length === 0 && !error && (
+            <ProjectEmptyState 
+              searchTerm={searchTerm}
+              onClearSearch={handleClearSearch}
+            />
+          )}
+        </div>
+      </section>
     </div>
   )
 }

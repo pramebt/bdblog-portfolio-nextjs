@@ -6,8 +6,8 @@ const ProjectPagination = ({
   currentPage, 
   totalPages, 
   onPageChange,
-  prevText = "ก่อนหน้า",
-  nextText = "ถัดไป"
+  prevText = "Previous",
+  nextText = "Next"
 }) => {
   if (totalPages <= 1) return null
 
@@ -17,11 +17,12 @@ const ProjectPagination = ({
   }
 
   return (
-    <div className="flex justify-center items-center gap-2">
+    <div className="flex justify-center items-center gap-3">
       <Button
-        variant="outline"
+        variant="ghost"
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage <= 1}
+        className="rounded-full px-6 py-3 text-base font-medium hover:bg-muted/50 disabled:opacity-30"
       >
         {prevText}
       </Button>
@@ -30,9 +31,16 @@ const ProjectPagination = ({
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <Button
             key={page}
-            variant={currentPage === page ? "default" : "outline"}
+            variant={currentPage === page ? "default" : "ghost"}
             size="sm"
             onClick={() => handlePageChange(page)}
+            className={`
+              rounded-full w-10 h-10 p-0 text-base font-medium
+              ${currentPage === page 
+                ? 'bg-foreground text-background hover:bg-foreground/90' 
+                : 'hover:bg-muted/50'
+              }
+            `}
           >
             {page}
           </Button>
@@ -40,9 +48,10 @@ const ProjectPagination = ({
       </div>
 
       <Button
-        variant="outline"
+        variant="ghost"
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage >= totalPages}
+        className="rounded-full px-6 py-3 text-base font-medium hover:bg-muted/50 disabled:opacity-30"
       >
         {nextText}
       </Button>

@@ -81,49 +81,69 @@ const BlogPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <BlogHeader />
+      {/* Hero Section */}
+      <section className="py-16 md:py-24 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight mb-6 text-foreground">
+            Blog
+          </h1>
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+            Thoughts, tutorials, and insights about web development and technology.
+          </p>
+          
+          {/* Search */}
+          <div className="max-w-md mx-auto">
+            <BlogSearch 
+              searchTerm={searchTerm}
+              onSearchChange={(e) => setSearchTerm(e.target.value)}
+              onSubmit={handleSearch}
+              loading={loading}
+            />
+          </div>
+        </div>
+      </section>
 
-        {/* Search */}
-        <BlogSearch 
-          searchTerm={searchTerm}
-          onSearchChange={(e) => setSearchTerm(e.target.value)}
-          onSubmit={handleSearch}
-          loading={loading}
-        />
+      {/* Content Section */}
+      <section className="pb-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Results Info */}
+          {!loading && totalPosts > 0 && (
+            <div className="text-center mb-12">
+              <p className="text-lg text-muted-foreground">
+                {searchTerm ? `Found ${totalPosts} articles for "${searchTerm}"` : `${totalPosts} articles`}
+              </p>
+            </div>
+          )}
 
-        {/* Results Info */}
-        <BlogResultsInfo 
-          searchTerm={searchTerm}
-          totalPosts={totalPosts}
-          loading={loading}
-        />
+          {/* Error State */}
+          <BlogErrorState error={error} />
 
-        {/* Error State */}
-        <BlogErrorState error={error} />
+          {/* Loading State */}
+          <BlogLoadingState loading={loading} />
 
-        {/* Loading State */}
-        <BlogLoadingState loading={loading} />
+          {/* Posts Grid */}
+          <BlogGrid posts={posts} loading={loading} />
 
-        {/* Posts Grid */}
-        <BlogGrid posts={posts} loading={loading} />
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="mt-16">
+              <BlogPagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
 
-        {/* Pagination */}
-        <BlogPagination 
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-
-        {/* Empty State */}
-        {!loading && posts.length === 0 && !error && (
-          <BlogEmptyState 
-            searchTerm={searchTerm}
-            onClearSearch={handleClearSearch}
-          />
-        )}
-      </div>
+          {/* Empty State */}
+          {!loading && posts.length === 0 && !error && (
+            <BlogEmptyState 
+              searchTerm={searchTerm}
+              onClearSearch={handleClearSearch}
+            />
+          )}
+        </div>
+      </section>
     </div>
   )
 }

@@ -7,9 +7,9 @@ const BlogResultsInfo = ({ searchTerm, totalPosts, loading = false }) => {
     <div className="text-center mb-8">
       <p className="text-muted-foreground">
         {searchTerm ? (
-          <>ผลการค้นหา "{searchTerm}": {totalPosts} บทความ</>
+          <>Search results for "{searchTerm}": {totalPosts} blog posts</>
         ) : (
-          <>ทั้งหมด {totalPosts} บทความ</>
+          <>Total {totalPosts} blog posts</>
         )}
       </p>
     </div>

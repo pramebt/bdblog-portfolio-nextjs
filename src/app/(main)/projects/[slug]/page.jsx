@@ -155,7 +155,7 @@ const ProjectPage = () => {
           <Button variant="ghost" asChild>
             <Link href="/projects">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              กลับไปหน้าโปรเจค
+              Back to projects
             </Link>
           </Button>
         </div>

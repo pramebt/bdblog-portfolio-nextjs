@@ -7,9 +7,9 @@ const ProjectResultsInfo = ({ searchTerm, totalProjects, loading = false }) => {
     <div className="text-center mb-8">
       <p className="text-muted-foreground">
         {searchTerm ? (
-          <>ผลการค้นหา "{searchTerm}": {totalProjects} โปรเจค</>
+          <>Search results for "{searchTerm}": {totalProjects} projects</>
         ) : (
-          <>ทั้งหมด {totalProjects} โปรเจค</>
+          <>Total {totalProjects} projects</>
         )}
       </p>
     </div>

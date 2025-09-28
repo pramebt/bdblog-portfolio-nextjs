@@ -6,26 +6,34 @@ import { FolderOpen } from 'lucide-react'
 const ProjectEmptyState = ({ 
   searchTerm, 
   onClearSearch,
-  noResultsTitle = 'ไม่พบโปรเจคที่ค้นหา',
-  noResultsDescription = 'ลองใช้คำค้นหาอื่นหรือเรียกดูโปรเจคทั้งหมด',
-  emptyTitle = 'ยังไม่มีโปรเจค',
-  emptyDescription = 'กลับมาดูใหม่ในภายหลัง จะมีโปรเจคน่าสนใจมาแบ่งปัน',
-  viewAllText = 'ดูโปรเจคทั้งหมด'
+  noResultsTitle = 'No projects found',
+  noResultsDescription = 'Try another search or view all projects',
+  emptyTitle = 'No projects found',
+  emptyDescription = 'Come back later, there will be interesting projects to share',
+  viewAllText = 'View all projects'
 }) => {
   return (
-    <div className="text-center py-12">
-      <FolderOpen className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-      <h3 className="text-xl font-semibold mb-2">
-        {searchTerm ? noResultsTitle : emptyTitle}
-      </h3>
-      <p className="text-muted-foreground mb-6">
-        {searchTerm ? noResultsDescription : emptyDescription}
-      </p>
-      {searchTerm && onClearSearch && (
-        <Button onClick={onClearSearch}>
-          {viewAllText}
-        </Button>
-      )}
+    <div className="text-center py-20">
+      <div className="max-w-md mx-auto">
+        <div className="w-20 h-20 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
+          <FolderOpen className="h-10 w-10 text-muted-foreground/60" />
+        </div>
+        <h3 className="text-2xl font-semibold mb-4 text-foreground">
+          {searchTerm ? noResultsTitle : emptyTitle}
+        </h3>
+        <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+          {searchTerm ? noResultsDescription : emptyDescription}
+        </p>
+        {searchTerm && onClearSearch && (
+          <Button 
+            onClick={onClearSearch}
+            variant="ghost"
+            className="rounded-full px-8 py-3 text-base font-medium hover:bg-muted/50"
+          >
+            {viewAllText}
+          </Button>
+        )}
+      </div>
     </div>
   )
 }

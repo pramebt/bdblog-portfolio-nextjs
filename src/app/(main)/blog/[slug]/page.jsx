@@ -258,7 +258,7 @@ const BlogPostPage = () => {
           <Button variant="ghost" asChild>
             <Link href="/blog">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              กลับไปหน้าบล็อก
+              Back to blog
             </Link>
           </Button>
         </div>
