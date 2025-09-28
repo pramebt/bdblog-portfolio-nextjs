@@ -28,6 +28,10 @@ import {
   AlertCircle
 } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
+import { 
+  fetchProjects,
+  deleteProject
+} from '@/actions/projects'
 
 const ProjectList = () => {
   const router = useRouter()
@@ -40,32 +44,26 @@ const ProjectList = () => {
   const [totalProjects, setTotalProjects] = useState(0)
 
   // Fetch projects
-  const fetchProjects = async (page = 1, search = '') => {
+  const fetchProjectsData = async (page = 1, search = '') => {
     try {
       setLoading(true)
       setError('')
       
-      const params = new URLSearchParams({
-        page: page.toString(),
-        limit: '12'
-      })
-      
-      if (search) {
-        params.append('search', search)
+      const params = {
+        page,
+        limit: 12,
+        search: search || undefined
       }
       
-      const response = await fetch(`/api/projects?${params}`)
-      const data = await response.json()
+      const result = await fetchProjects(params)
       
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to fetch projects')
-      }
-      
-      if (data.success) {
-        setProjects(data.data.projects)
-        setCurrentPage(data.data.pagination.page)
-        setTotalPages(data.data.pagination.pages)
-        setTotalProjects(data.data.pagination.total)
+      if (result.success) {
+        setProjects(result.projects)
+        setCurrentPage(result.pagination.page)
+        setTotalPages(result.pagination.pages)
+        setTotalProjects(result.pagination.total)
+      } else {
+        throw new Error(result.error || 'Failed to fetch projects')
       }
       
     } catch (err) {
@@ -78,37 +76,40 @@ const ProjectList = () => {
 
   // Initial load
   useEffect(() => {
-    fetchProjects(1, searchTerm)
+    fetchProjectsData(1, searchTerm)
   }, [])
 
   // Handle search
   const handleSearch = (e) => {
     e.preventDefault()
-    fetchProjects(1, searchTerm)
+    fetchProjectsData(1, searchTerm)
   }
 
   // Handle project actions
   const handleProjectAction = async (action, projectId) => {
     try {
-      let response
+      let result
       
       switch (action) {
         case 'delete':
           if (!confirm('Are you sure you want to delete this project?')) {
             return
           }
-          response = await fetch(`/api/projects/${projectId}`, {
-            method: 'DELETE'
-          })
+          result = await deleteProject(projectId)
           break
           
         case 'togglePublish':
+          // For now, just use a simple fetch until we have the proper actions
           const project = projects.find(p => p.id === projectId)
-          response = await fetch(`/api/projects/${projectId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ published: !project.published })
-          })
+          if (project) {
+            const response = await fetch(`/api/projects/${projectId}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ published: !project.published })
+            })
+            const data = await response.json()
+            result = response.ok ? { success: true, data } : { success: false, error: data.error }
+          }
           break
           
         case 'edit':
@@ -119,13 +120,12 @@ const ProjectList = () => {
           return
       }
       
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || 'Action failed')
+      if (!result || !result.success) {
+        throw new Error(result?.error || 'Action failed')
       }
       
       // Refresh the list
-      fetchProjects(currentPage, searchTerm)
+      fetchProjectsData(currentPage, searchTerm)
       
     } catch (err) {
       console.error('Error performing action:', err)
@@ -135,7 +135,7 @@ const ProjectList = () => {
 
   // Handle page change
   const handlePageChange = (page) => {
-    fetchProjects(page, searchTerm)
+    fetchProjectsData(page, searchTerm)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -236,11 +236,24 @@ const ProjectList = () => {
 
       {/* Loading State */}
       {loading && (
-        <div className="flex items-center justify-center py-12">
-          <div className="text-center space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" />
-            <p className="text-muted-foreground">Loading projects...</p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Card key={i} className="overflow-hidden animate-pulse">
+              <div className="aspect-video bg-muted" />
+              <CardContent className="p-4 space-y-3">
+                <div className="h-4 bg-muted rounded w-3/4" />
+                <div className="h-3 bg-muted rounded w-1/2" />
+                <div className="space-y-2">
+                  <div className="h-3 bg-muted rounded w-full" />
+                  <div className="h-3 bg-muted rounded w-2/3" />
+                </div>
+                <div className="flex gap-2 pt-2">
+                  <div className="h-8 bg-muted rounded flex-1" />
+                  <div className="h-8 bg-muted rounded flex-1" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       )}
 
@@ -248,8 +261,13 @@ const ProjectList = () => {
       {!loading && projects.length > 0 && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
-              <Card key={project.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col h-full">
+            {projects.map((project, index) => (
+              <div 
+                key={project.id}
+                className="animate-in fade-in slide-in-from-bottom-4 duration-500"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <Card className="group overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80">
                 {/* Cover Image */}
                 <div className="relative aspect-video overflow-hidden bg-muted">
                   {project.coverImage ? (
@@ -257,9 +275,9 @@ const ProjectList = () => {
                       <img
                         src={project.coverImage}
                         alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-muted">
@@ -402,7 +420,8 @@ const ProjectList = () => {
                     </div>
                   </CardContent>
                 </div>
-              </Card>
+                </Card>
+              </div>
             ))}
           </div>
 
