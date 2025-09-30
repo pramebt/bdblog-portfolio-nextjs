@@ -9,7 +9,7 @@ import BlogPagination from '@/components/main/blog/BlogPagination'
 import BlogEmptyState from '@/components/main/blog/BlogEmptyState'
 import BlogErrorState from '@/components/main/blog/BlogErrorState'
 import BlogLoadingState from '@/components/main/blog/BlogLoadingState'
-
+import { cn } from "@/lib/utils";
 const BlogPage = () => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -80,19 +80,32 @@ const BlogPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="w-full min-h-screen bg-background ">
+      <div
+        className={cn(
+          "fixed inset-0",
+          "[background-size:40px_40px]",
+          "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
+          "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]",
+        )}
+      />
+      {/* Radial gradient for the container to give a faded look */}
+      <div className="fixed pointer-events-none min-h-screen inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"/>
+      
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 px-4">
+        
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight mb-6 text-foreground">
+          <h1 className="relative z-10 text-4xl md:text-6xl font-bold tracking-tight mb-6 text-foreground">
             Blog
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="relative z-10 text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto font-light leading-relaxed">
             Thoughts, tutorials, and insights about web development and technology.
           </p>
           
           {/* Search */}
-          <div className="max-w-md mx-auto">
+          <div className="relative z-10 max-w-md mx-auto">
             <BlogSearch 
               searchTerm={searchTerm}
               onSearchChange={(e) => setSearchTerm(e.target.value)}
@@ -104,7 +117,9 @@ const BlogPage = () => {
       </section>
 
       {/* Content Section */}
+      
       <section className="pb-24 px-4">
+        <div className="relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Results Info */}
           {!loading && totalPosts > 0 && (
@@ -142,9 +157,11 @@ const BlogPage = () => {
               onClearSearch={handleClearSearch}
             />
           )}
-        </div>
+          </div>
+          </div>
       </section>
-    </div>
+ </div>
+
   )
 }
 

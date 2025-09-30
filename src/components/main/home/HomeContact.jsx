@@ -56,26 +56,7 @@ const HomeContact = () => {
           </div>
         </div>
 
-        {/* Admin Access */}
-        <div className="pt-8 border-t border-border/30">
-          <div className="space-y-4 mb-8">
-            <h3 className="text-2xl font-semibold">Admin Access</h3>
-            <p className="text-lg text-muted-foreground">
-              Content management dashboard for site administrators.
-            </p>
-          </div>
-          
-          <Button 
-            asChild
-            variant="outline"
-            size="lg"
-            className="px-8 py-4 text-lg font-medium rounded-full border-2 hover:bg-foreground hover:text-background transition-colors"
-          >
-            <Link href="/auth/signin">
-              Sign in to Admin
-            </Link>
-          </Button>
-        </div>
+        
       </div>
     </section>
   )
