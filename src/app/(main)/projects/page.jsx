@@ -9,7 +9,7 @@ import ProjectPagination from '@/components/main/projects/ProjectPagination'
 import ProjectEmptyState from '@/components/main/projects/ProjectEmptyState'
 import ProjectErrorState from '@/components/main/projects/ProjectErrorState'
 import ProjectLoadingState from '@/components/main/projects/ProjectLoadingState'
-
+import { BackgroundBeams } from '@/components/ui/background-beams'
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
@@ -81,6 +81,7 @@ const ProjectsPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <BackgroundBeams />
       {/* Hero Section */}
       <section className="py-16 md:py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -107,13 +108,7 @@ const ProjectsPage = () => {
       <section className="pb-24 px-4">
         <div className="max-w-6xl mx-auto">
           {/* Results Info */}
-          {!loading && totalProjects > 0 && (
-            <div className="text-center mb-12">
-              <p className="text-lg text-muted-foreground">
-                {searchTerm ? `Found ${totalProjects} projects for "${searchTerm}"` : `${totalProjects} projects`}
-              </p>
-            </div>
-          )}
+          <ProjectResultsInfo searchTerm={searchTerm} totalProjects={totalProjects} loading={loading} />
 
           {/* Error State */}
           <ProjectErrorState error={error} />
