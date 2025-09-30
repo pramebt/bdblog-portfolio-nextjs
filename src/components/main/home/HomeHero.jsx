@@ -5,14 +5,14 @@ import { User, MapPin, Calendar, ArrowRight } from 'lucide-react'
 
 const HomeHero = () => {
   return (
-    <section className="py-24 md:py-32 px-4">
+    <section className="py-24 md:py-32 px-4 ">
       <div className="max-w-4xl mx-auto text-center">
         <div className="w-32 h-32 mx-auto mb-12 rounded-full bg-muted/30 flex items-center justify-center">
           <User className="h-16 w-16 text-muted-foreground/60" />
         </div>
         
         <h1 className="text-5xl md:text-7xl font-semibold tracking-tight mb-8 text-foreground">
-          BD Blog
+          Bandit Kaewnoi
         </h1>
         <p className="text-2xl md:text-3xl text-muted-foreground mb-8 max-w-3xl mx-auto font-light leading-relaxed">
           Passionate developer who loves creating meaningful digital experiences.

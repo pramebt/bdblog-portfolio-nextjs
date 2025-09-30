@@ -5,7 +5,7 @@ import { ModeToggle } from '@/components/main/headers/modetoggle'
 import { cn } from "@/lib/utils";
 const MainLayout = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col ">
       
       <HeaderMain />
       {/* Main Content */}

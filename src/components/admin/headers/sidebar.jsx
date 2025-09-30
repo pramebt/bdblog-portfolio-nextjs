@@ -16,12 +16,18 @@ import SidebarLink from "./sidebar-link";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { signOut } from "next-auth/react";
+import { useAdminStats } from "@/hooks/useAdminStats";
+
+import { ModeToggle } from "@/components/main/headers/modetoggle";
+
 const SidebarAdmin = ({ user }) => {
+  const { stats, loading, error } = useAdminStats()
+
   const handleLogout = () => {
     signOut({ callbackUrl: '/' })
   }
 
-  // Admin navigation items
+  // Admin navigation items with dynamic badges
   const adminNavItems = [
     {
       href: "/admin",
@@ -33,19 +39,13 @@ const SidebarAdmin = ({ user }) => {
       href: "/admin/blog",
       label: "Posts",
       icon: BookOpen,
-      badge: "12",
+      badge: loading ? "..." : error ? "0" : stats.posts.total.toString(),
     },
     {
       href: "/admin/projects",
       label: "Projects",
       icon: FolderOpen,
-      badge: "8",
-    },
-    {
-      href: "/admin/media",
-      label: "Media",
-      icon: Image,
-      badge: "156",
+      badge: loading ? "..." : error ? "0" : stats.projects.total.toString(),
     },
     {
       href: "/admin/analytics",
@@ -57,6 +57,7 @@ const SidebarAdmin = ({ user }) => {
 
   return (
     <aside className="w-64 bg-card border-r border-border h-screen fixed left-0 top-0 pt-16 flex flex-col">
+      
       {/* User Info */}
       <div className="p-4 border-b border-border">
         
@@ -72,6 +73,7 @@ const SidebarAdmin = ({ user }) => {
               {user?.email || "admin@bdblog.com"}
             </p>
           </div>
+          <ModeToggle />
         </div>
       </div>
 
@@ -94,13 +96,14 @@ const SidebarAdmin = ({ user }) => {
         asChild
           variant="ghost"
           size="sm"
-          className="w-full justify-start text-black hover:text-primary hover:bg-primary/10"
+          className="w-full justify-start text-primary hover:text-primary hover:bg-primary/10"
         >
           <Link href="/" className="flex items-center space-x-2">
           <Home className="w-4 h-4 mr-2" />
           Home
           </Link>
         </Button>
+        
       <Separator />
         <Button
           variant="ghost"

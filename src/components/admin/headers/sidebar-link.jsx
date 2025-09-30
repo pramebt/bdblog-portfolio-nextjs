@@ -26,7 +26,7 @@ const SidebarLink = ({ href, label, icon: Icon, badge }) => {
           <span className="text-sm font-medium">{label}</span>
         </div>
         {badge && (
-          <Badge variant="secondary" className="text-xs">
+          <Badge variant="default" className="text-xs bg-primary text-white">
             {badge}
           </Badge>
         )}

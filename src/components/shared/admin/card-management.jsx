@@ -29,17 +29,7 @@ const CardManagement = () => {
       buttonText: "Manage Projects",
       buttonVariant: "default"
     },
-    {
-      title: "Media",
-      description: "Manage your images and media files",
-      icon: Image,
-      badges: [
-        { text: "156 Files", variant: "secondary" },
-        { text: "2.3 GB", variant: "outline" }
-      ],
-      buttonText: "Manage Media",
-      buttonVariant: "default"
-    },
+    
     {
       title: "Analytics",
       description: "View your blog performance metrics",
