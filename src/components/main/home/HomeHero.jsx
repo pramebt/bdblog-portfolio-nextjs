@@ -15,16 +15,16 @@ const HomeHero = () => {
           Bandit Kaewnoi
         </h1>
         <p className="text-2xl md:text-3xl text-muted-foreground mb-8 max-w-3xl mx-auto font-light leading-relaxed">
-          Passionate developer who loves creating meaningful digital experiences.
+          Passionate developer who loves creating websites.
         </p>
         <p className="text-lg text-muted-foreground/80 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-          นักพัฒนาที่หลงใหลในการสร้างประสบการณ์ดิจิทัลที่มีความหมาย
+          นักพัฒนาที่หลงใหลในการสร้างเว็บไซต์
         </p>
 
         <div className="flex flex-wrap gap-4 justify-center items-center mb-12">
           <div className="flex items-center gap-2 text-muted-foreground">
             <MapPin className="h-5 w-5" />
-            <span className="font-light">Bangkok, Thailand</span>
+            <span className="font-light">phayao, Thailand</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <Calendar className="h-5 w-5" />

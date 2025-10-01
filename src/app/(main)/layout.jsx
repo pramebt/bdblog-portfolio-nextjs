@@ -1,9 +1,12 @@
+
 import React from 'react'
 import Footer from '@/components/main/headers/footer'
 import HeaderMain from '@/components/main/headers/header'
 import { ModeToggle } from '@/components/main/headers/modetoggle'
-import { cn } from "@/lib/utils";
+
+
 const MainLayout = ({ children }) => {
+
   return (
     <div className="min-h-screen flex flex-col ">
       

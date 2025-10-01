@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import Link from 'next/link'
-import { Home, BookOpen, FolderOpen, User, Mail, LogOut} from 'lucide-react'
+import { Home, BookOpen, FolderOpen, User, Mail, LogOut, FlaskConical} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
@@ -23,6 +23,11 @@ const Navbar = ({ user }) => {
       href: "/projects",
       title: "Projects",
       icon: (<FolderOpen className="h-full w-full text-neutral-500 dark:text-neutral-300"/>)
+    },
+    {
+      href: "/experiment",
+      title: "Experiment",
+      icon: (<FlaskConical className="h-full w-full text-neutral-500 dark:text-neutral-300"/>)
     },
     {
       href: "/contact",

@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Mail, Github, Linkedin } from 'lucide-react'
-
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 const HomeContact = () => {
   return (
     <section className="py-20 px-4 border-t border-border/50">
@@ -20,16 +20,16 @@ const HomeContact = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-          <Button 
-            asChild 
-            size="lg" 
-            className="px-8 py-4 text-lg font-medium rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
-          >
-            <Link href="/contact">
+        <HoverBorderGradient
+        containerClassName="rounded-full"
+        as="button"
+        className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+      >
+            <Link href="/contact" className="flex items-center space-x-2">
               <Mail className="mr-2 h-5 w-5" />
               Get in Touch
             </Link>
-          </Button>
+          </HoverBorderGradient>
           
           <div className="flex gap-4">
             <Button 

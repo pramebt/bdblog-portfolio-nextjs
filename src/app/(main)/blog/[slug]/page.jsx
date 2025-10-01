@@ -112,6 +112,7 @@ const BlogPostPage = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
+
   // Fetch post by slug
   useEffect(() => {
     const fetchPost = async () => {
