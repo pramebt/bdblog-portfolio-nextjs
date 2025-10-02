@@ -1,6 +1,7 @@
 import React from 'react'
 import { 
   HomeHero, 
+  HomeAbout,
   HomeSkills, 
   HomeExperience, 
   HomePersonal, 
@@ -12,6 +13,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-background">
       <HomeHero />
+      <HomeAbout />
       <HomeSkills />
       <HomeExperience />
       <HomePersonal />

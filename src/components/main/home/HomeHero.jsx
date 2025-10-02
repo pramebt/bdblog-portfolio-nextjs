@@ -1,25 +1,26 @@
+"use client";
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { User, MapPin, Calendar, ArrowRight } from 'lucide-react'
+import { MapPin, Calendar, ArrowRight } from 'lucide-react'
+import { TextGenerateEffect } from '@/components/ui/text-generate-effect'
 
-const HomeHero = () => {
+const words = "Passionate developer who loves creating websites."
+const HomeHero = () => 
+{
+
   return (
-    <section className="py-24 md:py-32 px-4 ">
+    <section className="min-h-screen flex items-center justify-center py-24 md:py-32 px-4 ">
       <div className="max-w-4xl mx-auto text-center">
-        <div className="w-32 h-32 mx-auto mb-12 rounded-full bg-muted/30 flex items-center justify-center">
-          <User className="h-16 w-16 text-muted-foreground/60" />
-        </div>
+        
         
         <h1 className="text-5xl md:text-7xl font-semibold tracking-tight mb-8 text-foreground">
           Bandit Kaewnoi
         </h1>
-        <p className="text-2xl md:text-3xl text-muted-foreground mb-8 max-w-3xl mx-auto font-light leading-relaxed">
-          Passionate developer who loves creating websites.
-        </p>
-        <p className="text-lg text-muted-foreground/80 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-          นักพัฒนาที่หลงใหลในการสร้างเว็บไซต์
-        </p>
+        <div className="text-2xl md:text-3xl text-muted-foreground mb-8 max-w-3xl mx-auto font-light leading-relaxed">
+          <TextGenerateEffect words={words} />
+        </div>
+        
 
         <div className="flex flex-wrap gap-4 justify-center items-center mb-12">
           <div className="flex items-center gap-2 text-muted-foreground">

@@ -2,6 +2,7 @@ import { Inter, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from '@/components/theme-provider'
 import { SessionProvider } from '@/components/session-provider'
+import { Toaster } from '@/components/ui/sonner'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
         >
           <SessionProvider>
             {children}
+            <Toaster />
           </SessionProvider>
         </ThemeProvider>
       </body>
