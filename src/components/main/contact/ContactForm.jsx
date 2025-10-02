@@ -24,7 +24,7 @@ const ContactForm = () => {
             <Input 
               id="firstName" 
               placeholder="John" 
-              className="border-border/50 focus:border-primary bg-background/50"
+              className="border-border/50 focus:border-primary bg-background/50 ring-0 focus:ring-0 focus-visible:ring-0 "
             />
           </div>
           <div className="space-y-2">
@@ -32,7 +32,7 @@ const ContactForm = () => {
             <Input 
               id="lastName" 
               placeholder="Doe" 
-              className="border-border/50 focus:border-primary bg-background/50"
+              className="border-border/50 focus:border-primary bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
             />
           </div>
         </div>
@@ -43,7 +43,7 @@ const ContactForm = () => {
             id="email" 
             type="email" 
             placeholder="john@example.com" 
-            className="border-border/50 focus:border-primary bg-background/50"
+            className="border-border/50 focus:border-primary bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
           />
         </div>
         
@@ -52,7 +52,7 @@ const ContactForm = () => {
           <Input 
             id="subject" 
             placeholder="Project Inquiry" 
-            className="border-border/50 focus:border-primary bg-background/50"
+            className="border-border/50 focus:border-primary bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
           />
         </div>
         
@@ -62,7 +62,7 @@ const ContactForm = () => {
             id="message" 
             placeholder="Tell me about your project or just say hello..."
             rows={6}
-            className="border-border/50 focus:border-primary resize-none bg-background/50"
+            className="border-border/50 focus:border-primary resize-none bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
           />
         </div>
         
