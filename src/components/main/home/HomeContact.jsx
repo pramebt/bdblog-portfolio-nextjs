@@ -5,8 +5,8 @@ import { Mail, Github, Linkedin } from 'lucide-react'
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 const HomeContact = () => {
   return (
-    <section className="py-20 px-4 border-t border-border/50">
-      <div className="max-w-4xl mx-auto text-center">
+    <section className="py-12 px-4 border-t border-border/50">
+      <div className="max-w-6xl mx-auto text-center">
         <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
           <Mail className="h-8 w-8 text-muted-foreground/60" />
         </div>
@@ -15,11 +15,11 @@ const HomeContact = () => {
           Let's Connect
         </h2>
         
-        <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+        <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto font-light leading-relaxed">
           Always excited to collaborate on interesting projects or just have a chat about technology.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-10">
         <HoverBorderGradient
         containerClassName="rounded-full"
         as="button"

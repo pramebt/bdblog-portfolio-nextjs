@@ -11,16 +11,16 @@ const HomeAbout = () => {
   ]
 
   return (
-    <section className="py-20 px-4 border-border/50">
+    <section className="py-12 px-4 border-border/50">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
             <User className="h-8 w-8 text-muted-foreground/60" />
           </div>
           <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
             About Me
           </h2>
-          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
             A passionate developer with a love for creating meaningful digital experiences
           </p>
         </div>
@@ -79,7 +79,7 @@ const HomeAbout = () => {
           </div>
 
           {/* Fun Facts */}
-          <div className="p-6 rounded-2xl bg-muted/20 border border-border/30 max-w-2xl mx-auto">
+          <div className="p-6 rounded-2xl bg-muted/20 border border-border/30 max-w-3xl mx-auto">
             <h4 className="text-lg font-semibold text-foreground mb-4 flex items-center justify-center">
               <Coffee className="h-5 w-5 mr-2 text-primary" />
               Fun Facts

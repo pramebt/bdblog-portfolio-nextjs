@@ -11,7 +11,7 @@ import {
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="w-full min-h-screen bg-background">
       <HomeHero />
       <HomeAbout />
       <HomeSkills />

@@ -26,21 +26,21 @@ const HomeExperience = () => {
   ]
 
   return (
-    <section className="py-20 px-4">
+    <section className="py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
             <Briefcase className="h-8 w-8 text-muted-foreground/60" />
           </div>
           <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
             Experience
           </h2>
-          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
             My professional journey in software development
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="max-w-5xl mx-auto space-y-8">
           {experiences.map((exp, index) => (
             <Card key={index} className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80 transition-all duration-300">
               <CardContent className="p-8">

@@ -3,21 +3,21 @@ import { Heart, Coffee, Zap, GraduationCap } from 'lucide-react'
 
 const HomePersonal = () => {
   return (
-    <section className="py-20 px-4">
+    <section className="py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
             <Heart className="h-8 w-8 text-muted-foreground/60" />
           </div>
           <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
             What I Love
           </h2>
-          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
             Beyond coding, here's what drives my passion
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <div className="text-center">
             <div className="w-12 h-12 mx-auto mb-6 rounded-xl bg-muted/30 flex items-center justify-center">
               <Coffee className="h-6 w-6 text-muted-foreground/60" />
