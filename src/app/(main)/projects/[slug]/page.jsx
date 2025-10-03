@@ -19,7 +19,43 @@ import {
   Image as ImageIcon
 } from 'lucide-react'
 import BlockPreview from '@/components/admin/blog/block-preview'
+import { motion } from "framer-motion"; 
 
+const variants = {
+  initial: {
+    scaleY: 0.5,
+    opacity: 0,
+  },
+  animate: {
+    scaleY: 1,
+    opacity: 1,
+    transition: {
+      repeat: Infinity,
+      repeatType: "mirror",
+      duration: 1,
+      ease: "circIn",
+    },
+  },
+};
+
+const BarLoader = () => {
+  return (
+    <motion.div
+      transition={{
+        staggerChildren: 0.25,
+      }}
+      initial="initial"
+      animate="animate"
+      className="flex gap-1 justify-center"
+    >
+      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
+      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
+      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
+      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
+      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
+    </motion.div>
+  );
+};
 const ProjectPage = () => {
   const params = useParams()
   const slug = params.slug
@@ -58,7 +94,9 @@ const ProjectPage = () => {
         console.error('Error fetching project:', err)
         setError(err.message)
       } finally {
-        setLoading(false)
+        setTimeout(() => {
+          setLoading(false)
+        }, 6000) // รอ 3 วินาที
       }
     }
 
@@ -82,33 +120,29 @@ const ProjectPage = () => {
       try {
         await navigator.share({
           title: project.title,
-          text: 'ดูโปรเจคนี้',
+          text: 'View this project',
           url: window.location.href
         })
       } catch (err) {
         console.log('Error sharing:', err)
         // Fallback to copy URL
         navigator.clipboard.writeText(window.location.href)
-        alert('ลิงก์ถูกคัดลอกแล้ว!')
+        alert('Link copied!')
       }
     } else {
       // Fallback for browsers that don't support Web Share API
       navigator.clipboard.writeText(window.location.href)
-      alert('ลิงก์ถูกคัดลอกแล้ว!')
+      alert('Link copied!')
     }
   }
 
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-center min-h-[400px]">
-            <div className="text-center space-y-4">
-              <Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" />
-              <p className="text-muted-foreground">กำลังโหลดโปรเจค...</p>
-            </div>
-          </div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <BarLoader />
+          <p className="text-muted-foreground">Loading project...</p>
         </div>
       </div>
     )
@@ -126,7 +160,7 @@ const ProjectPage = () => {
             <Button asChild>
               <Link href="/projects">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                กลับไปหน้าโปรเจค
+                Back to projects
               </Link>
             </Button>
           </div>

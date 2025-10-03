@@ -18,7 +18,7 @@ const notoSansThai = Noto_Sans_Thai({
 });
 
 export const metadata = {
-  title: "BD Blog",
+  title: "personal ",
   description: "Personal blog and project showcase",
 };
 
