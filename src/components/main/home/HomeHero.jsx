@@ -4,13 +4,13 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { MapPin, Calendar, ArrowRight } from 'lucide-react'
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect'
-
+import { WavyBackground } from "@/components/ui/wavy-background";
 const words = "Passionate developer who loves creating websites."
 const HomeHero = () => 
 {
 
   return (
-    <section className="min-h-screen flex items-center justify-center py-24 md:py-32 px-4 ">
+    <WavyBackground   className="min-h-screen flex items-center justify-center py-24 md:py-32 px-4 ">
       <div className="max-w-4xl mx-auto text-center">
         
         
@@ -56,7 +56,7 @@ const HomeHero = () =>
           </Button>
         </div>
       </div>
-    </section>
+    </WavyBackground>
   )
 }
 
