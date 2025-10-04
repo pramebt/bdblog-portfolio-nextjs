@@ -181,9 +181,8 @@ const BlogPostPage = () => {
         setError(err.message)
       } finally {
         // เพิ่ม delay เพื่อดู loading animation
-        setTimeout(() => {
           setLoading(false)
-        }, 6000) // รอ 3 วินาที
+
       }
     }
 
@@ -232,12 +231,12 @@ const BlogPostPage = () => {
         console.log('Error sharing:', err)
         // Fallback to copy URL
         navigator.clipboard.writeText(window.location.href)
-        alert('ลิงก์ถูกคัดลอกแล้ว!')
+        alert('Link copied!')
       }
     } else {
       // Fallback for browsers that don't support Web Share API
       navigator.clipboard.writeText(window.location.href)
-      alert('ลิงก์ถูกคัดลอกแล้ว!')
+      alert('Link copied!')
     }
   }
 

@@ -28,7 +28,7 @@ const useResizeObserver = (callback, elements, dependencies) => {
     });
 
     callback();
-
+     
     return () => {
       observers.forEach(observer => observer?.disconnect());
     };
