@@ -13,6 +13,7 @@ export async function GET(request) {
     const limit = parsePositiveInt(searchParams.get('limit'), 10, 1, 50)
     const search = searchParams.get('search') || ''
     const published = parseBool(searchParams.get('published'))
+    const type = searchParams.get('type') // เพิ่มการกรองตามประเภท
     
     const skip = (page - 1) * limit
     
@@ -28,6 +29,10 @@ export async function GET(request) {
     
     if (published !== undefined) {
       where.published = published
+    }
+
+    if (type && type !== 'all') {
+      where.type = type
     }
     
     // Get projects with pagination
@@ -49,6 +54,15 @@ export async function GET(request) {
       }),
       prisma.project.count({ where })
     ])
+
+    // Get counts for each type (for tabs badges)
+    const baseWhere = { ...where }
+    delete baseWhere.type // Remove type filter to get all counts
+    
+    const [personalCount, professionalCount] = await Promise.all([
+      prisma.project.count({ where: { ...baseWhere, type: 'PERSONAL' } }),
+      prisma.project.count({ where: { ...baseWhere, type: 'PROFESSIONAL' } })
+    ])
     
     return NextResponse.json({
       success: true,
@@ -59,6 +73,11 @@ export async function GET(request) {
           limit,
           total,
           pages: Math.ceil(total / limit)
+        },
+        counts: {
+          personal: personalCount,
+          professional: professionalCount,
+          total: personalCount + professionalCount
         }
       }
     })

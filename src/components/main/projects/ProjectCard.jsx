@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Calendar, User, ArrowRight, FolderOpen, Github, ExternalLink, Eye } from 'lucide-react'
+import { Calendar, User, ArrowRight, FolderOpen, Github, ExternalLink, Eye, Briefcase, User as UserIcon } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 import ImageModal from '@/components/shared/ImageModal'
 import { HoverLift } from '@/components/ui/animations'
 
@@ -34,6 +35,22 @@ const ProjectCard = ({ project }) => {
       return content.substring(0, 150) + '...'
     }
   }
+
+  // Get project type info
+  const getProjectTypeInfo = (type) => {
+    if (type === 'PROFESSIONAL') {
+      return {
+        label: 'Professional',
+        icon: <Briefcase className="h-3 w-3" />
+      }
+    }
+    return {
+      label: 'Personal',
+      icon: <UserIcon className="h-3 w-3" />
+    }
+  }
+
+  const projectTypeInfo = getProjectTypeInfo(project.type)
 
   return (
     <Card className="group overflow-hidden h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80 hover:shadow-lg transition-all duration-300">
@@ -78,6 +95,14 @@ const ProjectCard = ({ project }) => {
       {/* Content - เพิ่ม flex-1 เพื่อให้ขยายเต็มพื้นที่ */}
       <div className="flex flex-col flex-1">
         <CardHeader className="pb-3">
+          {/* Project Type Badge */}
+          <div className="mb-2">
+            <Badge variant="secondary" className="w-fit text-xs font-medium">
+              {projectTypeInfo.icon}
+              <span className="ml-1">{projectTypeInfo.label}</span>
+            </Badge>
+          </div>
+          
           <CardTitle className="line-clamp-2 text-lg font-semibold group-hover:text-primary transition-colors duration-200 leading-tight">
             <Link href={`/projects/${project.slug}`} className="hover:underline">
               {project.title}

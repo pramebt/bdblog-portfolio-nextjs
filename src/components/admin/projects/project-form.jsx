@@ -25,8 +25,11 @@ import {
   CheckCircle,
   Github,
   ExternalLink,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Briefcase,
+  User
 } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import CloudinaryUpload from '@/components/admin/media/CloudinaryUpload'
 
 const ProjectForm = ({ 
@@ -59,6 +62,7 @@ const ProjectForm = ({
       images: project?.images || [],
       githubUrl: project?.githubUrl || '',
       liveUrl: project?.liveUrl || '',
+      type: project?.type || 'PERSONAL',
       published: project?.published || false,
     }
   })
@@ -223,6 +227,37 @@ const ProjectForm = ({
                   />
                   {errors.description && (
                     <p className="text-sm text-destructive">{errors.description.message}</p>
+                  )}
+                </div>
+
+                {/* Project Type */}
+                <div className="space-y-2">
+                  <Label htmlFor="type">Project Type *</Label>
+                  <Select
+                    value={watchedValues.type}
+                    onValueChange={(value) => setValue('type', value, { shouldDirty: true })}
+                    disabled={isSubmitting}
+                  >
+                    <SelectTrigger id="type">
+                      <SelectValue placeholder="Select project type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="PERSONAL">
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4" />
+                          <span>Personal Project</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="PROFESSIONAL">
+                        <div className="flex items-center gap-2">
+                          <Briefcase className="h-4 w-4" />
+                          <span>Professional Project</span>
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {errors.type && (
+                    <p className="text-sm text-destructive">{errors.type.message}</p>
                   )}
                 </div>
 
@@ -459,14 +494,34 @@ const ProjectForm = ({
                     </div>
                   )}
                   
-                  {/* Status Preview */}
-                  <div className="flex items-center gap-2 pt-4 border-t">
-                    <span className="text-sm text-muted-foreground">Status:</span>
-                    <span className={`text-sm font-medium ${
-                      watchedValues.published ? 'text-green-600' : 'text-orange-600'
-                    }`}>
-                      {watchedValues.published ? 'Published' : 'Draft'}
-                    </span>
+                  {/* Type & Status Preview */}
+                  <div className="flex items-center gap-4 pt-4 border-t">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">Type:</span>
+                      <span className={`text-sm font-medium flex items-center gap-1 ${
+                        watchedValues.type === 'PROFESSIONAL' ? 'text-blue-600' : 'text-purple-600'
+                      }`}>
+                        {watchedValues.type === 'PROFESSIONAL' ? (
+                          <>
+                            <Briefcase className="h-3 w-3" />
+                            Professional
+                          </>
+                        ) : (
+                          <>
+                            <User className="h-3 w-3" />
+                            Personal
+                          </>
+                        )}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">Status:</span>
+                      <span className={`text-sm font-medium ${
+                        watchedValues.published ? 'text-green-600' : 'text-orange-600'
+                      }`}>
+                        {watchedValues.published ? 'Published' : 'Draft'}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </CardContent>

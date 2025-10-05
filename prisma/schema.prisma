@@ -14,6 +14,11 @@ enum Role {
   ADMIN
 }
 
+enum ProjectType {
+  PERSONAL
+  PROFESSIONAL
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -44,17 +49,18 @@ model Post {
 }
 
 model Project {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   title       String
-  slug        String   @unique
-  description String   @db.Text
+  slug        String      @unique
+  description String      @db.Text
   coverImage  String?
   images      String[] 
   githubUrl   String?
   liveUrl     String?
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  type        ProjectType @default(PERSONAL)
+  published   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   authorId    String
 
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)

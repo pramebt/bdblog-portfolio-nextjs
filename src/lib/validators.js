@@ -19,6 +19,7 @@ export const projectSchema = z.object({
     images: z.array(z.string()).optional(),
     githubUrl: OptionalUrlOrEmpty,
     liveUrl: OptionalUrlOrEmpty,
+    type: z.enum(['PERSONAL', 'PROFESSIONAL']).optional(),
     published: z.boolean().optional(),
 })
 

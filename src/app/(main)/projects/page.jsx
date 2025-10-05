@@ -9,18 +9,21 @@ import ProjectPagination from '@/components/main/projects/ProjectPagination'
 import ProjectEmptyState from '@/components/main/projects/ProjectEmptyState'
 import ProjectErrorState from '@/components/main/projects/ProjectErrorState'
 import ProjectLoadingState from '@/components/main/projects/ProjectLoadingState'
+import ProjectTabs from '@/components/main/projects/ProjectTabs'
 import { BackgroundBeams } from '@/components/ui/background-beams'
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [activeTab, setActiveTab] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [totalProjects, setTotalProjects] = useState(0)
+  const [counts, setCounts] = useState({ personal: 0, professional: 0, total: 0 })
 
   // Fetch projects
-  const fetchProjects = async (page = 1, search = '') => {
+  const fetchProjects = async (page = 1, search = '', type = 'all') => {
     try {
       setLoading(true)
       setError('')
@@ -33,6 +36,10 @@ const ProjectsPage = () => {
       
       if (search) {
         params.append('search', search)
+      }
+
+      if (type && type !== 'all') {
+        params.append('type', type)
       }
       
       const response = await fetch(`/api/projects?${params}`)
@@ -47,6 +54,7 @@ const ProjectsPage = () => {
         setCurrentPage(data.data.pagination.page)
         setTotalPages(data.data.pagination.pages)
         setTotalProjects(data.data.pagination.total)
+        setCounts(data.data.counts || { personal: 0, professional: 0, total: 0 })
       }
       
     } catch (err) {
@@ -59,24 +67,31 @@ const ProjectsPage = () => {
 
   // Initial load
   useEffect(() => {
-    fetchProjects(1, searchTerm)
+    fetchProjects(1, searchTerm, activeTab)
   }, [])
 
   // Handle search
   const handleSearch = (e) => {
     e.preventDefault()
-    fetchProjects(1, searchTerm)
+    fetchProjects(1, searchTerm, activeTab)
+  }
+
+  // Handle tab change
+  const handleTabChange = (tab) => {
+    setActiveTab(tab)
+    setCurrentPage(1)
+    fetchProjects(1, searchTerm, tab)
   }
 
   // Handle pagination
   const handlePageChange = (page) => {
-    fetchProjects(page, searchTerm)
+    fetchProjects(page, searchTerm, activeTab)
   }
 
   // Handle clear search
   const handleClearSearch = () => {
     setSearchTerm('')
-    fetchProjects(1, '')
+    fetchProjects(1, '', activeTab)
   }
 
   return (
@@ -107,36 +122,46 @@ const ProjectsPage = () => {
       {/* Content Section */}
       <section className="pb-24 px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Results Info */}
-          <ProjectResultsInfo searchTerm={searchTerm} totalProjects={totalProjects} loading={loading} />
+          {/* Tabs */}
+          <ProjectTabs 
+            projects={projects}
+            personalCount={counts.personal}
+            professionalCount={counts.professional}
+            totalCount={counts.total}
+            activeTab={activeTab}
+            onTabChange={handleTabChange}
+          >
+            {/* Results Info */}
+            <ProjectResultsInfo searchTerm={searchTerm} totalProjects={totalProjects} loading={loading} />
 
-          {/* Error State */}
-          <ProjectErrorState error={error} />
+            {/* Error State */}
+            <ProjectErrorState error={error} />
 
-          {/* Loading State */}
-          <ProjectLoadingState loading={loading} />
+            {/* Loading State */}
+            <ProjectLoadingState loading={loading} />
 
-          {/* Projects Grid */}
-          <ProjectGrid projects={projects} loading={loading} />
+            {/* Projects Grid */}
+            <ProjectGrid projects={projects} loading={loading} />
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="mt-16">
-              <ProjectPagination 
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-16">
+                <ProjectPagination 
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </div>
+            )}
+
+            {/* Empty State */}
+            {!loading && projects.length === 0 && !error && (
+              <ProjectEmptyState 
+                searchTerm={searchTerm}
+                onClearSearch={handleClearSearch}
               />
-            </div>
-          )}
-
-          {/* Empty State */}
-          {!loading && projects.length === 0 && !error && (
-            <ProjectEmptyState 
-              searchTerm={searchTerm}
-              onClearSearch={handleClearSearch}
-            />
-          )}
+            )}
+          </ProjectTabs>
         </div>
       </section>
     </div>

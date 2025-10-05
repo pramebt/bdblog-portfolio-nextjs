@@ -16,8 +16,11 @@ import {
   AlertCircle,
   Github,
   ExternalLink,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Briefcase,
+  User as UserIcon
 } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 import BlockPreview from '@/components/admin/blog/block-preview'
 import { motion } from "framer-motion"; 
 import { TracingBeam } from "@/components/ui/tracing-beam";
@@ -114,6 +117,20 @@ const ProjectPage = () => {
     })
   }
 
+  // Get project type info
+  const getProjectTypeInfo = (type) => {
+    if (type === 'PROFESSIONAL') {
+      return {
+        label: 'Professional Project',
+        icon: <Briefcase className="h-3 w-3" />
+      }
+    }
+    return {
+      label: 'Personal Project',
+      icon: <UserIcon className="h-3 w-3" />
+    }
+  }
+
   // Share functionality
   const handleShare = async () => {
     if (navigator.share && project) {
@@ -181,6 +198,8 @@ const ProjectPage = () => {
     descriptionBlocks = [{ id: '1', type: 'paragraph', content: project.description }]
   }
 
+  const projectTypeInfo = getProjectTypeInfo(project.type)
+
   return (
     <TracingBeam className='px-5'>
     <div className="min-h-screen bg-background">
@@ -211,6 +230,14 @@ const ProjectPage = () => {
           {/* Header */}
           <header className="mb-8">
             <div className="space-y-4">
+              {/* Project Type Badge */}
+              <div>
+                <Badge variant="secondary" className="w-fit text-sm font-medium">
+                  {projectTypeInfo.icon}
+                  <span className="ml-1.5">{projectTypeInfo.label}</span>
+                </Badge>
+              </div>
+              
               {/* Title */}
               <h1 className="text-4xl md:text-5xl font-bold leading-tight">
                 {project.title}
