@@ -93,9 +93,9 @@ const HomeSkills = () => {
   ];
 
   return (
-    <section className="py-12">
+    <section className="py-8">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
             <Code2 className="h-8 w-8 text-muted-foreground/60" />
           </div>
@@ -108,7 +108,7 @@ const HomeSkills = () => {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {skillCategories.map((category, idx) => (
             <div 
               key={idx}
