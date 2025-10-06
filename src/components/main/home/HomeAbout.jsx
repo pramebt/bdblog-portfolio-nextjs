@@ -13,14 +13,14 @@ const HomeAbout = () => {
   return (
     <section className="py-12 px-4 border-border/50">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-10">
-          <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
+        <div className="text-left mb-8">
+          <div className="w-16 h-16 mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
             <User className="h-8 w-8 text-muted-foreground/60" />
           </div>
           <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
             About Me
           </h2>
-          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-2xl">
             A passionate developer with a love for creating meaningful digital experiences
           </p>
         </div>

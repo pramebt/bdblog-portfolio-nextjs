@@ -77,7 +77,7 @@ const HomeWork = () => {
 
                     <Link 
                       href={work.link} 
-                      className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium group-hover:gap-3 gap-2"
+                      className="inline-flex items-center text-muted-foreground hover:text-primary transition-colors font-medium group-hover:gap-3 gap-2"
                     >
                       {work.linkText}
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

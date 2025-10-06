@@ -1,44 +1,44 @@
 import React from 'react'
 import { Heart, Coffee, Zap, GraduationCap, Target, Lightbulb, Users, BookOpen } from 'lucide-react'
+import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 const HomePersonal = () => {
   const passions = [
     {
-      icon: <Coffee className="h-6 w-6" />,
+      area: "md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]",
+      icon: <Coffee className="h-4 w-4 text-black dark:text-neutral-400" />,
       title: "Problem Solving",
       description: "Finding elegant solutions to complex challenges through creative thinking and systematic approach."
     },
     {
-      icon: <Zap className="h-6 w-6" />,
+      area: "md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]",
+      icon: <Zap className="h-4 w-4 text-black dark:text-neutral-400" />,
       title: "Innovation",
       description: "Exploring new technologies and creative approaches to build better user experiences."
     },
     {
-      icon: <GraduationCap className="h-6 w-6" />,
+      area: "md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]",
+      icon: <GraduationCap className="h-4 w-4 text-black dark:text-neutral-400" />,
       title: "Learning",
       description: "Continuously growing and sharing knowledge with the developer community."
     },
     {
-      icon: <Target className="h-6 w-6" />,
+      area: "md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]",
+      icon: <Target className="h-4 w-4 text-black dark:text-neutral-400" />,
       title: "Quality Focus",
       description: "Writing clean, maintainable code that stands the test of time and scale."
     },
     {
-      icon: <Users className="h-6 w-6" />,
+      area: "md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]",
+      icon: <Users className="h-4 w-4 text-black dark:text-neutral-400" />,
       title: "Collaboration",
       description: "Working with teams to deliver exceptional products and mentor fellow developers."
-    },
-    {
-      icon: <BookOpen className="h-6 w-6" />,
-      title: "Knowledge Sharing",
-      description: "Contributing to open-source projects and writing technical articles."
     }
   ]
 
-
   return (
     <section className="py-6 px-4">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
             <Heart className="h-8 w-8 text-muted-foreground/60" />
@@ -51,29 +51,53 @@ const HomePersonal = () => {
           </p>
         </div>
 
-        {/* Passions Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        {/* Passions Grid with Glowing Effect */}
+        <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
           {passions.map((passion, index) => (
-            <div 
+            <GridItem
               key={index}
-              className="p-6 rounded-2xl bg-muted/20 border border-border/50 hover:border-border transition-all duration-300 hover:shadow-lg group"
-            >
-              <div className="w-12 h-12 mb-4 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
-                {passion.icon}
-              </div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">{passion.title}</h3>
-              <p className="text-muted-foreground font-light leading-relaxed text-sm">
-                {passion.description}
-              </p>
-            </div>
+              area={passion.area}
+              icon={passion.icon}
+              title={passion.title}
+              description={passion.description}
+            />
           ))}
-        </div>
-
-        
-        
-        
+        </ul>
       </div>
     </section>
+  )
+}
+
+const GridItem = ({ area, icon, title, description }) => {
+  return (
+    <li className={`min-h-[14rem] list-none ${area}`}>
+      <div className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3">
+        <GlowingEffect
+          blur={0}
+          borderWidth={3}
+          spread={80}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+        />
+        <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D]">
+          <div className="relative flex flex-1 flex-col justify-between gap-3">
+            <div className="w-fit rounded-lg border border-gray-600 p-2">
+              {icon}
+            </div>
+            <div className="space-y-3">
+              <h3 className="-tracking-4 pt-0.5 font-sans text-xl/[1.375rem] font-semibold text-balance text-black md:text-2xl/[1.875rem] dark:text-white">
+                {title}
+              </h3>
+              <h2 className="font-sans text-sm/[1.125rem] text-black md:text-base/[1.375rem] dark:text-neutral-400 [&_b]:md:font-semibold [&_strong]:md:font-semibold">
+                {description}
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
   )
 }
 
