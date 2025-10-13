@@ -8,7 +8,7 @@ import BlogPagination from "@/components/main/blog/BlogPagination";
 import BlogEmptyState from "@/components/main/blog/BlogEmptyState";
 import BlogErrorState from "@/components/main/blog/BlogErrorState";
 import BlogLoadingState from "@/components/main/blog/BlogLoadingState";
-import { BackgroundBeams } from "@/components/ui/background-beams";
+
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -78,8 +78,10 @@ const BlogPage = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-background ">
-      <BackgroundBeams speed={1}/>
+    <div className=" min-h-screen relative ">
+      <div className="fixed inset-0 -z-10">
+        
+      </div>
       {/* Hero Section */}
       <section className="py-16 md:py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
