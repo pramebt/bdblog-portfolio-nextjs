@@ -135,7 +135,7 @@ const ContactForm = () => {
           <Label htmlFor="subject" className="text-sm font-medium text-foreground">Subject</Label>
           <Input 
             id="subject" 
-            placeholder="Project Inquiry" 
+            placeholder="Hello, I'd like to chat" 
             className="border-border/50 focus:border-primary bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
             name="subject"
             value={formData.subject}
@@ -147,7 +147,7 @@ const ContactForm = () => {
           <Label htmlFor="message" className="text-sm font-medium text-foreground">Message</Label>
           <Textarea 
             id="message" 
-            placeholder="Tell me about your project or just say hello..."
+            placeholder="Tell me what's on your mind or just say hello..."
             rows={6}
             className="border-border/50 focus:border-primary resize-none bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
             name="message"

@@ -12,11 +12,11 @@ const HomeContact = () => {
         </div>
         
         <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
-          Let's Connect
+          Let's Work Together
         </h2>
         
         <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-          Always excited to collaborate on interesting projects or just have a chat about technology.
+          Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-10">
@@ -27,7 +27,7 @@ const HomeContact = () => {
       >
             <Link href="/contact" className="flex items-center space-x-2">
               <Mail className="mr-2 h-5 w-5" />
-              Get in Touch
+              Start a Project
             </Link>
           </HoverBorderGradient>
           

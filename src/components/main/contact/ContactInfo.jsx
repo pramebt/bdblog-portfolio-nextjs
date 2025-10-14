@@ -13,7 +13,7 @@ const ContactInfo = () => {
     {
       icon: Phone,
       title: "Phone",
-      value: "+66 (0) XX XXX XXXX",
+      value: "+66 (0) 99 459 4970",
       badge: "Available Mon-Fri, 9AM-6PM"
     },
     {
