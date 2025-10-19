@@ -16,12 +16,12 @@ const HomePage = () => {
       <HomeHero />
       <HomeAbout />
       {/* Gradient Line Divider */}
-      <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent my-8"></div>
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-black dark:via-white to-transparent my-8"></div>
       <HomeSkills />
       <HomeExperience />
       <HomePersonal />
       {/* Gradient Line Divider */}
-      <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent my-8"></div>
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-black dark:via-white to-transparent my-8"></div>
       <HomeWork />
       <HomeContact />
     </div>
