@@ -268,7 +268,7 @@ const ProjectPage = () => {
                   )}
                   {project.liveUrl && (
                     <Button size="sm" asChild>
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className='text-white'>
                         <ExternalLink className="h-4 w-4 mr-2" />
                         Live Demo
                       </a>
@@ -361,7 +361,7 @@ const ProjectPage = () => {
                 )}
                 {project.liveUrl && (
                   <Button asChild>
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className='text-white'>
                       <ExternalLink className="h-4 w-4 mr-2" />
                       Live Demo
                     </a>

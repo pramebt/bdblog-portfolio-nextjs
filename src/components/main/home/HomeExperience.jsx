@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Timeline } from '@/components/ui/timeline'
 import { 
@@ -58,12 +59,24 @@ const HomeExperience = () => {
       title: 'May 2024 - June 2024',
       icon: <Code2 className="h-5 w-5" />,
       iconColor: 'text-purple-500',
-      iconBg: 'bg-background/95 backdrop-blur-sm',
+      iconBg: 'bg-white',
+      logo: {
+        src: '/images/common/forth-logo.png',
+        alt: 'Forth Smart Service Logo',
+        width: 28,
+        height: 28
+      },
       content: (
         <div className="bg-card/30 backdrop-blur-sm rounded-2xl p-6 border border-border/50 hover:border-border transition-all duration-300">
           <div className="flex items-start gap-4 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-              <Code2 className="h-6 w-6 text-purple-500" />
+            <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center flex-shrink-0 p-2">
+              <Image 
+                src="/images/common/forth-logo.png" 
+                alt="Forth Smart Service Logo"
+                width={40}
+                height={40}
+                className="object-contain"
+              />
             </div>
             <div>
               <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-1">
