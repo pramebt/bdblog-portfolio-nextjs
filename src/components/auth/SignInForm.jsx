@@ -122,7 +122,7 @@ export default function SignInForm() {
           </Button>
         </form>
         
-        <div className="mt-6 text-center text-sm">
+        {/* <div className="mt-6 text-center text-sm">
           <span className="text-muted-foreground">Don't have an account? </span>
           <Link 
             href="/auth/signup" 
@@ -130,7 +130,7 @@ export default function SignInForm() {
           >
             Sign up
           </Link>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   )
