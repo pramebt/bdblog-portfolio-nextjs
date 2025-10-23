@@ -29,8 +29,8 @@ const Footer = () => {
               </Link>
             </Button>
             <p className="text-muted-foreground leading-relaxed max-w-md">
-              A personal blog and project showcase focused on web development, sharing knowledge, 
-              and building amazing digital experiences with modern technologies.
+              Frontend Developer passionate about creating modern web experiences with React, Next.js, 
+              and cutting-edge technologies. Sharing knowledge through projects and blog posts.
             </p>
             
           </div>
@@ -39,22 +39,27 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Explore</h3>
             <div className="flex flex-col space-y-3">
-              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground hover:text-foreground transition-colors">
+              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
                 <Link href="/" className="flex items-center gap-2">
                   <span>Home</span>
                 </Link>
               </Button>
-              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground hover:text-foreground transition-colors">
+              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
                 <Link href="/blog" className="flex items-center gap-2">
                   <span>Blog Posts</span>
                 </Link>
               </Button>
-              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground hover:text-foreground transition-colors">
+              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
                 <Link href="/projects" className="flex items-center gap-2">
                   <span>Projects</span>
                 </Link>
               </Button>
-              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground hover:text-foreground transition-colors">
+              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
+                <Link href="/experiment" className="flex items-center gap-2">
+                  <span>Experiment</span>
+                </Link>
+              </Button>
+              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
                 <Link href="/contact" className="flex items-center gap-2">
                   <span>Contact</span>
                 </Link>
@@ -68,11 +73,11 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Mail className="w-4 h-4" />
-                <span className="text-sm">hello@bdblog.dev</span>
+                <span className="text-sm">bdforwk@gmail.com</span>
               </div>
-              <p className="text-sm text-muted-foreground">Let's build something amazing together</p>
+              <p className="text-sm text-muted-foreground">Available for freelance projects</p>
               <div className="flex space-x-2">
-                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0">
+                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
                   <a 
                     href="https://github.com" 
                     target="_blank" 
@@ -83,7 +88,7 @@ const Footer = () => {
                     <span className="sr-only">GitHub</span>
                   </a>
                 </Button>
-                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0">
+                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
                   <a 
                     href="https://instagram.com" 
                     target="_blank" 
@@ -94,7 +99,7 @@ const Footer = () => {
                     <span className="sr-only">Instagram</span>
                   </a>
                 </Button>
-                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0">
+                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
                   <a 
                     href="https://facebook.com" 
                     target="_blank" 
@@ -105,7 +110,7 @@ const Footer = () => {
                     <span className="sr-only">Facebook</span>
                   </a>
                 </Button>
-                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0">
+                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
                   <a 
                     href="https://linkedin.com" 
                     target="_blank" 
@@ -129,11 +134,11 @@ const Footer = () => {
             </div>
             
             <div className="flex items-center space-x-4 text-sm">
-              <Button variant="ghost" size="sm" asChild className="h-auto p-0 text-muted-foreground hover:text-foreground">
-                <Link href="/privacy">Privacy Policy</Link>
+              <Button variant="ghost" size="sm" asChild className="h-auto p-0 text-muted-foreground hover:text-foreground hover:bg-transparent">
+                <Link href="/resume">Resume</Link>
               </Button>
-              <Button variant="ghost" size="sm" asChild className="h-auto p-0 text-muted-foreground hover:text-foreground">
-                <Link href="/terms">Terms of Service</Link>
+              <Button variant="ghost" size="sm" asChild className="h-auto p-0 text-muted-foreground hover:text-foreground hover:bg-transparent">
+                <Link href="/sitemap">Sitemap</Link>
               </Button>
             </div>
           </div>
