@@ -65,7 +65,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             className="flex justify-start pt-10 md:pt-40 md:gap-10"
           >
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-32 self-start max-w-xs lg:max-w-sm md:w-full">
-              <div className={`h-12 w-12 absolute left-2 md:left-2 w-10 rounded-full ${item.iconBg || 'bg-background/80 backdrop-blur-sm'} flex items-center justify-center border-2 ${item.iconColor?.replace('text-', 'border-') || 'border-border'}`}>
+              <div className={`h-12 w-12 absolute left-2 md:left-2 rounded-full ${item.iconBg || 'bg-background/80 backdrop-blur-sm'} flex items-center justify-center border-2 ${item.iconColor?.replace('text-', 'border-') || 'border-border'}`}>
                 {item.logo ? (
                   <Image 
                     src={item.logo.src}
