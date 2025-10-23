@@ -10,7 +10,7 @@ import Image from "next/image";
 
 interface TimelineEntry {
   title: string;
-  content: React.ReactNode;
+  content: React.ReactNode | ((index: number) => React.ReactNode);
   icon?: React.ReactNode;
   iconColor?: string;
   iconBg?: string;
@@ -64,8 +64,8 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             key={index}
             className="flex justify-start pt-10 md:pt-40 md:gap-10"
           >
-            <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
-              <div className={`h-12 absolute left-2 md:left-2 w-12 rounded-full ${item.iconBg || 'bg-background/80 backdrop-blur-sm'} flex items-center justify-center border-2 ${item.iconColor?.replace('text-', 'border-') || 'border-border'}`}>
+            <div className="sticky flex flex-col md:flex-row z-40 items-center top-32 self-start max-w-xs lg:max-w-sm md:w-full">
+              <div className={`h-12 w-12 absolute left-2 md:left-2 w-10 rounded-full ${item.iconBg || 'bg-background/80 backdrop-blur-sm'} flex items-center justify-center border-2 ${item.iconColor?.replace('text-', 'border-') || 'border-border'}`}>
                 {item.logo ? (
                   <Image 
                     src={item.logo.src}
@@ -82,20 +82,21 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                   <div className="h-4 w-4 rounded-full bg-primary" />
                 )}
               </div>
-              <h3 className="hidden md:block text-xl md:pl-20 md:text-2xl font-bold text-neutral-500 dark:text-neutral-500 ">
+              <h3 className="hidden md:block text-lg md:pl-16 md:text-xl font-bold text-neutral-500 dark:text-neutral-500 ">
                 {item.title}
               </h3>
             </div>
 
-            <div className="relative pl-20 pr-4 md:pl-4 w-full">
+            <div className="relative pl-16 pr-4 md:pl-4 w-full">
               <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-neutral-500 dark:text-neutral-500">
                 {item.title}
               </h3>
-              {item.content}{" "}
+              {typeof item.content === 'function' ? item.content(index) : item.content}
             </div>
           </div>
         ))}
-        <div
+        {/* Timeline line hidden */}
+        {/* <div
           style={{
             height: height + "px",
           }}
@@ -108,7 +109,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             }}
             className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-blue-400 via-blue-500 to-blue-300 from-[0%] via-[50%] rounded-full"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Code2, Monitor, Server, Palette, Wrench } from 'lucide-react'
-import LogoLoop from '@/components/LogoLoop';
+import LogoLoop from '@/components/ui/LogoLoop';
 import { 
   SiReact, 
   SiNextdotjs, 

@@ -6,7 +6,7 @@ import { MapPin, Calendar, ArrowRight } from "lucide-react";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { WavyBackground } from "@/components/ui/wavy-background";
 const words = "Passionate developer who loves creating websites.";
-import DecryptedText from "@/components/DecryptedText";
+import DecryptedText from "@/components/ui/DecryptedText";
 const HomeHero = () => {
   return (
     <WavyBackground className="min-h-screen flex items-center justify-center py-16 md:py-20 px-4 ">

@@ -1,7 +1,7 @@
 import { Inter, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from '@/components/theme-provider'
-import { SessionProvider } from '@/components/session-provider'
+import { SessionProvider } from '@/components/ui/session-provider'
 import { Toaster } from '@/components/ui/sonner'
 
 const inter = Inter({
