@@ -4,9 +4,6 @@ import { MessageCircle } from 'lucide-react'
 const ContactHeader = () => {
   return (
     <div className="text-center mb-20">
-      <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
-        <MessageCircle className="h-8 w-8 text-muted-foreground/60" />
-      </div>
       <h1 className="text-4xl md:text-6xl font-semibold mb-6 text-foreground">
         Get In Touch
       </h1>

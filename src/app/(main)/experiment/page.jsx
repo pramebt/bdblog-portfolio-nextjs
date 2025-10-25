@@ -3,8 +3,6 @@ import { Separator } from '@/components/ui/separator'
 import { 
   ExperienceSection,
   EducationSection,
-  SkillsSection,
-  PersonalInterestsSection
 } from '@/components/main/experiment'
 
 const ExperimentPage = () => {
@@ -28,16 +26,6 @@ const ExperimentPage = () => {
 
         {/* Education Section */}
         <EducationSection />
-
-        <Separator className="my-16" />
-
-        {/* Skills Section */}
-        <SkillsSection />
-
-        <Separator className="my-16" />
-
-        {/* Personal Interests Section */}
-        <PersonalInterestsSection />
       </div>
     </div>
   )
