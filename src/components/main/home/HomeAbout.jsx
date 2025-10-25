@@ -1,22 +1,14 @@
 import React from 'react'
-import { Badge } from '@/components/ui/badge'
-import { User, Code, Heart, Coffee, BookOpen, Lightbulb } from 'lucide-react'
+
+import { User, } from 'lucide-react'
 
 const HomeAbout = () => {
-  const interests = [
-    { icon: Code, label: "Web Development" },
-    { icon: BookOpen, label: "Learning" },
-    { icon: Lightbulb, label: "Innovation" },
-    { icon: Heart, label: "Problem Solving" }
-  ]
 
   return (
     <section className="py-12 px-4 border-border/50">
       <div className="max-w-4xl mx-auto">
         <div className="text-left mb-8">
-          <div className="w-16 h-16 mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
-            <User className="h-8 w-8 text-muted-foreground/60" />
-          </div>
+          
           <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
             About Me
           </h2>
@@ -58,47 +50,8 @@ const HomeAbout = () => {
             </div>
           </div>
 
-          {/* Interests */}
-          <div className="text-center space-y-6">
-            <h3 className="text-2xl font-semibold text-foreground">What I Love</h3>
-            <div className="flex flex-wrap gap-3 justify-center">
-              {interests.map((interest, index) => {
-                const IconComponent = interest.icon
-                return (
-                  <Badge 
-                    key={index}
-                    variant="secondary"
-                    className="px-4 py-2 text-sm font-medium bg-muted/30 text-foreground hover:bg-muted/50 transition-colors"
-                  >
-                    <IconComponent className="h-4 w-4 mr-2" />
-                    {interest.label}
-                  </Badge>
-                )
-              })}
-            </div>
-          </div>
+          
 
-          {/* Fun Facts */}
-          <div className="p-6 rounded-2xl bg-muted/20 border border-border/30 max-w-3xl mx-auto">
-            <h4 className="text-lg font-semibold text-foreground mb-4 flex items-center justify-center">
-              <Coffee className="h-5 w-5 mr-2 text-primary" />
-              Fun Facts
-            </h4>
-            <div className="space-y-3 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-primary rounded-full" />
-                <span>I drink more coffee than water ☕</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-primary rounded-full" />
-                <span>Love solving coding challenges in my free time</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-primary rounded-full" />
-                <span>Always excited to learn new frameworks</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
