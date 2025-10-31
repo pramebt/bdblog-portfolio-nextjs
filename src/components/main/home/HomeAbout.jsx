@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { User, } from 'lucide-react'
+import Image from 'next/image'
 
 const HomeAbout = () => {
 
@@ -37,17 +37,19 @@ const HomeAbout = () => {
               </div>
             </div>
 
-            {/* Image Placeholder */}
-            <div className="relative">
-              <div className="aspect-square rounded-2xl bg-muted/20 border border-border/30 flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <User className="h-16 w-16 text-muted-foreground/40 mx-auto" />
-                  <p className="text-sm text-muted-foreground/60 font-light">
-                    Profile Image
-                  </p>
-                </div>
-              </div>
+          {/* Profile Image */}
+          <div className="relative">
+            <div className="aspect-square rounded-2xl border border-border/30 overflow-hidden relative">
+              <Image
+                src="/images/common/prame.webp"
+                alt="Profile image"
+                fill
+                priority
+                className="object-cover"
+                sizes="(min-width: 1024px) 50vw, 100vw"
+              />
             </div>
+          </div>
           </div>
 
           
