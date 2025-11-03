@@ -19,21 +19,23 @@ const HomeAbout = () => {
 
         <div className="space-y-12">
           {/* Story with Image */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-stretch">
             {/* Text Content */}
-            <div className="space-y-6">
-              <div className="space-y-4 text-muted-foreground font-light leading-relaxed">
-                <p>
-                  Hello! I'm Bandit, a passionate developer from Phayao, Thailand. 
-                  My journey in web development started with curiosity about how websites work, 
-                  and it quickly became my passion.
-                </p>
-                <p>
-                  I specialize in creating modern, responsive web applications using 
-                  cutting-edge technologies. From frontend frameworks like React and Next.js 
-                  to backend solutions with Node.js and databases, I enjoy the full spectrum 
-                  of web development.
-                </p>
+            <div className="flex items-start">
+              <div className="space-y-6 w-full">
+                <div className="space-y-4 text-muted-foreground font-light leading-relaxed">
+                  <p>
+                    Hello! I'm Bandit, a passionate developer from Phayao, Thailand. 
+                    My journey in web development started with curiosity about how websites work, 
+                    and it quickly became my passion.
+                  </p>
+                  <p>
+                    I specialize in creating modern, responsive web applications using 
+                    cutting-edge technologies. From frontend frameworks like React and Next.js 
+                    to backend solutions with Node.js and databases, I enjoy the full spectrum 
+                    of web development.
+                  </p>
+                </div>
               </div>
             </div>
 

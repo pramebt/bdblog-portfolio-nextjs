@@ -1,38 +1,44 @@
 "use client"
 import React from 'react'
-import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Home, BookOpen, FolderOpen, User, Mail, LogOut, FlaskConical} from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+
 
 import { FloatingDock } from "@/components/ui/floating-dock";
 const Navbar = ({ user }) => {
+  const pathname = usePathname()
+  
   // Navigation items array
   const links = [
     {
       href: "/",
       title: "Home",
-      icon: (<Home className="h-full w-full text-neutral-500 dark:text-neutral-300"/>)
+      icon: (<Home className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      isActive: pathname === "/"
     },
     {
       href: "/blog",
       title: "Blog",
-      icon: (<BookOpen className="h-full w-full text-neutral-500 dark:text-neutral-300"/>)
+      icon: (<BookOpen className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      isActive: pathname.startsWith("/blog")
     },
     {
       href: "/projects",
       title: "Projects",
-      icon: (<FolderOpen className="h-full w-full text-neutral-500 dark:text-neutral-300"/>)
+      icon: (<FolderOpen className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      isActive: pathname.startsWith("/projects")
     },
     {
       href: "/experiment",
       title: "Experiment",
-      icon: (<FlaskConical className="h-full w-full text-neutral-500 dark:text-neutral-300"/>)
+      icon: (<FlaskConical className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      isActive: pathname.startsWith("/experiment")
     },
     {
       href: "/contact",
       title: "Contact",
-      icon: (<Mail className="h-full w-full text-neutral-500 dark:text-neutral-300"/>)
+      icon: (<Mail className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      isActive: pathname.startsWith("/contact")
     }
   ]
 
@@ -43,8 +49,6 @@ const Navbar = ({ user }) => {
         mobileClassName="fixed top-4 right-4"
         items={links}
       />
-
-      
     </nav>
   )
 }

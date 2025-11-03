@@ -17,7 +17,7 @@ export const FloatingDock = ({
   desktopClassName,
   mobileClassName,
 }: {
-  items: { title: string; icon: React.ReactNode; href: string }[];
+  items: { title: string; icon: React.ReactNode; href: string; isActive?: boolean }[];
   desktopClassName?: string;
   mobileClassName?: string;
 }) => {
@@ -33,7 +33,7 @@ const FloatingDockMobile = ({
   items,
   className,
 }: {
-  items: { title: string; icon: React.ReactNode; href: string }[];
+  items: { title: string; icon: React.ReactNode; href: string; isActive?: boolean }[];
   className?: string;
 }) => {
   const [open, setOpen] = useState(false);
@@ -83,17 +83,24 @@ const MobileIconContainer = ({
   title,
   icon,
   href,
+  isActive,
 }: {
   title: string;
   icon: React.ReactNode;
   href: string;
+  isActive?: boolean;
 }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
     <a
       href={href}
-      className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white/90 backdrop-blur-md border border-gray-200 dark:bg-black/90 dark:border-gray-800"
+      className={cn(
+        "relative flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-md border transition-colors",
+        isActive
+          ? "bg-foreground/10 border-foreground/30 dark:bg-foreground/20"
+          : "bg-white/90 border-gray-200 dark:bg-black/90 dark:border-gray-800"
+      )}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -118,7 +125,7 @@ const FloatingDockDesktop = ({
   items,
   className,
 }: {
-  items: { title: string; icon: React.ReactNode; href: string }[];
+  items: { title: string; icon: React.ReactNode; href: string; isActive?: boolean }[];
   className?: string;
 }) => {
   let mouseX = useMotionValue(Infinity);
@@ -143,11 +150,13 @@ function IconContainer({
   title,
   icon,
   href,
+  isActive,
 }: {
   mouseX: MotionValue;
   title: string;
   icon: React.ReactNode;
   href: string;
+  isActive?: boolean;
 }) {
   let ref = useRef<HTMLDivElement>(null);
 
@@ -198,7 +207,12 @@ function IconContainer({
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="relative flex aspect-square items-center justify-center rounded-full bg-white/90 backdrop-blur-md border border-gray-200 dark:bg-black/90 dark:border-gray-800"
+        className={cn(
+          "relative flex aspect-square items-center justify-center rounded-full backdrop-blur-md border transition-colors",
+          isActive
+            ? "bg-foreground/10 border-foreground/30 dark:bg-foreground/20"
+            : "bg-white/90 border-gray-200 dark:bg-black/90 dark:border-gray-800"
+        )}
       >
         <AnimatePresence>
           {hovered && (
