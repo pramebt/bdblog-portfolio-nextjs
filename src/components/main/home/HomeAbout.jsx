@@ -1,6 +1,7 @@
 import React from 'react'
-
+import Link from 'next/link'
 import Image from 'next/image'
+import { Download, Github, Linkedin, Mail, Facebook, Instagram } from 'lucide-react'
 
 const HomeAbout = () => {
 
@@ -22,7 +23,7 @@ const HomeAbout = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-stretch">
             {/* Text Content */}
             <div className="flex items-start">
-              <div className="space-y-6 w-full">
+              <div className="space-y-8 w-full">
                 <div className="space-y-4 text-muted-foreground font-light leading-relaxed">
                   <p>
                     Hello! I'm Bandit, a passionate developer from Phayao, Thailand. 
@@ -35,6 +36,64 @@ const HomeAbout = () => {
                     to backend solutions with Node.js and databases, I enjoy the full spectrum 
                     of web development.
                   </p>
+                </div>
+
+                {/* CV Download Button */}
+                <div className='flex justify-center md:justify-start'>
+                  <Link 
+                    href="/cv/resume.pdf" 
+                    target="_blank"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-foreground text-background hover:opacity-90 transition-opacity font-medium"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download CV
+                  </Link>
+                </div>
+
+                {/* Social Links */}
+                <div className="space-y-3 justify-center items-center gap-3">
+                  <p className="flex justify-center md:justify-start text-sm text-muted-foreground font-medium ml-0 md:ml-2">Connect with me</p>
+                  <div className="flex items-center gap-3 flex-wrap justify-center md:justify-start">
+                    <Link 
+                      href="https://github.com/yourusername" 
+                      target="_blank"
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      aria-label="GitHub"
+                    >
+                      <Github className="w-4 h-4 text-foreground" />
+                    </Link>
+                    <Link 
+                      href="https://facebook.com/yourusername" 
+                      target="_blank"
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      aria-label="Facebook"
+                    >
+                      <Facebook className="w-4 h-4 text-foreground" />
+                    </Link>
+                    <Link 
+                      href="https://instagram.com/yourusername" 
+                      target="_blank"
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="w-4 h-4 text-foreground" />
+                    </Link>
+                    <Link 
+                      href="mailto:your.email@gmail.com"
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      aria-label="Gmail"
+                    >
+                      <Mail className="w-4 h-4 text-foreground" />
+                    </Link>
+                    <Link 
+                      href="https://linkedin.com/in/yourusername" 
+                      target="_blank"
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin className="w-4 h-4 text-foreground" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
