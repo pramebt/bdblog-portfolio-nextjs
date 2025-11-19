@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { GithubLogo, InstagramLogo, FacebookLogo, LinkedinLogo, PaperPlaneTilt, Code, Heart, Coffee, ArrowSquareOut } from '@phosphor-icons/react'
+import { GithubLogo, InstagramLogo, FacebookLogo, LinkedinLogo, PaperPlaneTilt, Code, Heart, Coffee, ArrowSquareOut } from '@phosphor-icons/react/dist/ssr'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()

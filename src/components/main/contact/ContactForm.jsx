@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { PaperPlaneRight } from '@phosphor-icons/react'
+import { PaperPlaneRight } from '@phosphor-icons/react/dist/ssr'
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import { toast } from 'sonner'
 const ContactForm = () => {

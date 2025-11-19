@@ -1,6 +1,6 @@
 import React from 'react'
 import { Badge } from '@/components/ui/badge'
-import { PaperPlaneTilt, Phone, MapPin } from '@phosphor-icons/react'
+import { PaperPlaneTilt, Phone, MapPin } from '@phosphor-icons/react/dist/ssr'
 
 const ContactInfo = () => {
   const contactItems = [

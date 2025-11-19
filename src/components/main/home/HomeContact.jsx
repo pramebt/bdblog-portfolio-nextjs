@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { PaperPlaneTilt, GithubLogo, LinkedinLogo } from '@phosphor-icons/react'
+import { PaperPlaneTilt, GithubLogo, LinkedinLogo } from '@phosphor-icons/react/dist/ssr'
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 const HomeContact = () => {
   return (

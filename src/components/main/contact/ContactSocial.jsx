@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { GithubLogo, LinkedinLogo, InstagramLogo, FacebookLogo } from '@phosphor-icons/react'
+import { GithubLogo, LinkedinLogo, InstagramLogo, FacebookLogo } from '@phosphor-icons/react/dist/ssr'
 
 const ContactSocial = () => {
   const socialLinks = [

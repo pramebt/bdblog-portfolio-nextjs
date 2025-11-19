@@ -11,7 +11,7 @@ import {
   MapPin,
   CaretDown,
   CaretUp
-} from '@phosphor-icons/react'
+} from '@phosphor-icons/react/dist/ssr'
 
 const HomeExperience = () => {
   const [expandedItems, setExpandedItems] = useState(new Set())

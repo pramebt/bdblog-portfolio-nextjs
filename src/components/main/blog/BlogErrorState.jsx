@@ -1,7 +1,7 @@
 'use client'
 
 import { Card, CardContent } from '@/components/ui/card'
-import { WarningCircle } from '@phosphor-icons/react'
+import { WarningCircle } from '@phosphor-icons/react/dist/ssr'
 
 const BlogErrorState = ({ error }) => {
   if (!error) return null

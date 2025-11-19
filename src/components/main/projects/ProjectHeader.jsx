@@ -1,6 +1,6 @@
 'use client'
 
-import { FolderOpen } from '@phosphor-icons/react'
+import { FolderOpen } from '@phosphor-icons/react/dist/ssr'
 
 const ProjectHeader = ({ 
   title = "Projects", 

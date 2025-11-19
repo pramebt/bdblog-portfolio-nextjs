@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Badge } from '@/components/ui/badge'
-import { Code, Monitor, Database, Palette, Wrench } from '@phosphor-icons/react'
+import { Code, Monitor, Database, Palette, Wrench } from '@phosphor-icons/react/dist/ssr'
 import LogoLoop from '@/components/ui/LogoLoop';
 import { 
   SiReact, 

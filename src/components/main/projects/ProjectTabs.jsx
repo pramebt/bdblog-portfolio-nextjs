@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
-import { Briefcase, User, GridFour } from '@phosphor-icons/react'
+import { Briefcase, User, GridFour } from '@phosphor-icons/react/dist/ssr'
 
 const ProjectTabs = ({ 
   projects = [],

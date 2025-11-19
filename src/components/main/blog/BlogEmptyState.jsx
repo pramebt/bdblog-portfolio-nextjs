@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { BookOpen } from '@phosphor-icons/react'
+import { BookOpen } from '@phosphor-icons/react/dist/ssr'
 
 const BlogEmptyState = ({ 
   searchTerm, 

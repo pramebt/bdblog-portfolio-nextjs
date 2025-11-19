@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { CloudArrowDown, GithubLogo, LinkedinLogo, PaperPlaneTilt, FacebookLogo, InstagramLogo } from '@phosphor-icons/react'
+import { CloudArrowDown, GithubLogo, LinkedinLogo, PaperPlaneTilt, FacebookLogo, InstagramLogo } from '@phosphor-icons/react/dist/ssr'
 
 const HomeAbout = () => {
 

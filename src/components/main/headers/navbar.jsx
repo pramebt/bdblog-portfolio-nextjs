@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { usePathname } from 'next/navigation'
-import { House, BookOpen, FolderOpen, User, EnvelopeSimple, SignOut, Flask} from '@phosphor-icons/react'
+import { House, BookOpen, FolderOpen, User, EnvelopeSimple, SignOut, Flask} from '@phosphor-icons/react/dist/ssr'
 
 
 import { FloatingDock } from "@/components/ui/floating-dock";

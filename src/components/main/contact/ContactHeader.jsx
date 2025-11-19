@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChatCircle } from '@phosphor-icons/react'
+import { ChatCircle } from '@phosphor-icons/react/dist/ssr'
 
 const ContactHeader = () => {
   return (

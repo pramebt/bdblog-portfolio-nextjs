@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { MapPin, Calendar, ArrowRight } from "@phosphor-icons/react";
+import { MapPin, Calendar, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { WavyBackground } from "@/components/ui/wavy-background";
 const words = "Passionate developer who loves creating websites.";

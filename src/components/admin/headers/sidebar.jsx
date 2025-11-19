@@ -9,7 +9,7 @@ import {
   SignOut,
   User,
   House,
-} from "@phosphor-icons/react";
+} from "@phosphor-icons/react/dist/ssr";
 import SidebarLink from "./sidebar-link";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";

@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { MagnifyingGlass, CircleNotch } from '@phosphor-icons/react'
+import { MagnifyingGlass, CircleNotch } from '@phosphor-icons/react/dist/ssr'
 
 const BlogSearch = ({ 
   searchTerm, 

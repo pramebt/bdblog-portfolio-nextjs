@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { FolderOpen } from '@phosphor-icons/react'
+import { FolderOpen } from '@phosphor-icons/react/dist/ssr'
 
 const ProjectEmptyState = ({ 
   searchTerm, 

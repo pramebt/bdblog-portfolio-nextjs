@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Heart, Coffee, Lightning, GraduationCap, Target, Lightbulb, Users, BookOpen } from '@phosphor-icons/react'
+import { Heart, Coffee, Lightning, GraduationCap, Target, Lightbulb, Users, BookOpen } from '@phosphor-icons/react/dist/ssr'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 const HomePersonal = () => {

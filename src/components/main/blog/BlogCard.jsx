@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Calendar, User, ArrowRight, Eye } from '@phosphor-icons/react'
+import { Calendar, User, ArrowRight, Eye } from '@phosphor-icons/react/dist/ssr'
 import ImageModal from '@/components/shared/ImageModal'
 import { HoverLift, FadeIn } from '@/components/ui/animations'
 
