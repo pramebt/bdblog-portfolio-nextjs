@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
-import { Briefcase, User, Grid3X3 } from 'lucide-react'
+import { Briefcase, User, GridFour } from '@phosphor-icons/react'
 
 const ProjectTabs = ({ 
   projects = [],
@@ -20,7 +20,7 @@ const ProjectTabs = ({
           value="all" 
           className="flex items-center gap-2 text-sm font-medium data-[state=active]:bg-background data-[state=active]:text-foreground"
         >
-          <Grid3X3 className="h-4 w-4" />
+          <GridFour size={16} weight="light" />
           <span>All Projects</span>
           {totalCount > 0 && (
             <Badge variant="secondary" className="h-5 px-2 text-xs bg-background/80">
@@ -33,7 +33,7 @@ const ProjectTabs = ({
           value="PERSONAL" 
           className="flex items-center gap-2 text-sm font-medium data-[state=active]:bg-background data-[state=active]:text-foreground"
         >
-          <User className="h-4 w-4" />
+          <User size={16} weight="light" />
           <span>Personal</span>
           {personalCount > 0 && (
             <Badge variant="secondary" className="h-5 px-2 text-xs bg-background/80">
@@ -46,7 +46,7 @@ const ProjectTabs = ({
           value="PROFESSIONAL" 
           className="flex items-center gap-2 text-sm font-medium data-[state=active]:bg-background data-[state=active]:text-foreground"
         >
-          <Briefcase className="h-4 w-4" />
+          <Briefcase size={16} weight="light" />
           <span>Professional</span>
           {professionalCount > 0 && (
             <Badge variant="secondary" className="h-5 px-2 text-xs bg-background/80">

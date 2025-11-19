@@ -1,11 +1,11 @@
 import React from 'react'
 import { Badge } from '@/components/ui/badge'
-import { Mail, Phone, MapPin } from 'lucide-react'
+import { PaperPlaneTilt, Phone, MapPin } from '@phosphor-icons/react'
 
 const ContactInfo = () => {
   const contactItems = [
     {
-      icon: Mail,
+      icon: PaperPlaneTilt,
       title: "Email",
       value: "bdforwk@gmail.com",
       badge: "I'll respond within 24 hours"
@@ -41,7 +41,7 @@ const ContactInfo = () => {
           return (
             <div key={index} className="flex items-start space-x-4 p-6 rounded-2xl bg-muted/20 border border-border/30">
               <div className="w-12 h-12 rounded-xl bg-muted/30 flex items-center justify-center">
-                <IconComponent className="h-6 w-6 text-muted-foreground/60" />
+                <IconComponent size={28} weight="duotone" className="text-muted-foreground/60" />
               </div>
               <div>
                 <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>

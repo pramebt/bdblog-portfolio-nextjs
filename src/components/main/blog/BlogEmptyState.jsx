@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { BookOpen } from 'lucide-react'
+import { BookOpen } from '@phosphor-icons/react'
 
 const BlogEmptyState = ({ 
   searchTerm, 
@@ -16,7 +16,7 @@ const BlogEmptyState = ({
     <div className="text-center py-20">
       <div className="max-w-md mx-auto">
         <div className="w-20 h-20 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
-          <BookOpen className="h-10 w-10 text-muted-foreground/60" />
+          <BookOpen size={40} weight="light" className="text-muted-foreground/60" />
         </div>
         <h3 className="text-2xl font-semibold mb-4 text-foreground">
           {searchTerm ? noResultsTitle : emptyTitle}

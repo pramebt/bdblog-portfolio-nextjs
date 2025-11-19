@@ -3,15 +3,13 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  LayoutDashboard,
+  SquaresFour,
   BookOpen,
   FolderOpen,
-  Image,
-  BarChart3,
-  LogOut,
+  SignOut,
   User,
-  Home,
-} from "lucide-react";
+  House,
+} from "@phosphor-icons/react";
 import SidebarLink from "./sidebar-link";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
@@ -32,7 +30,7 @@ const SidebarAdmin = ({ user }) => {
     {
       href: "/admin",
       label: "Dashboard",
-      icon: LayoutDashboard,
+      icon: SquaresFour,
       badge: null,
     },
     {
@@ -47,12 +45,6 @@ const SidebarAdmin = ({ user }) => {
       icon: FolderOpen,
       badge: loading ? "..." : error ? "0" : stats.projects.total.toString(),
     },
-    {
-      href: "/admin/analytics",
-      label: "Analytics",
-      icon: BarChart3,
-      badge: null,
-    },
   ];
 
   return (
@@ -63,7 +55,7 @@ const SidebarAdmin = ({ user }) => {
         
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-            <User className="w-4 h-4 text-primary-foreground" />
+            <User size={16} weight="light" className="text-primary-foreground" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-foreground truncate">
@@ -99,7 +91,7 @@ const SidebarAdmin = ({ user }) => {
           className="w-full justify-start text-primary hover:text-primary hover:bg-primary/10"
         >
           <Link href="/" className="flex items-center space-x-2">
-          <Home className="w-4 h-4 mr-2" />
+          <House size={16} weight="light" className="mr-2" />
           Home
           </Link>
         </Button>
@@ -111,7 +103,7 @@ const SidebarAdmin = ({ user }) => {
           className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
           onClick={handleLogout}
         >
-          <LogOut className="w-4 h-4 mr-2" />
+          <SignOut size={16} weight="light" className="mr-2" />
           Logout
         </Button>
       </div>

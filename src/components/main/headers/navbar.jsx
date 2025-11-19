@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { usePathname } from 'next/navigation'
-import { Home, BookOpen, FolderOpen, User, Mail, LogOut, FlaskConical} from 'lucide-react'
+import { House, BookOpen, FolderOpen, User, EnvelopeSimple, SignOut, Flask} from '@phosphor-icons/react'
 
 
 import { FloatingDock } from "@/components/ui/floating-dock";
@@ -13,31 +13,31 @@ const Navbar = ({ user }) => {
     {
       href: "/",
       title: "Home",
-      icon: (<Home className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      icon: (<House weight="light" className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
       isActive: pathname === "/"
     },
     {
       href: "/blog",
       title: "Blog",
-      icon: (<BookOpen className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      icon: (<BookOpen weight="light" className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
       isActive: pathname.startsWith("/blog")
     },
     {
       href: "/projects",
       title: "Projects",
-      icon: (<FolderOpen className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      icon: (<FolderOpen weight="light" className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
       isActive: pathname.startsWith("/projects")
     },
     {
       href: "/experiment",
       title: "Experiment",
-      icon: (<FlaskConical className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      icon: (<Flask weight="light" className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
       isActive: pathname.startsWith("/experiment")
     },
     {
       href: "/contact",
       title: "Contact",
-      icon: (<Mail className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
+      icon: (<EnvelopeSimple weight="light" className="h-full w-full text-neutral-500 dark:text-neutral-300"/>),
       isActive: pathname.startsWith("/contact")
     }
   ]

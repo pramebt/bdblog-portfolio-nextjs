@@ -1,9 +1,11 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Github, Instagram, Facebook, Linkedin, Mail, Code, Heart, Coffee, ExternalLink } from 'lucide-react'
+import { GithubLogo, InstagramLogo, FacebookLogo, LinkedinLogo, PaperPlaneTilt, Code, Heart, Coffee, ArrowSquareOut } from '@phosphor-icons/react'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -72,7 +74,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-foreground">Connect</h3>
             <div className="space-y-4">
               <div className="flex items-center space-x-2 text-muted-foreground">
-                <Mail className="w-4 h-4" />
+                <PaperPlaneTilt size={18} weight="duotone" />
                 <span className="text-sm">bdforwk@gmail.com</span>
               </div>
               <p className="text-sm text-muted-foreground">Available for freelance projects</p>
@@ -84,7 +86,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    <Github className="w-4 h-4" />
+                    <GithubLogo size={20} weight="duotone" />
                     <span className="sr-only">GitHub</span>
                   </a>
                 </Button>
@@ -95,7 +97,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    <Instagram className="w-4 h-4" />
+                    <InstagramLogo size={20} weight="duotone" />
                     <span className="sr-only">Instagram</span>
                   </a>
                 </Button>
@@ -106,7 +108,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    <Facebook className="w-4 h-4" />
+                    <FacebookLogo size={20} weight="duotone" />
                     <span className="sr-only">Facebook</span>
                   </a>
                 </Button>
@@ -117,7 +119,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    <Linkedin className="w-4 h-4" />
+                    <LinkedinLogo size={20} weight="duotone" />
                     <span className="sr-only">LinkedIn</span>
                   </a>
                 </Button>
@@ -146,9 +148,9 @@ const Footer = () => {
           {/* Mobile "Made with" */}
           <div className="flex sm:hidden items-center justify-center space-x-1 text-sm text-muted-foreground mt-4">
             <span>Made with</span>
-            <Heart className="w-4 h-4 text-red-500 fill-current" />
+            <Heart size={16} weight="fill" className="text-red-500" />
             <span>and</span>
-            <Coffee className="w-4 h-4 text-amber-600" />
+            <Coffee size={16} weight="light" className="text-amber-600" />
           </div>
         </div>
       </div>

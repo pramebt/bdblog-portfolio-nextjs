@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Search, Loader2 } from 'lucide-react'
+import { MagnifyingGlass, CircleNotch } from '@phosphor-icons/react'
 
 const ProjectSearch = ({ 
   searchTerm, 
@@ -16,7 +16,7 @@ const ProjectSearch = ({
     <div className="w-full">
       <form onSubmit={onSubmit} className="flex gap-3 items-center">
         <div className="relative flex-1 max-w-sm mx-auto">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground/60" />
+          <MagnifyingGlass size={20} weight="light" className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground/60" />
           <Input
             type="text"
             placeholder={placeholder}
@@ -32,7 +32,7 @@ const ProjectSearch = ({
           size="sm"
           className="rounded-full px-6 py-5 text-base font-medium hover:bg-muted/50"
         >
-          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : buttonText}
+          {loading ? <CircleNotch size={16} weight="bold" className="animate-spin" /> : buttonText}
         </Button>
       </form>
     </div>

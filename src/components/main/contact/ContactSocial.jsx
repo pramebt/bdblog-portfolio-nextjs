@@ -1,29 +1,29 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { Github, Linkedin, Instagram, Facebook } from 'lucide-react'
+import { GithubLogo, LinkedinLogo, InstagramLogo, FacebookLogo } from '@phosphor-icons/react'
 
 const ContactSocial = () => {
   const socialLinks = [
     {
-      icon: Github,
+      icon: GithubLogo,
       label: "GitHub",
       href: "https://github.com",
       iconColor: "text-gray-800 dark:text-gray-200"
     },
     {
-      icon: Linkedin,
+      icon: LinkedinLogo,
       label: "LinkedIn",
       href: "https://linkedin.com",
       iconColor: "text-blue-600 dark:text-blue-400"
     },
     {
-      icon: Instagram,
+      icon: InstagramLogo,
       label: "Instagram",
       href: "https://instagram.com",
       iconColor: "text-pink-600 dark:text-pink-400"
     },
     {
-      icon: Facebook,
+      icon: FacebookLogo,
       label: "Facebook",
       href: "https://facebook.com",
       iconColor: "text-blue-700 dark:text-blue-300"
@@ -50,7 +50,7 @@ const ContactSocial = () => {
               asChild
             >
               <a href={social.href} target="_blank" rel="noopener noreferrer">
-                <IconComponent className={`h-5 w-5 mr-2 ${social.iconColor}`} />
+                <IconComponent size={22} weight="duotone" className={`mr-2 ${social.iconColor}`} />
                 <span className="text-foreground">{social.label}</span>
               </a>
             </Button>

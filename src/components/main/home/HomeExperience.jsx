@@ -5,13 +5,13 @@ import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Timeline } from '@/components/ui/timeline'
 import { 
-  Building2, 
+  Buildings, 
   Rocket, 
-  Code2,
+  Code,
   MapPin,
-  ChevronDown,
-  ChevronUp
-} from 'lucide-react'
+  CaretDown,
+  CaretUp
+} from '@phosphor-icons/react'
 
 const HomeExperience = () => {
   const [expandedItems, setExpandedItems] = useState(new Set())
@@ -62,7 +62,7 @@ const HomeExperience = () => {
                   Freelance
                 </p>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4" />
+                  <MapPin size={16} weight="light" />
                   <span>Remote</span>
                 </div>
               </div>
@@ -71,8 +71,10 @@ const HomeExperience = () => {
               onClick={() => toggleExpanded(index)}
               className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-foreground/5 transition-all duration-500 ease-out"
             >
-              <ChevronDown 
-                className={`h-4 w-4 text-foreground dark:text-white transition-all duration-500 ease-out ${
+              <CaretDown 
+                size={16}
+                weight="bold"
+                className={`text-foreground dark:text-white transition-all duration-500 ease-out ${
                   expandedItems.has(index) ? 'rotate-180' : 'rotate-0'
                 }`} 
               />
@@ -136,7 +138,7 @@ const HomeExperience = () => {
                   Forth Smart Service Public Co., Ltd.
                 </p>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4" />
+                  <MapPin size={16} weight="light" />
                   <span>Bangkok, Thailand</span>
                 </div>
               </div>
@@ -145,8 +147,10 @@ const HomeExperience = () => {
               onClick={() => toggleExpanded(index)}
               className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-foreground/5 transition-all duration-500 ease-out"
             >
-              <ChevronDown 
-                className={`h-4 w-4 text-foreground dark:text-white transition-all duration-500 ease-out ${
+              <CaretDown 
+                size={16}
+                weight="bold"
+                className={`text-foreground dark:text-white transition-all duration-500 ease-out ${
                   expandedItems.has(index) ? 'rotate-180' : 'rotate-0'
                 }`} 
               />

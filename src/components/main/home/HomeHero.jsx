@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { MapPin, Calendar, ArrowRight } from "lucide-react";
+import { MapPin, Calendar, ArrowRight } from "@phosphor-icons/react";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { WavyBackground } from "@/components/ui/wavy-background";
 const words = "Passionate developer who loves creating websites.";
@@ -26,11 +26,11 @@ const HomeHero = () => {
 
         <div className="flex flex-wrap gap-4 justify-center items-center mb-12">
           <div className="flex items-center gap-2 text-muted-foreground">
-            <MapPin className="h-5 w-5" />
+            <MapPin size={20} weight="light" />
             <span className="font-light">phayao, Thailand</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Calendar className="h-5 w-5" />
+            <Calendar size={20} weight="light" />
             <span className="font-light">Available for projects</span>
           </div>
         </div>
@@ -49,9 +49,9 @@ const HomeHero = () => {
             size="lg"
             className="px-8 py-4 text-lg font-medium rounded-full hover:bg-muted/50 transition-colors"
           >
-            <Link href="/projects">
+            <Link href="/projects" className="flex items-center">
               View Projects
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <ArrowRight size={20} weight="light" className="ml-2" />
             </Link>
           </Button>
         </div>

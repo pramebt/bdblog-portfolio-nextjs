@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Calendar, User, ArrowRight, FolderOpen, Github, ExternalLink, Eye, Briefcase, User as UserIcon } from 'lucide-react'
+import { Calendar, User, ArrowRight, FolderOpen, GithubLogo, ArrowSquareOut, Eye, Briefcase, User as UserIcon } from '@phosphor-icons/react'
 import { Badge } from '@/components/ui/badge'
 import ImageModal from '@/components/shared/ImageModal'
 import { HoverLift } from '@/components/ui/animations'
@@ -41,12 +41,12 @@ const ProjectCard = ({ project }) => {
     if (type === 'PROFESSIONAL') {
       return {
         label: 'Professional',
-        icon: <Briefcase className="h-3 w-3" />
+        icon: <Briefcase size={12} weight="light" />
       }
     }
     return {
       label: 'Personal',
-      icon: <UserIcon className="h-3 w-3" />
+      icon: <UserIcon size={12} weight="light" />
     }
   }
 
@@ -80,14 +80,14 @@ const ProjectCard = ({ project }) => {
                     setIsImageModalOpen(true)
                   }}
                 >
-                  <Eye className="h-4 w-4 mr-1" />
+                  <Eye size={16} weight="light" className="mr-1" />
                   ดูรูป
                 </Button>
               </div>
             </>
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-muted group-hover:bg-muted/80 transition-colors">
-              <FolderOpen className="h-12 w-12 text-muted-foreground group-hover:text-foreground transition-colors" />
+              <FolderOpen size={48} weight="light" className="text-muted-foreground group-hover:text-foreground transition-colors" />
             </div>
           )}
         </div>
@@ -112,11 +112,11 @@ const ProjectCard = ({ project }) => {
           {/* Meta Info */}
           <div className="flex items-center gap-4 text-sm text-muted-foreground mt-2">
             <div className="flex items-center gap-1.5 hover:text-foreground transition-colors">
-              <Calendar className="h-3.5 w-3.5" />
+              <Calendar size={14} weight="light" />
               <span className="font-medium">{formatDate(project.createdAt)}</span>
             </div>
             <div className="flex items-center gap-1.5 hover:text-foreground transition-colors">
-              <User className="h-3.5 w-3.5" />
+              <User size={14} weight="light" />
               <span className="font-medium">{project.author?.name || 'Unknown'}</span>
             </div>
           </div>
@@ -141,7 +141,7 @@ const ProjectCard = ({ project }) => {
                     asChild
                   >
                     <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github className="h-3 w-3 mr-1.5" />
+                      <GithubLogo size={12} weight="light" className="mr-1.5" />
                       <span>Code</span>
                     </a>
                   </Button>
@@ -154,7 +154,7 @@ const ProjectCard = ({ project }) => {
                     asChild
                   >
                     <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-3 w-3 mr-1.5" />
+                      <ArrowSquareOut size={12} weight="light" className="mr-1.5" />
                       <span>Demo</span>
                     </a>
                   </Button>
@@ -172,7 +172,7 @@ const ProjectCard = ({ project }) => {
             >
               <Link href={`/projects/${project.slug}`} className="flex items-center justify-between w-full">
                 <span className="font-medium">ดูรายละเอียด</span>
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                <ArrowRight size={16} weight="light" className="group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
             </Button>
           </div>

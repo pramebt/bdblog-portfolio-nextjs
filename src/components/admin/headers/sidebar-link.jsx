@@ -22,7 +22,7 @@ const SidebarLink = ({ href, label, icon: Icon, badge }) => {
     >
       <Link href={href} className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <Icon className="w-4 h-4" />
+          <Icon size={16} weight="light" />
           <span className="text-sm font-medium">{label}</span>
         </div>
         {badge && (

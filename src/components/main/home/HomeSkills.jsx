@@ -1,6 +1,8 @@
+'use client'
+
 import React from 'react'
 import { Badge } from '@/components/ui/badge'
-import { Code2, Monitor, Server, Palette, Wrench } from 'lucide-react'
+import { Code, Monitor, Database, Palette, Wrench } from '@phosphor-icons/react'
 import LogoLoop from '@/components/ui/LogoLoop';
 import { 
   SiReact, 
@@ -27,7 +29,7 @@ const HomeSkills = () => {
   const skillCategories = [
     {
       title: "Frontend",
-      icon: <Monitor className="h-6 w-6" />,
+      icon: <Monitor size={24} weight="light" />,
       color: "text-muted-foreground",
       bgColor: "bg-muted/30",
       skills: [
@@ -40,7 +42,7 @@ const HomeSkills = () => {
     },
     {
       title: "Backend",
-      icon: <Server className="h-6 w-6" />,
+      icon: <Database size={24} weight="light" />,
       color: "text-muted-foreground",
       bgColor: "bg-muted/30",
       skills: [
@@ -55,7 +57,7 @@ const HomeSkills = () => {
     },
     {
       title: "Design",
-      icon: <Palette className="h-6 w-6" />,
+      icon: <Palette size={24} weight="light" />,
       color: "text-muted-foreground",
       bgColor: "bg-muted/30",
       skills: [
@@ -64,7 +66,7 @@ const HomeSkills = () => {
     },
     {
       title: "Tools",
-      icon: <Wrench className="h-6 w-6" />,
+      icon: <Wrench size={24} weight="light" />,
       color: "text-muted-foreground",
       bgColor: "bg-muted/30",
       skills: [
@@ -97,7 +99,7 @@ const HomeSkills = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
-            <Code2 className="h-8 w-8 text-muted-foreground/60" />
+            <Code size={32} weight="light" className="text-muted-foreground/60" />
           </div>
           <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
             Skills & Technologies

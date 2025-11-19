@@ -3,7 +3,7 @@ import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { BookOpen, FolderOpen, Image, Settings, Users, BarChart3, Loader2 } from 'lucide-react'
+import { BookOpen, FolderOpen, CircleNotch } from '@phosphor-icons/react'
 import { useAdminStats } from '@/hooks/useAdminStats'
 import Link from 'next/link'
 
@@ -58,25 +58,6 @@ const CardManagement = () => {
       buttonVariant: "default",
       total: loading ? "..." : error ? "0" : stats.projects.total
     },
-    {
-      title: "Analytics",
-      description: "View your blog performance metrics",
-      icon: BarChart3,
-      href: "/admin/analytics",
-      badges: loading ? [
-        { text: "Loading...", variant: "outline" },
-        { text: "Loading...", variant: "outline" }
-      ] : error ? [
-        { text: "Error", variant: "destructive" },
-        { text: "Error", variant: "destructive" }
-      ] : [
-        { text: `${formatNumber(stats.overview.totalContent)} Total`, variant: "secondary" },
-        { text: `${stats.overview.recentActivity} Recent`, variant: "outline" }
-      ],
-      buttonText: "View Analytics",
-      buttonVariant: "outline",
-      total: loading ? "..." : error ? "0" : stats.overview.totalContent
-    },
   ]
 
   const dashboardCards = getDashboardCards()
@@ -98,8 +79,8 @@ const CardManagement = () => {
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  {loading && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
-                  <IconComponent className="h-5 w-5 text-muted-foreground" />
+                  {loading && <CircleNotch size={16} weight="bold" className="animate-spin text-muted-foreground" />}
+                  <IconComponent size={20} weight="light" className="text-muted-foreground" />
                 </div>
               </div>
               <CardDescription className="text-sm">
@@ -123,7 +104,7 @@ const CardManagement = () => {
                 <Link href={card.href}>
                   {loading ? (
                     <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      <CircleNotch size={16} weight="bold" className="mr-2 animate-spin" />
                       Loading...
                     </>
                   ) : (

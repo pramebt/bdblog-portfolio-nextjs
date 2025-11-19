@@ -1,14 +1,16 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Mail, Github, Linkedin } from 'lucide-react'
+import { PaperPlaneTilt, GithubLogo, LinkedinLogo } from '@phosphor-icons/react'
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 const HomeContact = () => {
   return (
     <section className="py-12 px-4 border-t border-border/50">
       <div className="max-w-6xl mx-auto text-center">
         <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-muted/30 flex items-center justify-center">
-          <Mail className="h-8 w-8 text-muted-foreground/60" />
+          <PaperPlaneTilt size={36} weight="duotone" className="text-muted-foreground/60" />
         </div>
         
         <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
@@ -26,7 +28,7 @@ const HomeContact = () => {
         className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
       >
             <Link href="/contact" className="flex items-center space-x-2">
-              <Mail className="mr-2 h-5 w-5" />
+              <PaperPlaneTilt size={22} weight="duotone" className="mr-2" />
               Start a Project
             </Link>
           </HoverBorderGradient>
@@ -39,7 +41,7 @@ const HomeContact = () => {
               asChild
             >
               <Link href="https://github.com" target="_blank">
-                <Github className="h-5 w-5" />
+                <GithubLogo size={24} weight="duotone" />
               </Link>
             </Button>
             
@@ -50,7 +52,7 @@ const HomeContact = () => {
               asChild
             >
               <Link href="https://linkedin.com" target="_blank">
-                <Linkedin className="h-5 w-5" />
+                <LinkedinLogo size={24} weight="duotone" />
               </Link>
             </Button>
           </div>

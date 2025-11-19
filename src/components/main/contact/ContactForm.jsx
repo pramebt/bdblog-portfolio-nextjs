@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { Send } from 'lucide-react'
+import { PaperPlaneRight } from '@phosphor-icons/react'
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import { toast } from 'sonner'
 const ContactForm = () => {
@@ -163,7 +163,7 @@ const ContactForm = () => {
           className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 w-full justify-center"
           disabled={isPending}
         >
-          <Send className="h-4 w-4" />
+          <PaperPlaneRight size={18} weight="duotone" />
           <span>{isPending ? 'Sending...' : 'Send Message'}</span>
         </HoverBorderGradient>
       </form>

@@ -1,7 +1,9 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Download, Github, Linkedin, Mail, Facebook, Instagram } from 'lucide-react'
+import { CloudArrowDown, GithubLogo, LinkedinLogo, PaperPlaneTilt, FacebookLogo, InstagramLogo } from '@phosphor-icons/react'
 
 const HomeAbout = () => {
 
@@ -45,7 +47,7 @@ const HomeAbout = () => {
                     target="_blank"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-foreground text-background hover:opacity-90 transition-opacity font-medium"
                   >
-                    <Download className="w-4 h-4" />
+                    <CloudArrowDown size={20} weight="duotone" />
                     Download CV
                   </Link>
                 </div>
@@ -57,41 +59,41 @@ const HomeAbout = () => {
                     <Link 
                       href="https://github.com/yourusername" 
                       target="_blank"
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="GitHub"
                     >
-                      <Github className="w-4 h-4 text-foreground" />
+                      <GithubLogo size={22} weight="duotone" className="group-hover:scale-110 transition-transform" />
                     </Link>
                     <Link 
                       href="https://facebook.com/yourusername" 
                       target="_blank"
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="Facebook"
                     >
-                      <Facebook className="w-4 h-4 text-foreground" />
+                      <FacebookLogo size={22} weight="duotone" className="group-hover:scale-110 transition-transform" />
                     </Link>
                     <Link 
                       href="https://instagram.com/yourusername" 
                       target="_blank"
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="Instagram"
                     >
-                      <Instagram className="w-4 h-4 text-foreground" />
+                      <InstagramLogo size={22} weight="duotone" className="group-hover:scale-110 transition-transform" />
                     </Link>
                     <Link 
                       href="mailto:your.email@gmail.com"
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="Gmail"
                     >
-                      <Mail className="w-4 h-4 text-foreground" />
+                      <PaperPlaneTilt size={22} weight="duotone" className="group-hover:scale-110 transition-transform" />
                     </Link>
                     <Link 
                       href="https://linkedin.com/in/yourusername" 
                       target="_blank"
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all"
+                      className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="LinkedIn"
                     >
-                      <Linkedin className="w-4 h-4 text-foreground" />
+                      <LinkedinLogo size={22} weight="duotone" className="group-hover:scale-110 transition-transform" />
                     </Link>
                   </div>
                 </div>

@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Loader2, Upload, X, Image as ImageIcon } from 'lucide-react'
+import { CircleNotch, UploadSimple, X, Image as ImageIcon } from '@phosphor-icons/react'
 
 export default function CloudinaryUpload({ onUpload, type = 'blog', maxFiles = 1 }) {
   const [files, setFiles] = useState([])
@@ -147,7 +147,7 @@ export default function CloudinaryUpload({ onUpload, type = 'blog', maxFiles = 1
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <ImageIcon className="h-5 w-5" />
+          <ImageIcon size={20} weight="light" />
           Upload Images
         </CardTitle>
         <CardDescription>
@@ -215,14 +215,14 @@ export default function CloudinaryUpload({ onUpload, type = 'blog', maxFiles = 1
                       {/* Status */}
                       {fileItem.uploading && (
                         <div className="flex items-center gap-1 text-xs text-blue-600">
-                          <Loader2 className="h-3 w-3 animate-spin" />
+                          <CircleNotch size={12} weight="bold" className="animate-spin" />
                           Uploading...
                         </div>
                       )}
                       
                       {fileItem.uploaded && (
                         <div className="flex items-center gap-1 text-xs text-green-600">
-                          <ImageIcon className="h-3 w-3" />
+                          <ImageIcon size={12} weight="light" />
                           Uploaded
                         </div>
                       )}
@@ -239,7 +239,7 @@ export default function CloudinaryUpload({ onUpload, type = 'blog', maxFiles = 1
                       onClick={() => removeFile(fileItem.id)}
                       disabled={uploading}
                     >
-                      <X className="h-4 w-4" />
+                      <X size={16} weight="bold" />
                     </Button>
                   </div>
                 </div>
