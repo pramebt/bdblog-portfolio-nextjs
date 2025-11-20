@@ -22,7 +22,8 @@ const BlogSearch = ({
             placeholder={placeholder}
             value={searchTerm}
             onChange={onSearchChange}
-            className="pl-12 pr-4 py-3 rounded-full bg-muted/30 border-muted/40 text-base placeholder:text-muted-foreground/60 ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none border-0 focus:border-0 focus-visible:border-0 focus:bg-muted/50 transition-colors"
+            variant="noRing"
+            className="pl-12 pr-4 py-3 rounded-full bg-muted/30 text-base placeholder:text-muted-foreground/60 border-0 focus:bg-muted/50 transition-colors"
           />
         </div>
         <Button 
@@ -30,7 +31,7 @@ const BlogSearch = ({
           disabled={loading}
           variant="ghost"
           size="sm"
-          className="rounded-full px-6 py-5 text-base font-medium hover:bg-muted/50"
+          className="rounded-full px-6 py-5 text-base font-medium hover:bg-muted/50 cursor-pointer"
         >
           {loading ? <CircleNotch size={16} weight="bold" className="animate-spin" /> : buttonText}
         </Button>
