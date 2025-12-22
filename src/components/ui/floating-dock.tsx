@@ -98,8 +98,8 @@ const MobileIconContainer = ({
       className={cn(
         "relative flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-md border transition-colors",
         isActive
-          ? "bg-foreground/10 border-foreground/30 dark:bg-foreground/20"
-          : "bg-white/90 border-gray-200 dark:bg-black/90 dark:border-gray-800"
+          ? "bg-neutral-200/80 border-neutral-300 text-neutral-900 dark:bg-neutral-800/80 dark:border-neutral-600 dark:text-neutral-100"
+          : "bg-neutral-50/80 border-neutral-200 text-neutral-700 dark:bg-neutral-900/70 dark:border-neutral-800 dark:text-neutral-400"
       )}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -210,8 +210,8 @@ function IconContainer({
         className={cn(
           "relative flex aspect-square items-center justify-center rounded-full backdrop-blur-md border transition-colors",
           isActive
-            ? "bg-foreground/10 border-foreground/30 dark:bg-foreground/20"
-            : "bg-white/90 border-gray-200 dark:bg-black/90 dark:border-gray-800"
+            ? "bg-neutral-200/80 border-neutral-300 text-neutral-900 dark:bg-neutral-800/80 dark:border-neutral-600 dark:text-neutral-100"
+            : "bg-neutral-50/80 border-neutral-200 text-neutral-700 dark:bg-neutral-900/70 dark:border-neutral-800 dark:text-neutral-400"
         )}
       >
         <AnimatePresence>
