@@ -18,8 +18,13 @@ const notoSansThai = Noto_Sans_Thai({
 });
 
 export const metadata = {
-  title: "personal ",
+  title: "BD - Folio",
   description: "Personal blog and project showcase",
+  icons: {
+    icon: "/images/common/logo.svg",
+    shortcut: "/images/common/logo.svg",
+    apple: "/images/common/logo.svg",
+  },
 };
 
 export default function RootLayout({ children }) {
