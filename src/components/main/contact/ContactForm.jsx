@@ -51,7 +51,11 @@ const ContactForm = () => {
           }
     
           // Add Web3Forms access key and additional fields
-          formDataObj.append("access_key", "20720aa8-5d0e-4355-b66c-a1b5076e21d8")
+          const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
+          if (process.env.NODE_ENV === 'development' && !process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY) {
+            console.warn('Warning: Using fallback Web3Forms access key. Please set NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY in your .env file.')
+          }
+          formDataObj.append("access_key", accessKey)
           formDataObj.append("from_name", `${firstName} ${lastName}`)
           formDataObj.append("reply_to", email)
     

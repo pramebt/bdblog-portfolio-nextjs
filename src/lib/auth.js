@@ -68,7 +68,7 @@ export const authOptions = {
     signIn: '/auth/signin',
     signUp: '/auth/signup',
   },
-  secret: process.env.NEXTAUTH_SECRET || 'UwPnYqdGmsAnM2jBF3lwJbf5m7PAURt8S0VDOBbbAmg=',
+  secret: process.env.NEXTAUTH_SECRET,
 }
 export default NextAuth(authOptions)
 

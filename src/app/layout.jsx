@@ -21,9 +21,7 @@ export const metadata = {
   title: "BD - Folio",
   description: "Personal blog and project showcase",
   icons: {
-    icon: "/images/common/logo.svg",
-    shortcut: "/images/common/logo.svg",
-    apple: "/images/common/logo.svg",
+    icon: "/favicon.ico",
   },
 };
 
