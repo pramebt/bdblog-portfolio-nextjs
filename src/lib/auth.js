@@ -4,6 +4,12 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 
+// Validate NEXTAUTH_SECRET is set
+if (!process.env.NEXTAUTH_SECRET) {
+  console.warn('⚠️  NEXTAUTH_SECRET is not set. Please set it in your .env file.')
+  console.warn('   You can generate one by running: npm run generate:secret')
+}
+
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -69,6 +75,7 @@ export const authOptions = {
     signUp: '/auth/signup',
   },
   secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development',
 }
 export default NextAuth(authOptions)
 
