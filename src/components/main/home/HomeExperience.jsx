@@ -13,6 +13,7 @@ import {
   Code,
   GraduationCap
 } from '@phosphor-icons/react/dist/ssr'
+import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/ui/scroll-reveal'
 
 const HomeExperience = () => {
   const [expandedExpItems, setExpandedExpItems] = useState(new Set())
@@ -78,17 +79,19 @@ const HomeExperience = () => {
       
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-10 relative z-10">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 mb-8 rounded-2xl bg-muted/30 border border-border/50">
-            <Briefcase size={32} weight="light" className="text-muted-foreground/60" />
+        <ScrollReveal delay={0.3} duration={0.9}>
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center justify-center w-16 h-16 mb-8 rounded-2xl bg-muted/30 border border-border/50">
+              <Briefcase size={32} weight="light" className="text-muted-foreground/60" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
+              Experience & Education
+            </h2>
+            <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
+              My professional journey and educational background
+            </p>
           </div>
-          <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
-            Experience & Education
-          </h2>
-          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
-            My professional journey and educational background
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Two Column Layout - Experience and Education */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
@@ -102,10 +105,10 @@ const HomeExperience = () => {
                 Experience
               </h3>
             </div>
-            <div className="space-y-6">
+            <StaggerContainer className="space-y-6" staggerDelay={0.15}>
               {experienceData.map((exp, index) => (
+            <StaggerItem key={index} duration={0.9}>
             <div
-              key={index}
               className="group relative overflow-hidden rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-border/80 hover:bg-card/70 transition-all duration-200 ease-out flex flex-col"
             >
               {/* Content */}
@@ -204,8 +207,9 @@ const HomeExperience = () => {
                 </div>
               </div>
             </div>
+            </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
 
           {/* Education Section */}
@@ -218,10 +222,10 @@ const HomeExperience = () => {
                 Education
               </h3>
             </div>
-            <div className="space-y-6">
+            <StaggerContainer className="space-y-6" staggerDelay={0.2}>
               {educationData.map((edu, index) => (
+                <StaggerItem key={index} duration={0.9}>
                 <div
-                  key={index}
                   className="group relative overflow-hidden rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-border/80 hover:bg-card/70 transition-all duration-200 ease-out flex flex-col"
                 >
                   {/* Content */}
@@ -269,8 +273,9 @@ const HomeExperience = () => {
                     
                   </div>
                 </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </div>
 

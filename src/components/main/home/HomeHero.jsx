@@ -5,56 +5,66 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Calendar, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { WavyBackground } from "@/components/ui/wavy-background";
-const words = "Passionate developer who loves creating websites.";
 import DecryptedText from "@/components/ui/DecryptedText";
+import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/ui/scroll-reveal';
+const words = "Passionate developer who loves creating websites.";
 const HomeHero = () => {
   return (
     <WavyBackground className="min-h-screen flex items-center justify-center py-16 md:py-20 px-4 ">
       <div className="max-w-6xl mx-auto text-center">
-        <h1 className="text-5xl md:text-7xl font-semibold tracking-tight mb-8 text-foreground">
-          <DecryptedText
-            text="Bandit Kaewnoi"
-            speed={100}
-            maxIterations={20}
-            className="revealed"
-            encryptedClassName="encrypted"
-          />
-        </h1>
-        <div className="text-2xl md:text-3xl text-muted-foreground mb-8 max-w-3xl mx-auto font-light leading-relaxed">
-          <TextGenerateEffect words={words} />
-        </div>
-
-        <div className="flex flex-wrap gap-4 justify-center items-center mb-12">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <MapPin size={20} weight="light" />
-            <span className="font-light">phayao, Thailand</span>
+        <ScrollReveal delay={0.4} yOffset={30} duration={0.9}>
+          <h1 className="text-5xl md:text-7xl font-semibold tracking-tight mb-8 text-foreground">
+            <DecryptedText
+              text="Bandit Kaewnoi"
+              speed={100}
+              maxIterations={20}
+              className="revealed"
+              encryptedClassName="encrypted"
+            />
+          </h1>
+        </ScrollReveal>
+        
+        <ScrollReveal delay={0.6} yOffset={20} duration={0.9}>
+          <div className="text-2xl md:text-3xl text-muted-foreground mb-8 max-w-3xl mx-auto font-light leading-relaxed">
+            <TextGenerateEffect words={words} />
           </div>
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Calendar size={20} weight="light" />
-            <span className="font-light">Available for projects</span>
-          </div>
-        </div>
+        </ScrollReveal>
 
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-          <Button
-            asChild
-            size="lg"
-            className="px-8 py-4 text-lg font-medium rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
-          >
-            <Link href="/blog">Read Blog</Link>
-          </Button>
-          <Button
-            asChild
-            variant="ghost"
-            size="lg"
-            className="px-8 py-4 text-lg font-medium rounded-full hover:bg-muted/50 transition-colors"
-          >
-            <Link href="/projects" className="flex items-center">
-              View Projects
-              <ArrowRight size={20} weight="light" className="ml-2" />
-            </Link>
-          </Button>
-        </div>
+        <ScrollReveal delay={0.8} yOffset={20} duration={0.9}>
+          <div className="flex flex-wrap gap-4 justify-center items-center mb-12">
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <MapPin size={20} weight="light" />
+              <span className="font-light">phayao, Thailand</span>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Calendar size={20} weight="light" />
+              <span className="font-light">Available for projects</span>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={1.0} yOffset={20} duration={0.9}>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Button
+              asChild
+              size="lg"
+              className="px-8 py-4 text-lg font-medium rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
+            >
+              <Link href="/blog">Read Blog</Link>
+            </Button>
+            <Button
+              asChild
+              variant="ghost"
+              size="lg"
+              className="px-8 py-4 text-lg font-medium rounded-full hover:bg-muted/50 transition-colors"
+            >
+              <Link href="/projects" className="flex items-center">
+                View Projects
+                <ArrowRight size={20} weight="light" className="ml-2" />
+              </Link>
+            </Button>
+          </div>
+        </ScrollReveal>
       </div>
     </WavyBackground>
   );

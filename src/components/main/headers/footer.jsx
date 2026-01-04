@@ -134,24 +134,7 @@ const Footer = () => {
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
               <p>© {currentYear} BD Blog. All rights reserved.</p>
             </div>
-            
-            <div className="flex items-center space-x-4 text-sm">
-              <Button variant="ghost" size="sm" asChild className="h-auto p-0 text-muted-foreground hover:text-foreground hover:bg-transparent">
-                <Link href="/resume">Resume</Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild className="h-auto p-0 text-muted-foreground hover:text-foreground hover:bg-transparent">
-                <Link href="/sitemap">Sitemap</Link>
-              </Button>
-            </div>
-          </div>
-          
-          {/* Mobile "Made with" */}
-          <div className="flex sm:hidden items-center justify-center space-x-1 text-sm text-muted-foreground mt-4">
-            <span>Made with</span>
-            <Heart size={16} weight="fill" className="text-red-500" />
-            <span>and</span>
-            <Coffee size={16} weight="light" className="text-amber-600" />
-          </div>
+          </div> 
         </div>
       </div>
     </footer>
