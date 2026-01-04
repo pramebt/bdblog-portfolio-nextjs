@@ -81,7 +81,7 @@ const Footer = () => {
               <div className="flex space-x-2">
                 <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
                   <a 
-                    href="https://github.com" 
+                    href="https://github.com/pramebt" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
@@ -92,7 +92,7 @@ const Footer = () => {
                 </Button>
                 <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
                   <a 
-                    href="https://instagram.com" 
+                    href="https://www.instagram.com/prame.bt/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
@@ -103,7 +103,7 @@ const Footer = () => {
                 </Button>
                 <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
                   <a 
-                    href="https://facebook.com" 
+                    href="https://www.facebook.com/bandit.prame/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
@@ -114,7 +114,7 @@ const Footer = () => {
                 </Button>
                 <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
                   <a 
-                    href="https://linkedin.com" 
+                    href="https://www.linkedin.com/in/bandit-kaewnoi-48b76335b/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"

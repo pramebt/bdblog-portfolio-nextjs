@@ -40,7 +40,7 @@ const HomeContact = () => {
               className="rounded-full px-6 py-4 text-base font-medium hover:bg-muted/50"
               asChild
             >
-              <Link href="https://github.com" target="_blank">
+              <Link href="https://github.com/pramebt" target="_blank">
                 <GithubLogo size={24} weight="duotone" />
               </Link>
             </Button>
@@ -51,7 +51,7 @@ const HomeContact = () => {
               className="rounded-full px-6 py-4 text-base font-medium hover:bg-muted/50"
               asChild
             >
-              <Link href="https://linkedin.com" target="_blank">
+              <Link href="https://www.linkedin.com/in/bandit-kaewnoi-48b76335b/" target="_blank">
                 <LinkedinLogo size={24} weight="duotone" />
               </Link>
             </Button>

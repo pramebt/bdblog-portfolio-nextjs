@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { CircleNotch, UploadSimple, X, Image as ImageIcon } from '@phosphor-icons/react/dist/ssr'
+import { Upload, Loader2 } from 'lucide-react'
 
 export default function CloudinaryUpload({ onUpload, type = 'blog', maxFiles = 1 }) {
   const [files, setFiles] = useState([])
