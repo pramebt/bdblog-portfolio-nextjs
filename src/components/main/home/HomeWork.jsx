@@ -105,7 +105,9 @@ const HomeWork = async () => {
                       src={projects[0].coverImage} 
                       alt={projects[0].title} 
                       fill 
-                      className="object-cover transition-all duration-1000 ease-out grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105" 
+                      priority
+                      quality={90}
+                      className="object-cover transition-all duration-1000 ease-out grayscale-0 group-hover:scale-105" 
                       sizes="(min-width: 1024px) 50vw, 100vw"
                     />
                     {/* Simple gradient overlay */}
@@ -163,7 +165,7 @@ const HomeWork = async () => {
           </Link>
 
           {/* Other Projects - Minimal Cards */}
-          {projects.slice(1, 3).map((project, idx) => (
+          {projects.slice(1, 2).map((project, idx) => (
             <Link 
               key={project.id}
               href={`/projects/${project.slug}`}
@@ -179,7 +181,8 @@ const HomeWork = async () => {
                         src={project.coverImage} 
                         alt={project.title} 
                         fill 
-                        className="object-cover transition-all duration-1000 ease-out grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105" 
+                        quality={90}
+                        className="object-cover transition-all duration-1000 ease-out grayscale-0 group-hover:scale-105" 
                         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       />
                     </>
@@ -206,20 +209,19 @@ const HomeWork = async () => {
             <Link 
               key={post.id}
               href={`/blog/${post.slug}`}
-              className={`group relative rounded-2xl overflow-hidden bg-muted/30 hover:bg-muted/50 transition-all duration-700 ease-out border border-border/50 hover:border-foreground/20 ${
-                idx === 0 ? 'lg:row-span-2' : ''
-              }`}
+              className="group relative rounded-2xl overflow-hidden bg-muted/30 hover:bg-muted/50 transition-all duration-700 ease-out border border-border/50 hover:border-foreground/20 lg:row-span-1"
             >
               <div className="relative h-full flex flex-col">
                 {/* Image */}
-                <div className={`relative ${idx === 0 ? 'aspect-[4/3]' : 'aspect-video'} overflow-hidden`}>
+                <div className="relative aspect-video overflow-hidden">
                   {post.coverImage ? (
                     <>
                       <Image 
                         src={post.coverImage} 
                         alt={post.title} 
                         fill 
-                        className="object-cover transition-all duration-1000 ease-out grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105" 
+                        quality={90}
+                        className="object-cover transition-all duration-1000 ease-out grayscale-0 group-hover:scale-105" 
                         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       />
                     </>
@@ -229,12 +231,7 @@ const HomeWork = async () => {
                 </div>
                 
                 {/* Minimal Content */}
-                <div className="flex-grow p-5 space-y-3">
-                  <h4 className={`font-semibold text-foreground line-clamp-2 group-hover:text-foreground transition-colors duration-500 tracking-tight ${
-                    idx === 0 ? 'text-lg' : 'text-base'
-                  }`}>
-                    {post.title}
-                  </h4>
+                <div className="flex-grow p-5 space-y-2">
                   {Array.isArray(post.tags) && post.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2">
                       {post.tags.slice(0, 2).map((tag) => (
@@ -247,11 +244,9 @@ const HomeWork = async () => {
                       ))}
                     </div>
                   )}
-                  {idx === 0 && post.excerpt && (
-                    <p className="text-sm text-muted-foreground/70 font-light leading-relaxed line-clamp-2">
-                      {post.excerpt}
-                    </p>
-                  )}
+                  <h4 className="text-base font-semibold text-foreground line-clamp-2 group-hover:text-foreground transition-colors duration-500 tracking-tight">
+                    {post.title}
+                  </h4>
                 </div>
               </div>
             </Link>

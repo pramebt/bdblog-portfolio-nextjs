@@ -16,9 +16,11 @@ import {
 
 const HomeExperience = () => {
   const [expandedExpItems, setExpandedExpItems] = useState(new Set())
+  const [expandedEduItems, setExpandedEduItems] = useState(new Set())
 
-  const toggleExpanded = (index) => {
-    setExpandedExpItems(prev => {
+  const toggleExpanded = (index, type) => {
+    const setter = type === 'experience' ? setExpandedExpItems : setExpandedEduItems
+    setter(prev => {
       const newSet = new Set(prev)
       if (newSet.has(index)) {
         newSet.delete(index)
@@ -183,7 +185,7 @@ const HomeExperience = () => {
                 {/* Expand/Collapse Button - Always at bottom */}
                 <div className="mt-auto pt-4">
                   <Button
-                    onClick={() => toggleExpanded(index)}
+                    onClick={() => toggleExpanded(index, 'experience')}
                     variant="ghost"
                     className="w-full flex items-center justify-center gap-2"
                     size="sm"
