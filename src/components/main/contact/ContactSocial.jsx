@@ -7,25 +7,25 @@ const ContactSocial = () => {
     {
       icon: GithubLogo,
       label: "GitHub",
-      href: "https://github.com",
+      href: "https://github.com/pramebt",
       iconColor: "text-gray-800 dark:text-gray-200"
     },
     {
       icon: LinkedinLogo,
       label: "LinkedIn",
-      href: "https://linkedin.com",
+      href: "https://www.linkedin.com/in/bandit-kaewnoi-48b76335b/",
       iconColor: "text-blue-600 dark:text-blue-400"
     },
     {
       icon: InstagramLogo,
       label: "Instagram",
-      href: "https://instagram.com",
+      href: "https://www.instagram.com/prame.bt/",
       iconColor: "text-pink-600 dark:text-pink-400"
     },
     {
       icon: FacebookLogo,
       label: "Facebook",
-      href: "https://facebook.com",
+      href: "https://www.facebook.com/bandit.prame/",
       iconColor: "text-blue-700 dark:text-blue-300"
     }
   ]

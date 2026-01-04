@@ -43,12 +43,12 @@ const HomeAbout = () => {
                 {/* CV Download Button */}
                 <div className='flex justify-center md:justify-start'>
                   <Link 
-                    href="/cv/resume.pdf" 
+                    href="/cv/BD_RESUME.pdf" 
                     target="_blank"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-foreground text-background hover:opacity-90 transition-opacity font-medium"
                   >
                     <CloudArrowDown size={20} weight="duotone" />
-                    Download CV
+                    Resume
                   </Link>
                 </div>
 
@@ -57,7 +57,7 @@ const HomeAbout = () => {
                   <p className="flex justify-center md:justify-start text-sm text-muted-foreground font-medium ml-0 md:ml-2">Connect with me</p>
                   <div className="flex items-center gap-3 flex-wrap justify-center md:justify-start">
                     <Link 
-                      href="https://github.com/yourusername" 
+                      href="https://github.com/pramebt" 
                       target="_blank"
                       className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="GitHub"
@@ -65,7 +65,7 @@ const HomeAbout = () => {
                       <GithubLogo size={22} weight="duotone" className="group-hover:scale-110 transition-transform" />
                     </Link>
                     <Link 
-                      href="https://facebook.com/yourusername" 
+                      href="https://www.facebook.com/bandit.prame/" 
                       target="_blank"
                       className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="Facebook"
@@ -73,7 +73,7 @@ const HomeAbout = () => {
                       <FacebookLogo size={22} weight="duotone" className="group-hover:scale-110 transition-transform" />
                     </Link>
                     <Link 
-                      href="https://instagram.com/yourusername" 
+                      href="https://www.instagram.com/prame.bt/" 
                       target="_blank"
                       className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="Instagram"
@@ -81,14 +81,14 @@ const HomeAbout = () => {
                       <InstagramLogo size={22} weight="duotone" className="group-hover:scale-110 transition-transform" />
                     </Link>
                     <Link 
-                      href="mailto:your.email@gmail.com"
+                      href="mailto:bdforwk@gmail.com"
                       className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="Gmail"
                     >
                       <PaperPlaneTilt size={22} weight="duotone" className="group-hover:scale-110 transition-transform" />
                     </Link>
                     <Link 
-                      href="https://linkedin.com/in/yourusername" 
+                      href="https://www.linkedin.com/in/bandit-kaewnoi-48b76335b/" 
                       target="_blank"
                       className="flex items-center justify-center w-11 h-11 rounded-full bg-muted/30 hover:bg-muted/50 border border-border/50 hover:border-foreground/20 transition-all group"
                       aria-label="LinkedIn"

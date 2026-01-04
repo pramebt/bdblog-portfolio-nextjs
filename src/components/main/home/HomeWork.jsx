@@ -35,7 +35,8 @@ const HomeWork = async () => {
   ])
 
   // Helper function to parse and extract description
-  const getProjectDescription = (description) => {
+  // blockIndex: 0 = first block, 1 = second block, etc.
+  const getProjectDescription = (description, blockIndex = 0) => {
     let descriptionBlocks = []
     try {
       descriptionBlocks = JSON.parse(description)
@@ -43,11 +44,33 @@ const HomeWork = async () => {
       descriptionBlocks = [{ id: '1', type: 'paragraph', content: description }]
     }
     
-    // Get first paragraph content
-    const firstParagraph = descriptionBlocks.find(block => 
-      ['paragraph', 'heading1', 'heading2', 'heading3'].includes(block.type)
+    // Get text-based blocks (skip image blocks)
+    const textBlockTypes = ['paragraph', 'heading1', 'heading2', 'heading3', 'quote', 'list', 'code']
+    const textBlocks = descriptionBlocks.filter(block => 
+      textBlockTypes.includes(block.type)
     )
-    return firstParagraph?.content || description || ''
+    
+    // Get block at specified index
+    const targetBlock = textBlocks[blockIndex]
+    
+    if (targetBlock) {
+      // Handle list block - convert to readable text
+      if (targetBlock.type === 'list') {
+        const lines = targetBlock.content.split('\n').filter(line => line.trim())
+        return lines.slice(0, 2).join(' ') || targetBlock.content
+      }
+      // Handle code block - return as is but limit length
+      if (targetBlock.type === 'code') {
+        return targetBlock.content.length > 150 
+          ? targetBlock.content.substring(0, 150) + '...' 
+          : targetBlock.content
+      }
+      // For other types, return content directly
+      return targetBlock.content || ''
+    }
+    
+    // Fallback: if blockIndex is 0, return original description, otherwise return empty
+    return blockIndex === 0 ? (description || '') : ''
   }
 
 
@@ -108,7 +131,7 @@ const HomeWork = async () => {
                     {projects[0].title}
                   </h3>
                   <p className="text-muted-foreground/80 font-light leading-relaxed line-clamp-2 text-base">
-                    {getProjectDescription(projects[0].description)}
+                    {getProjectDescription(projects[0].description, 2)}
                   </p>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-500">
                     <span className="font-medium">View project</span>
