@@ -213,4 +213,22 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;  /* Chrome, Safari and Opera */
   }
+  
+  .scrollbar-thin {
+    scrollbar-width: thin;  /* Firefox */
+    scrollbar-color: oklch(0.75 0.016 285.938 / 0.4) transparent;  /* Firefox */
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;  /* Chrome, Safari and Opera */
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;  /* Chrome, Safari and Opera */
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: oklch(0.75 0.016 285.938 / 0.4);  /* Chrome, Safari and Opera */
+    border-radius: 3px;  /* Chrome, Safari and Opera */
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: oklch(0.75 0.016 285.938 / 0.6);  /* Chrome, Safari and Opera */
+  }
 }

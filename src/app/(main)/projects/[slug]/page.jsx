@@ -247,32 +247,34 @@ const ProjectPage = () => {
                 <ImageIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                 <h2 className="text-lg sm:text-xl font-bold">Gallery</h2>
               </div>
-              <div className="overflow-x-auto scrollbar-hide -mx-3 sm:-mx-4 px-3 sm:px-4">
-                <div className="flex gap-2 sm:gap-3 pb-2" style={{ width: 'max-content' }}>
-                  {project.images.map((image, index) => {
-                    // Adjust index to account for cover image
-                    const imageIndex = project.coverImage ? index + 1 : index
-                    const allImages = project.coverImage 
-                      ? [project.coverImage, ...project.images]
-                      : project.images
-                    
-                    return (
-                      <div 
-                        key={index} 
-                        className="flex-shrink-0 w-36 h-24 sm:w-48 sm:h-32 overflow-hidden rounded-lg border cursor-pointer hover:scale-105 transition-transform duration-300"
-                        onClick={() => {
-                          setSelectedImageIndex(imageIndex)
-                          setIsModalOpen(true)
-                        }}
-                      >
-                        <img
-                          src={image}
-                          alt={`${project.title} screenshot ${index + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )
-                  })}
+              <div className="relative -mx-3 sm:-mx-4 px-3 sm:px-4">
+                <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent pb-2">
+                  <div className="flex gap-2 sm:gap-3" style={{ width: 'max-content' }}>
+                    {project.images.map((image, index) => {
+                      // Adjust index to account for cover image
+                      const imageIndex = project.coverImage ? index + 1 : index
+                      const allImages = project.coverImage 
+                        ? [project.coverImage, ...project.images]
+                        : project.images
+                      
+                      return (
+                        <div 
+                          key={index} 
+                          className="flex-shrink-0 w-36 h-24 sm:w-48 sm:h-32 overflow-hidden rounded-lg border cursor-pointer hover:scale-105 transition-transform duration-300"
+                          onClick={() => {
+                            setSelectedImageIndex(imageIndex)
+                            setIsModalOpen(true)
+                          }}
+                        >
+                          <img
+                            src={image}
+                            alt={`${project.title} screenshot ${index + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
