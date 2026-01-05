@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { X, ZoomIn, ZoomOut, RotateCw, Download } from 'lucide-react'
+import { X, ZoomIn, ZoomOut, RotateCw, Download, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const ImageModal = ({ 
   src, 
@@ -11,10 +11,19 @@ const ImageModal = ({
   title,
   isOpen, 
   onClose,
-  showControls = true 
+  showControls = true,
+  images = [],
+  currentIndex = 0,
+  onNavigate
 }) => {
   const [scale, setScale] = useState(1)
   const [rotation, setRotation] = useState(0)
+
+  // Reset zoom and rotation when image changes
+  useEffect(() => {
+    setScale(1)
+    setRotation(0)
+  }, [src])
 
   const handleZoomIn = () => {
     setScale(prev => Math.min(prev * 1.2, 3))
@@ -40,9 +49,44 @@ const ImageModal = ({
     setRotation(0)
   }
 
+  const handlePrevious = (e) => {
+    e.stopPropagation()
+    if (onNavigate && images.length > 0) {
+      const prevIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1
+      onNavigate(prevIndex)
+    }
+  }
+
+  const handleNext = (e) => {
+    e.stopPropagation()
+    if (onNavigate && images.length > 0) {
+      const nextIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0
+      onNavigate(nextIndex)
+    }
+  }
+
+  const handleKeyDown = (e) => {
+    if (!isOpen) return
+    
+    if (e.key === 'ArrowLeft') {
+      handlePrevious(e)
+    } else if (e.key === 'ArrowRight') {
+      handleNext(e)
+    } else if (e.key === 'Escape') {
+      onClose()
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown)
+      return () => window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen, currentIndex, images.length])
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="image-modal-dialog max-w-[95vw] max-h-[95vh] p-0 bg-black/95 border-none" showCloseButton={false}>
+      <DialogContent className="image-modal-dialog !max-w-[100vw] !w-screen max-h-[98vh] h-full p-0 bg-black/95 border-none m-0" showCloseButton={false}>
         {/* Accessible Title (hidden but required for screen readers) */}
         <DialogTitle className="sr-only">
           {'Image viewer'}
@@ -66,16 +110,49 @@ const ImageModal = ({
         )}
 
         {/* Image Container */}
-        <div className="flex items-center justify-center min-h-[50vh] max-h-[80vh] overflow-hidden relative">
+        <div className="flex items-center justify-center min-h-[85vh] max-h-[90vh] overflow-hidden relative">
+          {/* Navigation Arrows */}
+          {images.length > 1 && onNavigate && (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute left-4 z-10 text-white hover:bg-white/20 h-12 w-12"
+                onClick={handlePrevious}
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-4 z-10 text-white hover:bg-white/20 h-12 w-12"
+                onClick={handleNext}
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
+            </>
+          )}
+
           <img
             src={src}
             alt={alt}
-            className="max-w-full max-h-full object-contain transition-all duration-300 ease-out"
+            className="max-w-[98vw] max-h-[90vh] w-auto h-auto object-contain transition-all duration-300 ease-out"
             style={{
               transform: `scale(${scale}) rotate(${rotation}deg)`,
             }}
             onDoubleClick={handleReset}
           />
+
+          {/* Image Counter */}
+          {images.length > 1 && (
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 bg-black/60 backdrop-blur-sm rounded-full px-4 py-2">
+              <span className="text-white text-sm">
+                {currentIndex + 1} / {images.length}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Controls */}

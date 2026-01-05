@@ -24,6 +24,7 @@ import { Badge } from '@/components/ui/badge'
 import BlockPreview from '@/components/admin/blog/block-preview'
 import { motion } from "framer-motion"; 
 import { TracingBeam } from "@/components/ui/tracing-beam";
+import ImageModal from '@/components/shared/ImageModal'
 const variants = {
   initial: {
     scaleY: 0.5,
@@ -65,6 +66,8 @@ const ProjectPage = () => {
   const [project, setProject] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   // Fetch project by slug
   useEffect(() => {
@@ -222,8 +225,55 @@ const ProjectPage = () => {
               <img
                 src={project.coverImage}
                 alt={project.title}
-                className="w-full h-[400px] object-cover rounded-lg shadow-lg"
+                className="w-full h-[400px] object-cover rounded-lg shadow-lg cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={() => {
+                  // Include cover image in gallery if images exist
+                  const allImages = project.images && project.images.length > 0 
+                    ? [project.coverImage, ...project.images]
+                    : [project.coverImage]
+                  const coverIndex = 0
+                  setSelectedImageIndex(coverIndex)
+                  setIsModalOpen(true)
+                }}
               />
+            </div>
+          )}
+
+          {/* Project Gallery */}
+          {project.images && project.images.length > 0 && (
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <ImageIcon className="h-5 w-5" />
+                <h2 className="text-xl font-bold">Gallery</h2>
+              </div>
+              <div className="overflow-x-auto scrollbar-hide -mx-4 px-4">
+                <div className="flex gap-3 pb-2" style={{ width: 'max-content' }}>
+                  {project.images.map((image, index) => {
+                    // Adjust index to account for cover image
+                    const imageIndex = project.coverImage ? index + 1 : index
+                    const allImages = project.coverImage 
+                      ? [project.coverImage, ...project.images]
+                      : project.images
+                    
+                    return (
+                      <div 
+                        key={index} 
+                        className="flex-shrink-0 w-48 h-32 overflow-hidden rounded-lg border cursor-pointer hover:scale-105 transition-transform duration-300"
+                        onClick={() => {
+                          setSelectedImageIndex(imageIndex)
+                          setIsModalOpen(true)
+                        }}
+                      >
+                        <img
+                          src={image}
+                          alt={`${project.title} screenshot ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           )}
 
@@ -292,26 +342,28 @@ const ProjectPage = () => {
             </div>
           </div>
 
-          {/* Project Gallery */}
-          {project.images && project.images.length > 0 && (
-            <div className="mb-12">
-              <div className="flex items-center gap-2 mb-6">
-                <ImageIcon className="h-5 w-5" />
-                <h2 className="text-2xl font-bold">Gallery</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {project.images.map((image, index) => (
-                  <div key={index} className="aspect-video overflow-hidden rounded-lg border">
-                    <img
-                      src={image}
-                      alt={`${project.title} screenshot ${index + 1}`}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
-                      onClick={() => window.open(image, '_blank')}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Image Modal */}
+          {isModalOpen && selectedImageIndex !== null && project && (
+            <ImageModal
+              src={
+                project.coverImage && selectedImageIndex === 0
+                  ? project.coverImage
+                  : project.images && project.images[project.coverImage ? selectedImageIndex - 1 : selectedImageIndex]
+              }
+              alt={`${project.title} - Image ${selectedImageIndex + 1}`}
+              isOpen={isModalOpen}
+              onClose={() => {
+                setIsModalOpen(false)
+                setSelectedImageIndex(null)
+              }}
+              images={
+                project.coverImage
+                  ? [project.coverImage, ...(project.images || [])]
+                  : project.images || []
+              }
+              currentIndex={selectedImageIndex}
+              onNavigate={(newIndex) => setSelectedImageIndex(newIndex)}
+            />
           )}
 
           {/* Footer */}
