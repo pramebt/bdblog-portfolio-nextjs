@@ -60,37 +60,37 @@ const BlockPreview = ({ blocks }) => {
   if (!blocks || !Array.isArray(blocks)) return null
 
   return (
-    <div className="prose prose-lg max-w-none">
+    <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none">
       {blocks.map((block) => {
         switch (block.type) {
           case 'heading1':
             return (
-              <h1 key={block.id} className="text-3xl font-bold mt-8 mb-4 first:mt-0">
+              <h1 key={block.id} className="text-2xl sm:text-3xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 first:mt-0">
                 {block.content}
               </h1>
             )
           case 'heading2':
             return (
-              <h2 key={block.id} className="text-2xl font-semibold mt-6 mb-3">
+              <h2 key={block.id} className="text-xl sm:text-2xl font-semibold mt-5 sm:mt-6 mb-2 sm:mb-3">
                 {block.content}
               </h2>
             )
           case 'heading3':
             return (
-              <h3 key={block.id} className="text-xl font-medium mt-4 mb-2">
+              <h3 key={block.id} className="text-lg sm:text-xl font-medium mt-4 mb-2">
                 {block.content}
               </h3>
             )
           case 'paragraph':
             return (
-              <p key={block.id} className="mb-4 leading-relaxed">
+              <p key={block.id} className="mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">
                 {block.content}
               </p>
             )
           case 'list':
             const listItems = block.content.split('\n').filter(item => item.trim())
             return (
-              <ul key={block.id} className="list-disc list-inside mb-4 space-y-1">
+              <ul key={block.id} className="list-disc list-inside mb-3 sm:mb-4 space-y-1 text-sm sm:text-base">
                 {listItems.map((item, index) => (
                   <li key={index} className="leading-relaxed">
                     {item.replace(/^[•\-\*]\s*/, '')}
@@ -100,14 +100,14 @@ const BlockPreview = ({ blocks }) => {
             )
           case 'quote':
             return (
-              <blockquote key={block.id} className="border-l-4 border-primary pl-4 italic my-6 text-muted-foreground">
+              <blockquote key={block.id} className="border-l-4 border-primary pl-3 sm:pl-4 italic my-4 sm:my-6 text-muted-foreground text-sm sm:text-base">
                 {block.content}
               </blockquote>
             )
           case 'code':
             return (
-              <div key={block.id} className="mb-6">
-                <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
+              <div key={block.id} className="mb-4 sm:mb-6">
+                <pre className="bg-muted p-3 sm:p-4 rounded-lg overflow-x-auto text-xs sm:text-sm">
                   <code className={`language-${block.language || 'text'}`}>
                     {block.content}
                   </code>
@@ -116,14 +116,14 @@ const BlockPreview = ({ blocks }) => {
             )
           case 'image':
             return (
-              <div key={block.id} className="my-8">
+              <div key={block.id} className="my-6 sm:my-8">
                 <img
                   src={block.content}
                   alt={block.alt || 'Blog image'}
                   className="w-full rounded-lg shadow-md"
                 />
                 {block.alt && (
-                  <p className="text-center text-sm text-muted-foreground mt-2">
+                  <p className="text-center text-xs sm:text-sm text-muted-foreground mt-2">
                     {block.alt}
                   </p>
                 )}
@@ -131,7 +131,7 @@ const BlockPreview = ({ blocks }) => {
             )
           default:
             return (
-              <div key={block.id} className="mb-4">
+              <div key={block.id} className="mb-3 sm:mb-4 text-sm sm:text-base">
                 {block.content}
               </div>
             )
@@ -286,15 +286,16 @@ const BlogPostPage = () => {
   }
 
   return (
-    <TracingBeam className='px-5'>
+    <TracingBeam className='px-2 sm:px-5'>
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* Back Button */}
-        <div className="mb-6">
-          <Button variant="ghost" asChild>
+        <div className="mb-4 sm:mb-6">
+          <Button variant="ghost" size="sm" className="sm:size-default" asChild>
             <Link href="/blog">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to blog
+              <span className="hidden sm:inline">Back to blog</span>
+              <span className="sm:hidden">Back</span>
             </Link>
           </Button>
         </div>
@@ -303,24 +304,24 @@ const BlogPostPage = () => {
         <article className="max-w-4xl mx-auto">
           {/* Cover Image */}
           {post.coverImage && (
-            <div className="mb-8">
+            <div className="mb-6 sm:mb-8">
               <img
                 src={post.coverImage}
                 alt={post.title}
-                className="w-full h-[400px] object-cover rounded-lg shadow-lg"
+                className="w-full h-[250px] sm:h-[350px] md:h-[400px] object-cover rounded-lg shadow-lg"
               />
             </div>
           )}
 
           {/* Header */}
-          <header className="mb-8">
-            <div className="space-y-4">
+          <header className="mb-6 sm:mb-8">
+            <div className="space-y-3 sm:space-y-4">
               {/* Tags */}
               {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {post.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="flex items-center gap-1">
-                      <Hash className="h-3 w-3" />
+                    <Badge key={tag} variant="secondary" className="flex items-center gap-1 text-xs sm:text-sm">
+                      <Hash className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                       {tag}
                     </Badge>
                   ))}
@@ -328,38 +329,39 @@ const BlogPostPage = () => {
               )}
 
               {/* Title */}
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
                 {post.title}
               </h1>
 
               {/* Excerpt */}
               {post.excerpt && (
-                <p className="text-xl text-muted-foreground leading-relaxed">
+                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
                   {post.excerpt}
                 </p>
               )}
 
               {/* Meta Info */}
-              <div className="flex items-center justify-between flex-wrap gap-4">
-                <div className="flex items-center gap-6 text-muted-foreground">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 md:gap-6 text-xs sm:text-sm md:text-base text-muted-foreground">
                   <div className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    <span>{post.author.name}</span>
+                    <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                    <span className="truncate">{post.author.name}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <span>{formatDate(post.createdAt)}</span>
+                    <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                    <span className="truncate">{formatDate(post.createdAt)}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    <span>{calculateReadingTime(post.content)} นาทีในการอ่าน</span>
+                    <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                    <span className="truncate">{calculateReadingTime(post.content)} นาที</span>
                   </div>
                 </div>
 
                 {/* Share Button */}
-                <Button variant="outline" size="sm" onClick={handleShare}>
-                  <Share2 className="h-4 w-4 mr-2" />
-                  แบ่งปัน
+                <Button variant="outline" size="sm" className="text-xs sm:text-sm w-full sm:w-auto" onClick={handleShare}>
+                  <Share2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
+                  <span className="hidden sm:inline">แบ่งปัน</span>
+                  <span className="sm:hidden">Share</span>
                 </Button>
               </div>
 
@@ -368,30 +370,30 @@ const BlogPostPage = () => {
           </header>
 
           {/* Content */}
-          <div className="mb-12">
+          <div className="mb-8 sm:mb-12">
             <BlockPreview blocks={contentBlocks} />
           </div>
 
           {/* Footer */}
-          <footer className="space-y-6">
+          <footer className="space-y-4 sm:space-y-6">
             <Separator />
             
             {/* Author Info */}
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <User className="h-4 w-4 sm:h-5 sm:w-5" />
                   เกี่ยวกับผู้เขียน
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <User className="h-6 w-6 text-primary" />
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <User className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                   </div>
-                  <div>
-                    <h3 className="font-semibold">{post.author.name}</h3>
-                    <p className="text-muted-foreground text-sm">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-semibold text-sm sm:text-base">{post.author.name}</h3>
+                    <p className="text-muted-foreground text-xs sm:text-sm mt-1">
                       นักพัฒนาเว็บที่หลงใหลในการเรียนรู้เทคโนโลยีใหม่ๆ และชอบแบ่งปันความรู้
                     </p>
                   </div>
@@ -400,17 +402,19 @@ const BlogPostPage = () => {
             </Card>
 
             {/* Navigation */}
-            <div className="flex justify-between items-center">
-              <Button asChild variant="outline">
+            <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-0">
+              <Button asChild variant="outline" size="sm" className="sm:size-default w-full sm:w-auto">
                 <Link href="/blog">
                   <BookOpen className="h-4 w-4 mr-2" />
-                  ดูบทความอื่นๆ
+                  <span className="hidden sm:inline">ดูบทความอื่นๆ</span>
+                  <span className="sm:hidden">บทความอื่นๆ</span>
                 </Link>
               </Button>
               
-              <Button variant="outline" onClick={handleShare}>
+              <Button variant="outline" size="sm" className="sm:size-default w-full sm:w-auto" onClick={handleShare}>
                 <Share2 className="h-4 w-4 mr-2" />
-                แบ่งปันบทความ
+                <span className="hidden sm:inline">แบ่งปันบทความ</span>
+                <span className="sm:hidden">Share</span>
               </Button>
             </div>
           </footer>
