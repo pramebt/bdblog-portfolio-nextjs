@@ -22,7 +22,8 @@ import {
   SiDocker,
   SiAmazon,
   SiVercel,
-  SiJavascript
+  SiJavascript,
+  SiCanva
 } from 'react-icons/si';
 
 const HomeSkills = () => {
@@ -62,6 +63,7 @@ const HomeSkills = () => {
       bgColor: "bg-muted/30",
       skills: [
         { name: 'Figma', icon: <SiFigma className="h-5 w-5 transition-colors group-hover:text-[#F24E1E]" /> },
+        { name: 'Canva', icon: <SiCanva className="h-5 w-5 transition-colors group-hover:text-[#00C4CC]" /> },
       ]
     },
     {
@@ -73,7 +75,6 @@ const HomeSkills = () => {
         { name: 'Git', icon: <SiGit className="h-5 w-5 transition-colors group-hover:text-[#F05032]" /> },
         { name: 'GitHub', icon: <SiGithub className="h-5 w-5 transition-colors" /> },
         { name: 'Docker', icon: <SiDocker className="h-5 w-5 transition-colors group-hover:text-[#2496ED]" /> },
-        { name: 'AWS', icon: <SiAmazon className="h-5 w-5 transition-colors group-hover:text-[#FF9900]" /> },
         { name: 'Vercel', icon: <SiVercel className="h-5 w-5 transition-colors" /> },
       ]
     }
@@ -92,6 +93,7 @@ const HomeSkills = () => {
     { node: <SiGit className="text-[48px] transition-colors hover:text-[#F05032]" />, title: "Git", href: "https://git-scm.com" },
     { node: <SiGithub className="text-[48px] transition-colors" />, title: "GitHub", href: "https://github.com" },
     { node: <SiFigma className="text-[48px] transition-colors hover:text-[#F24E1E]" />, title: "Figma", href: "https://www.figma.com" },
+    { node: <SiCanva className="text-[48px] transition-colors hover:text-[#00C4CC]" />, title: "Canva", href: "https://www.canva.com" },
   ];
 
   return (
