@@ -133,7 +133,7 @@ const HomeWork = async () => {
                     {projects[0].title}
                   </h3>
                   <p className="text-muted-foreground/80 font-light leading-relaxed line-clamp-2 text-base">
-                    {getProjectDescription(projects[0].description, 2)}
+                    {getProjectDescription(projects[0].description, 0)}
                   </p>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-500">
                     <span className="font-medium">View project</span>
