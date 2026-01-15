@@ -21,7 +21,7 @@ const ContactForm = () => {
           ...prev,
           [name]: value
         }))
-      }
+    }
       const handleSubmit = async (event) => {
         event.preventDefault()
         setIsPending(true)
