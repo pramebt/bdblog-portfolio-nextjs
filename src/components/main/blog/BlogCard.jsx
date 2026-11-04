@@ -1,152 +1,132 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-import { Calendar, User, ArrowRight, Eye } from '@phosphor-icons/react/dist/ssr'
-import ImageModal from '@/components/shared/ImageModal'
-import { HoverLift, FadeIn } from '@/components/ui/animations'
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr'
 
-const BlogCard = ({ post }) => {
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
-
-  // Format date
+const BlogCard = ({ post, featured = false }) => {
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('th-TH', {
+    return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+      month: 'short',
+      day: 'numeric',
     })
   }
 
-  // Extract text from content blocks
   const extractTextFromContent = (content) => {
     try {
       const blocks = JSON.parse(content)
       return blocks
-        .filter(block => ['paragraph', 'heading1', 'heading2', 'heading3'].includes(block.type))
-        .map(block => block.content || '')
+        .filter((block) => ['paragraph', 'heading1', 'heading2', 'heading3'].includes(block.type))
+        .map((block) => block.content || '')
         .join(' ')
-        .substring(0, 150) + '...'
+        .substring(0, featured ? 220 : 120)
     } catch {
-      return content.substring(0, 150) + '...'
+      return (content || '').substring(0, featured ? 220 : 120)
     }
   }
 
-  return (
-    <Card className="overflow-hidden group h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50 hover:border-border hover:bg-card/80 hover:shadow-lg transition-all duration-300">
-        {/* Cover Image */}
-        {post.coverImage && (
-          <div className="relative aspect-video overflow-hidden rounded-lg m-4">
+  const preview = post.excerpt || extractTextFromContent(post.content)
+  const primaryTag = Array.isArray(post.tags) && post.tags.length > 0 ? post.tags[0] : 'Article'
+
+  if (featured) {
+    return (
+      <Link
+        href={`/blog/${post.slug}`}
+        className="group relative block overflow-hidden rounded-3xl border border-border/60 bg-muted/15 transition-all duration-700 hover:border-foreground/20"
+      >
+        <div className="relative aspect-[16/10] md:aspect-[21/9]">
+          {post.coverImage ? (
             <img
               src={post.coverImage}
               alt={post.title}
-              className="w-full h-full object-cover  transition-transform duration-500 cursor-pointer rounded-lg"
-              onClick={() => setIsImageModalOpen(true)}
+              loading="eager"
+              className="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.03]"
             />
-            
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
-            
-            {/* Image View Button */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-95">
-              <Button
-                size="sm"
-                variant="secondary"
-                className="bg-white/95 hover:bg-white text-black shadow-xl backdrop-blur-sm border-0 transform hover:scale-105 transition-transform"
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  setIsImageModalOpen(true)
-                }}
-              >
-                <Eye className="h-4 w-4 mr-1" />
-                ดูรูป
-              </Button>
-            </div>
-          </div>
-        )}
-        
-        <div className="flex flex-col flex-1">
-          <CardHeader className="flex-none">
-            <div className="space-y-3">
-              <CardTitle className="line-clamp-2 text-lg font-semibold group-hover:text-primary transition-colors duration-200 leading-tight">
-                <Link href={`/blog/${post.slug}`} className="hover:underline">
-                  {post.title}
-                </Link>
-              </CardTitle>
-              
-              {/* Meta Info */}
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-1.5 hover:text-foreground transition-colors">
-                  <Calendar className="h-3.5 w-3.5" />
-                  <span className="font-medium">{formatDate(post.createdAt)}</span>
-                </div>
-                <div className="flex items-center gap-1.5 hover:text-foreground transition-colors">
-                  <User className="h-3.5 w-3.5" />
-                  <span className="font-medium">{post.author.name}</span>
-                </div>
-              </div>
-            </div>
-          </CardHeader>
-
-          <CardContent className="flex-1 flex flex-col space-y-4">
-            {/* Excerpt */}
-            <CardDescription className="line-clamp-3 text-sm leading-relaxed flex-1">
-              {post.excerpt || extractTextFromContent(post.content)}
-            </CardDescription>
-
-            {/* Tags */}
-            {post.tags && post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {post.tags.slice(0, 3).map((tag, index) => (
-                  <Badge 
-                    key={tag} 
-                    variant="secondary" 
-                    className="text-xs px-2 py-1 hover:bg-primary hover:text-primary-foreground transition-colors"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-                {post.tags.length > 3 && (
-                  <Badge variant="outline" className="text-xs px-2 py-1 border-dashed">
-                    +{post.tags.length - 3}
-                  </Badge>
-                )}
-              </div>
-            )}
-
-            <Separator className="my-2" />
-
-            {/* Read More */}
-            <Button 
-              asChild 
-              variant="ghost" 
-              className="w-full justify-between p-3 h-auto group-hover:bg-primary/5 transition-colors duration-200 mt-auto"
-            >
-              <Link href={`/blog/${post.slug}`} className="flex items-center justify-between w-full">
-                <span className="font-medium">อ่านต่อ</span>
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-              </Link>
-            </Button>
-          </CardContent>
+          ) : (
+            <div className="h-full w-full bg-muted/40" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-transparent" />
         </div>
 
-        {/* Image Modal */}
-        {post.coverImage && (
-          <ImageModal
+        <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            <span className="meta-pill bg-background/50 backdrop-blur-sm">{primaryTag}</span>
+            <span className="meta-pill bg-background/50 backdrop-blur-sm">
+              {formatDate(post.createdAt)}
+            </span>
+          </div>
+          <h2 className="mb-3 max-w-3xl text-2xl font-semibold tracking-tight text-foreground md:text-4xl">
+            {post.title}
+          </h2>
+          <p className="mb-5 max-w-2xl text-sm font-light leading-relaxed text-muted-foreground md:text-base line-clamp-2">
+            {preview}
+          </p>
+          <span className="inline-flex items-center gap-2 text-sm font-medium text-foreground/80 transition-colors group-hover:text-foreground">
+            Read article
+            <ArrowRight size={14} weight="bold" className="transition-transform duration-500 group-hover:translate-x-1" />
+          </span>
+        </div>
+      </Link>
+    )
+  }
+
+  return (
+    <article className="group soft-card flex h-full flex-col overflow-hidden">
+      <Link href={`/blog/${post.slug}`} className="relative block aspect-[16/10] overflow-hidden bg-muted/30">
+        {post.coverImage ? (
+          <img
             src={post.coverImage}
             alt={post.title}
-            title={post.title}
-            isOpen={isImageModalOpen}
-            onClose={() => setIsImageModalOpen(false)}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
+        ) : (
+          <div className="h-full w-full bg-gradient-to-br from-muted/60 to-muted/20" />
         )}
-      </Card>
+      </Link>
+
+      <div className="flex flex-1 flex-col p-5 md:p-6">
+        <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+            {primaryTag}
+          </span>
+          <span className="font-mono text-[10px] text-muted-foreground/70">
+            {formatDate(post.createdAt)}
+          </span>
+        </div>
+
+        <h3 className="mb-2 text-lg font-semibold tracking-tight text-foreground line-clamp-2">
+          <Link href={`/blog/${post.slug}`} className="transition-colors hover:opacity-80">
+            {post.title}
+          </Link>
+        </h3>
+
+        <p className="mb-5 flex-1 text-sm font-light leading-relaxed text-muted-foreground line-clamp-3">
+          {preview}
+        </p>
+
+        {Array.isArray(post.tags) && post.tags.length > 1 && (
+          <div className="mb-4 flex flex-wrap gap-1.5">
+            {post.tags.slice(1, 3).map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-border/60 px-2.5 py-0.5 text-[11px] text-muted-foreground"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <Link
+          href={`/blog/${post.slug}`}
+          className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Read more
+          <ArrowRight size={14} weight="bold" className="transition-transform duration-300 group-hover:translate-x-1" />
+        </Link>
+      </div>
+    </article>
   )
 }
 

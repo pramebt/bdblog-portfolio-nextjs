@@ -3,7 +3,6 @@ import {
   HomeHero, 
   HomeAbout,
   HomeSkills, 
-
   HomeExperience, 
   HomePersonal, 
   HomeWork, 
@@ -12,18 +11,28 @@ import {
 
 const HomePage = () => {
   return (
-    <div className="w-full min-h-screen bg-background">
+    <div className="relative w-full">
       <HomeHero />
-      <HomeAbout />
-      {/* Gradient Line Divider */}
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent my-12"></div>
-      <HomeSkills />
-      <HomeExperience />
-      <HomePersonal />
-      {/* Gradient Line Divider */}
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent my-12"></div>
-      <HomeWork />
-      <HomeContact />
+      <div className="relative z-10 w-[100cqi] bg-background [margin-inline:calc(50%-50cqi)]">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-full h-20 backdrop-blur-[5px]"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent, black)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent, black)',
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-full h-14 bg-gradient-to-b from-transparent to-background"
+        />
+        <HomeAbout />
+        <HomeSkills />
+        <HomeExperience />
+        <HomePersonal />
+        <HomeWork />
+        <HomeContact />
+      </div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "motion/react";
 import BlogSearch from "@/components/main/blog/BlogSearch";
 import BlogResultsInfo from "@/components/main/blog/BlogResultsInfo";
 import BlogGrid from "@/components/main/blog/BlogGrid";
@@ -8,6 +9,8 @@ import BlogPagination from "@/components/main/blog/BlogPagination";
 import BlogEmptyState from "@/components/main/blog/BlogEmptyState";
 import BlogErrorState from "@/components/main/blog/BlogErrorState";
 import BlogLoadingState from "@/components/main/blog/BlogLoadingState";
+
+const ease = [0.16, 1, 0.3, 1];
 
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
@@ -18,7 +21,6 @@ const BlogPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
 
-  // Fetch posts
   const fetchPosts = async (page = 1, search = "") => {
     try {
       setLoading(true);
@@ -30,9 +32,7 @@ const BlogPage = () => {
         published: "true",
       });
 
-      if (search) {
-        params.append("search", search);
-      }
+      if (search) params.append("search", search);
 
       const response = await fetch(`/api/blog?${params}`);
       const data = await response.json();
@@ -55,99 +55,99 @@ const BlogPage = () => {
     }
   };
 
-  // Initial load
   useEffect(() => {
     fetchPosts(1, searchTerm);
   }, []);
 
-  // Handle search
   const handleSearch = (e) => {
     e.preventDefault();
     fetchPosts(1, searchTerm);
   };
 
-  // Handle pagination
   const handlePageChange = (page) => {
     fetchPosts(page, searchTerm);
   };
 
-  // Handle clear search
   const handleClearSearch = () => {
     setSearchTerm("");
     fetchPosts(1, "");
   };
 
   return (
-    <div className=" min-h-screen relative ">
-      <div className="fixed inset-0 -z-10">
-        
-      </div>
-      {/* Hero Section */}
-      <section className="py-16 md:py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="relative z-10 text-4xl md:text-6xl font-bold tracking-tight mb-6 text-foreground">
-            Blog
-          </h1>
-          <p className="relative z-10 text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-            Thoughts, tutorials, and insights about web development and
-            technology.
-          </p>
+    <div className="relative min-h-screen">
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[50vh] ambient-surface opacity-80" />
 
-          {/* Search */}
-          <div className="relative z-10 max-w-md mx-auto">
+      <section className="px-4 pb-10 pt-16 md:pb-14 md:pt-24">
+        <div className="mx-auto max-w-5xl">
+          <motion.p
+            className="section-label"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease }}
+          >
+            Writing
+          </motion.p>
+          <motion.h1
+            className="mb-4 text-4xl font-semibold tracking-tight text-foreground md:text-6xl"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.08, ease }}
+          >
+            Blog
+          </motion.h1>
+          <motion.p
+            className="mb-8 max-w-2xl text-lg font-light leading-relaxed text-muted-foreground"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.16, ease }}
+          >
+            Notes on web development, craft, and the things I&apos;m learning
+            along the way.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.24, ease }}
+          >
             <BlogSearch
               searchTerm={searchTerm}
               onSearchChange={(e) => setSearchTerm(e.target.value)}
               onSubmit={handleSearch}
               loading={loading}
             />
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Content Section */}
+      <section className="px-4 pb-24">
+        <div className="mx-auto max-w-5xl">
+          <BlogResultsInfo
+            searchTerm={searchTerm}
+            totalPosts={totalPosts}
+            loading={loading}
+          />
+          <BlogErrorState error={error} />
+          <BlogLoadingState loading={loading} />
+          <BlogGrid posts={posts} loading={loading} />
 
-      <section className="pb-24 px-4">
-        <div className="relative z-10">
-          <div className="max-w-6xl mx-auto">
-            {/* Results Info */}
-            <BlogResultsInfo
-              searchTerm={searchTerm}
-              totalPosts={totalPosts}
-              loading={loading}
-            />
-
-            {/* Error State */}
-            <BlogErrorState error={error} />
-
-            {/* Loading State */}
-            <BlogLoadingState loading={loading} />
-
-            {/* Posts Grid */}
-            <BlogGrid posts={posts} loading={loading} />
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="mt-16">
-                <BlogPagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </div>
-            )}
-
-            {/* Empty State */}
-            {!loading && posts.length === 0 && !error && (
-              <BlogEmptyState
-                searchTerm={searchTerm}
-                onClearSearch={handleClearSearch}
+          {totalPages > 1 && (
+            <div className="mt-12">
+              <BlogPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
               />
-            )}
-          </div>
+            </div>
+          )}
+
+          {!loading && posts.length === 0 && !error && (
+            <BlogEmptyState
+              searchTerm={searchTerm}
+              onClearSearch={handleClearSearch}
+            />
+          )}
         </div>
       </section>
-     
     </div>
   );
 };

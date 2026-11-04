@@ -4,12 +4,14 @@ const ProjectResultsInfo = ({ searchTerm, totalProjects, loading = false }) => {
   if (loading) return null
 
   return (
-    <div className="text-center mb-8">
-      <p className="text-muted-foreground">
+    <div className="mb-6 flex items-center justify-between gap-4">
+      <p className="font-mono text-xs tracking-wide text-muted-foreground">
         {searchTerm ? (
-          <>Search results for "{searchTerm}": {totalProjects} projects</>
+          <>
+            Results for “{searchTerm}” · {totalProjects}
+          </>
         ) : (
-          <>Total {totalProjects} projects</>
+          <>{totalProjects} projects</>
         )}
       </p>
     </div>

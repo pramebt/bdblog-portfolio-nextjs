@@ -11,14 +11,15 @@ export const ScrollReveal = ({
   children, 
   className = '',
   delay = 0,
-  duration = 0.6,
-  yOffset = 20,
+  duration = 0.75,
+  yOffset = 18,
   once = true
 }) => {
   const ref = useRef(null)
   const isInView = useInView(ref, { 
     once, 
-    margin: '-100px',
+    // Only inset the bottom so above-the-fold content still reveals
+    margin: '0px 0px -12% 0px',
     amount: 0.2
   })
 
@@ -30,7 +31,7 @@ export const ScrollReveal = ({
       transition={{
         duration,
         delay,
-        ease: [0.16, 1, 0.3, 1] // Apple's custom easing curve
+        ease: [0.16, 1, 0.3, 1]
       }}
       className={className}
     >
@@ -52,8 +53,8 @@ export const StaggerContainer = ({
   const ref = useRef(null)
   const isInView = useInView(ref, { 
     once: true, 
-    margin: '-100px',
-    amount: 0.1
+    margin: '0px 0px -10% 0px',
+    amount: 0.15
   })
 
   return (
@@ -67,7 +68,7 @@ export const StaggerContainer = ({
           opacity: 1,
           transition: {
             staggerChildren: staggerDelay,
-            delayChildren: 0.3
+            delayChildren: 0.08
           }
         }
       }}
@@ -84,15 +85,15 @@ export const StaggerContainer = ({
 export const StaggerItem = ({ 
   children, 
   className = '',
-  duration = 0.6,
-  yOffset = 20
+  duration = 0.7,
+  yOffset = 16
 }) => {
   return (
     <motion.div
       variants={{
         hidden: { 
           opacity: 0, 
-          y: yOffset 
+          y: yOffset,
         },
         visible: { 
           opacity: 1, 

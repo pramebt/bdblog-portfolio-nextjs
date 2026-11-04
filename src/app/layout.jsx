@@ -1,19 +1,26 @@
-import { Inter, Noto_Sans_Thai } from "next/font/google";
+import { Manrope, Noto_Sans_Thai, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from '@/components/theme-provider'
 import { SessionProvider } from '@/components/ui/session-provider'
 import { Toaster } from '@/components/ui/sonner'
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-manrope",
   display: 'swap',
 });
 
 const notoSansThai = Noto_Sans_Thai({
   subsets: ["thai", "latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-noto-sans-thai",
+  display: 'swap',
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-ibm-plex-mono",
   display: 'swap',
 });
 
@@ -29,13 +36,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${notoSansThai.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${manrope.variable} ${notoSansThai.variable} ${ibmPlexMono.variable} font-sans antialiased bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange={false}
         >
           <SessionProvider>
             {children}

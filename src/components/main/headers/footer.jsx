@@ -3,138 +3,77 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { GithubLogo, InstagramLogo, FacebookLogo, LinkedinLogo, PaperPlaneTilt, Code, Heart, Coffee, ArrowSquareOut } from '@phosphor-icons/react/dist/ssr'
+import { GithubLogo, InstagramLogo, FacebookLogo, LinkedinLogo } from '@phosphor-icons/react/dist/ssr'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
-  
+
   return (
-    <footer className="relative z-10 bg-background/95 backdrop-blur-sm border-t border-border/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="space-y-6 md:col-span-2">
-            <Button variant="ghost" size="sm" asChild className="p-0 h-auto hover:bg-transparent justify-start">
-              <Link href="/" className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Image 
-                    src="/images/common/terminal-box-fill.svg" 
-                    alt="BD Blog" 
-                    width={20} 
-                    height={20} 
-                    className="dark:invert"
-                  />
-                </div>
-                <span className="text-xl font-bold text-foreground">BD-Folio</span>
-              </Link>
-            </Button>
-            <p className="text-muted-foreground leading-relaxed max-w-md">
-              Frontend Developer passionate about creating modern web experiences with React, Next.js, 
-              and cutting-edge technologies. Sharing knowledge through projects and blog posts.
+    <footer className="relative z-10 border-t border-border/50 bg-background">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-14">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
+          <div className="space-y-4 max-w-sm">
+            <Link href="/" className="inline-flex items-center gap-2.5 group">
+              <div className="w-7 h-7 rounded-lg bg-foreground/5 border border-border/60 flex items-center justify-center">
+                <Image
+                  src="/images/common/terminal-box-fill.svg"
+                  alt="BD Folio"
+                  width={16}
+                  height={16}
+                  className="dark:invert"
+                />
+              </div>
+              <span className="text-base font-semibold tracking-tight text-foreground">
+                BD Folio
+              </span>
+            </Link>
+            <p className="text-sm text-muted-foreground font-light leading-relaxed">
+              Frontend developer crafting modern web experiences with React & Next.js.
             </p>
-            
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Explore</h3>
-            <div className="flex flex-col space-y-3">
-              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
-                <Link href="/" className="flex items-center gap-2">
-                  <span>Home</span>
-                </Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
-                <Link href="/blog" className="flex items-center gap-2">
-                  <span>Blog Posts</span>
-                </Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
-                <Link href="/projects" className="flex items-center gap-2">
-                  <span>Projects</span>
-                </Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
-                <Link href="/experiment" className="flex items-center gap-2">
-                  <span>Experiment</span>
-                </Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild className="justify-start h-auto p-0 text-muted-foreground">
-                <Link href="/contact" className="flex items-center gap-2">
-                  <span>Contact</span>
-                </Link>
-              </Button>
-            </div>
-          </div>
-
-          {/* Connect */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Connect</h3>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <PaperPlaneTilt size={18} weight="duotone" />
-                <span className="text-sm">bdforwk@gmail.com</span>
-              </div>
-              <p className="text-sm text-muted-foreground">Available for freelance projects</p>
-              <div className="flex space-x-2">
-                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
-                  <a 
-                    href="https://github.com/pramebt" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <GithubLogo size={20} weight="duotone" />
-                    <span className="sr-only">GitHub</span>
-                  </a>
-                </Button>
-                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
-                  <a 
-                    href="https://www.instagram.com/prame.bt/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <InstagramLogo size={20} weight="duotone" />
-                    <span className="sr-only">Instagram</span>
-                  </a>
-                </Button>
-                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
-                  <a 
-                    href="https://www.facebook.com/bandit.prame/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <FacebookLogo size={20} weight="duotone" />
-                    <span className="sr-only">Facebook</span>
-                  </a>
-                </Button>
-                <Button variant="ghost" size="sm" asChild className="h-9 w-9 p-0 hover:bg-transparent">
-                  <a 
-                    href="https://www.linkedin.com/in/bandit-kaewnoi-48b76335b/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <LinkedinLogo size={20} weight="duotone" />
-                    <span className="sr-only">LinkedIn</span>
-                  </a>
-                </Button>
-              </div>
-            </div>
+          <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
+            {[
+              { href: '/', label: 'Home' },
+              { href: '/blog', label: 'Blog' },
+              { href: '/projects', label: 'Projects' },
+              { href: '/experiment', label: 'Experiment' },
+              { href: '/contact', label: 'Contact' },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-border/50 mt-12 pt-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-              <p>© {currentYear} BD. All rights reserved.</p>
-            </div>
-          </div> 
+        <div className="mt-10 pt-8 border-t border-border/40 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs font-mono text-muted-foreground">
+            © {currentYear} Bandit Kaewnoi
+          </p>
+          <div className="flex items-center gap-1">
+            {[
+              { href: 'https://github.com/pramebt', icon: GithubLogo, label: 'GitHub' },
+              { href: 'https://www.instagram.com/prame.bt/', icon: InstagramLogo, label: 'Instagram' },
+              { href: 'https://www.facebook.com/bandit.prame/', icon: FacebookLogo, label: 'Facebook' },
+              { href: 'https://www.linkedin.com/in/bandit-kaewnoi-48b76335b/', icon: LinkedinLogo, label: 'LinkedIn' },
+            ].map(({ href, icon: Icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
+                aria-label={label}
+              >
+                <Icon size={18} weight="duotone" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>

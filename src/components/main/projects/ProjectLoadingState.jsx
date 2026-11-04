@@ -1,37 +1,21 @@
 'use client'
 
-import { GridSkeleton, ProjectCardSkeleton } from '@/components/ui/skeletons'
-import { FadeIn, LoadingSpinner } from '@/components/ui/animations'
+import { ProjectCardSkeleton, Skeleton } from '@/components/ui/skeletons'
 
-const ProjectLoadingState = ({ 
-  loading = false, 
-  text = "Loading projects...", 
-  count = 6,
-  useSkeletons = true 
-}) => {
+const ProjectLoadingState = ({ loading = false }) => {
   if (!loading) return null
 
-  if (useSkeletons) {
-    return (
-      <FadeIn>
-        <GridSkeleton 
-          count={count}
-          component={ProjectCardSkeleton}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        />
-      </FadeIn>
-    )
-  }
-
   return (
-    <FadeIn>
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center space-y-4">
-          <LoadingSpinner className="mx-auto text-muted-foreground" />
-          <p className="text-muted-foreground">{text}</p>
-        </div>
+    <div className="mb-12 space-y-6">
+      <div className="overflow-hidden rounded-3xl border border-border/50">
+        <Skeleton className="aspect-[16/10] w-full rounded-none md:aspect-[21/9]" />
       </div>
-    </FadeIn>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <ProjectCardSkeleton key={i} />
+        ))}
+      </div>
+    </div>
   )
 }
 

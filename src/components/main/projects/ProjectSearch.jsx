@@ -1,42 +1,36 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { MagnifyingGlass, CircleNotch } from '@phosphor-icons/react/dist/ssr'
 
-const ProjectSearch = ({ 
-  searchTerm, 
-  onSearchChange, 
-  onSubmit, 
+const ProjectSearch = ({
+  searchTerm,
+  onSearchChange,
+  onSubmit,
   loading = false,
-  placeholder = "Search for projects...",
-  buttonText = "Search"
+  placeholder = 'Search projects…',
 }) => {
   return (
-    <div className="w-full">
-      <form onSubmit={onSubmit} className="flex gap-3 items-center">
-        <div className="relative flex-1 max-w-sm mx-auto">
-          <MagnifyingGlass size={20} weight="light" className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground/60" />
-          <Input
-            type="text"
-            placeholder={placeholder}
-            value={searchTerm}
-            onChange={onSearchChange}
-            variant="noRing"
-            className="pl-12 pr-4 py-3 rounded-full bg-muted/30 text-base placeholder:text-muted-foreground/60 border-0 focus:bg-muted/50 transition-colors"
-          />
-        </div>
-        <Button 
-          type="submit" 
-          disabled={loading}
-          variant="ghost"
-          size="sm"
-          className="rounded-full px-6 py-5 text-base font-medium hover:bg-muted/50 cursor-pointer"
-        >
-          {loading ? <CircleNotch size={16} weight="bold" className="animate-spin" /> : buttonText}
-        </Button>
-      </form>
-    </div>
+    <form onSubmit={onSubmit} className="relative w-full max-w-md">
+      <MagnifyingGlass
+        size={18}
+        weight="light"
+        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/70"
+      />
+      <input
+        type="search"
+        placeholder={placeholder}
+        value={searchTerm}
+        onChange={onSearchChange}
+        className="w-full rounded-full border border-border/70 bg-background/70 py-3 pl-11 pr-12 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-foreground/25 focus:bg-background"
+      />
+      {loading && (
+        <CircleNotch
+          size={16}
+          weight="bold"
+          className="absolute right-4 top-1/2 -translate-y-1/2 animate-spin text-muted-foreground"
+        />
+      )}
+    </form>
   )
 }
 
