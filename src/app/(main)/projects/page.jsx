@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import PageIntro from "@/components/main/shared/PageIntro";
 import ProjectSearch from "@/components/main/projects/ProjectSearch";
 import ProjectResultsInfo from "@/components/main/projects/ProjectResultsInfo";
 import ProjectGrid from "@/components/main/projects/ProjectGrid";
@@ -10,8 +10,7 @@ import ProjectEmptyState from "@/components/main/projects/ProjectEmptyState";
 import ProjectErrorState from "@/components/main/projects/ProjectErrorState";
 import ProjectLoadingState from "@/components/main/projects/ProjectLoadingState";
 import ProjectTabs from "@/components/main/projects/ProjectTabs";
-
-const ease = [0.16, 1, 0.3, 1];
+const PAGE_SIZE = 12;
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
@@ -19,6 +18,7 @@ const ProjectsPage = () => {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [view, setView] = useState("grid");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalProjects, setTotalProjects] = useState(0);
@@ -35,7 +35,7 @@ const ProjectsPage = () => {
 
       const params = new URLSearchParams({
         page: page.toString(),
-        limit: "12",
+        limit: String(PAGE_SIZE),
         published: "true",
       });
 
@@ -92,49 +92,18 @@ const ProjectsPage = () => {
 
   return (
     <div className="relative min-h-screen">
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[50vh] ambient-surface opacity-80" />
-
-      <section className="px-4 pb-10 pt-16 md:pb-14 md:pt-24">
-        <div className="mx-auto max-w-5xl">
-          <motion.p
-            className="section-label"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease }}
-          >
-            Selected work
-          </motion.p>
-          <motion.h1
-            className="mb-4 text-4xl font-semibold tracking-tight text-foreground md:text-6xl"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.08, ease }}
-          >
-            Projects
-          </motion.h1>
-          <motion.p
-            className="mb-8 max-w-2xl text-lg font-light leading-relaxed text-muted-foreground"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.16, ease }}
-          >
-            Web apps and experiments I&apos;ve designed and built — from product
-            ideas to polished interfaces.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.24, ease }}
-          >
-            <ProjectSearch
-              searchTerm={searchTerm}
-              onSearchChange={(e) => setSearchTerm(e.target.value)}
-              onSubmit={handleSearch}
-              loading={loading}
-            />
-          </motion.div>
-        </div>
-      </section>
+      <PageIntro
+        label="Selected work"
+        title="Projects"
+        description="Web apps and experiments I've designed and built — from product ideas to polished interfaces."
+      >
+        <ProjectSearch
+          searchTerm={searchTerm}
+          onSearchChange={(e) => setSearchTerm(e.target.value)}
+          onSubmit={handleSearch}
+          loading={loading}
+        />
+      </PageIntro>
 
       <section className="px-4 pb-24">
         <div className="mx-auto max-w-5xl">
@@ -149,10 +118,17 @@ const ProjectsPage = () => {
               searchTerm={searchTerm}
               totalProjects={totalProjects}
               loading={loading}
+              view={view}
+              onViewChange={setView}
             />
             <ProjectErrorState error={error} />
             <ProjectLoadingState loading={loading} />
-            <ProjectGrid projects={projects} loading={loading} />
+            <ProjectGrid
+              projects={projects}
+              loading={loading}
+              view={view}
+              startIndex={(currentPage - 1) * PAGE_SIZE + 1}
+            />
 
             {totalPages > 1 && (
               <div className="mt-12">

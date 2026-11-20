@@ -6,8 +6,8 @@ const BlogPagination = ({
   currentPage, 
   totalPages, 
   onPageChange,
-  prevText = "ก่อนหน้า",
-  nextText = "ถัดไป"
+  prevText = "Previous",
+  nextText = "Next"
 }) => {
   if (totalPages <= 1) return null
 

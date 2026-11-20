@@ -1,63 +1,39 @@
+'use client'
+
 import React from 'react'
-import { Button } from '@/components/ui/button'
 import { GithubLogo, LinkedinLogo, InstagramLogo, FacebookLogo } from '@phosphor-icons/react/dist/ssr'
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
+
+const socialLinks = [
+  { icon: GithubLogo, label: 'GitHub', href: 'https://github.com/pramebt' },
+  { icon: LinkedinLogo, label: 'LinkedIn', href: 'https://www.linkedin.com/in/bandit-kaewnoi-48b76335b/' },
+  { icon: InstagramLogo, label: 'Instagram', href: 'https://www.instagram.com/prame.bt/' },
+  { icon: FacebookLogo, label: 'Facebook', href: 'https://www.facebook.com/bandit.prame/' },
+]
 
 const ContactSocial = () => {
-  const socialLinks = [
-    {
-      icon: GithubLogo,
-      label: "GitHub",
-      href: "https://github.com/pramebt",
-      iconColor: "text-gray-800 dark:text-gray-200"
-    },
-    {
-      icon: LinkedinLogo,
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/bandit-kaewnoi-48b76335b/",
-      iconColor: "text-blue-600 dark:text-blue-400"
-    },
-    {
-      icon: InstagramLogo,
-      label: "Instagram",
-      href: "https://www.instagram.com/prame.bt/",
-      iconColor: "text-pink-600 dark:text-pink-400"
-    },
-    {
-      icon: FacebookLogo,
-      label: "Facebook",
-      href: "https://www.facebook.com/bandit.prame/",
-      iconColor: "text-blue-700 dark:text-blue-300"
-    }
-  ]
-
   return (
-    <div className="text-center lg:text-left">
-      <h3 className="text-2xl font-semibold mb-4 text-foreground">
-        Follow Me
-      </h3>
-      <p className="text-muted-foreground font-light leading-relaxed mb-6">
+    <ScrollReveal>
+      <p className="section-label">Elsewhere</p>
+      <h3 className="mb-3 text-2xl font-semibold tracking-tight text-foreground">Follow me</h3>
+      <p className="mb-6 font-light leading-relaxed text-muted-foreground">
         Connect with me on social media for updates and insights.
       </p>
-      <div className="grid grid-cols-2 gap-4">
-        {socialLinks.map((social, index) => {
-          const IconComponent = social.icon
-          return (
-            <Button 
-              key={index}
-              variant="outline" 
-              size="lg"
-              className="flex-1 rounded-full border-border/50 hover:bg-muted/50 transition-colors"
-              asChild
-            >
-              <a href={social.href} target="_blank" rel="noopener noreferrer">
-                <IconComponent size={22} weight="duotone" className={`mr-2 ${social.iconColor}`} />
-                <span className="text-foreground">{social.label}</span>
-              </a>
-            </Button>
-          )
-        })}
+      <div className="flex flex-wrap gap-2">
+        {socialLinks.map(({ icon: Icon, label, href }) => (
+          <a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-border/70 px-4 py-2 text-sm text-muted-foreground transition-all duration-300 hover:border-foreground/25 hover:bg-muted/50 hover:text-foreground"
+          >
+            <Icon size={18} weight="duotone" />
+            {label}
+          </a>
+        ))}
       </div>
-    </div>
+    </ScrollReveal>
   )
 }
 

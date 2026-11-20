@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import PageIntro from "@/components/main/shared/PageIntro";
 import BlogSearch from "@/components/main/blog/BlogSearch";
 import BlogResultsInfo from "@/components/main/blog/BlogResultsInfo";
 import BlogGrid from "@/components/main/blog/BlogGrid";
@@ -9,9 +9,6 @@ import BlogPagination from "@/components/main/blog/BlogPagination";
 import BlogEmptyState from "@/components/main/blog/BlogEmptyState";
 import BlogErrorState from "@/components/main/blog/BlogErrorState";
 import BlogLoadingState from "@/components/main/blog/BlogLoadingState";
-
-const ease = [0.16, 1, 0.3, 1];
-
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -75,49 +72,18 @@ const BlogPage = () => {
 
   return (
     <div className="relative min-h-screen">
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[50vh] ambient-surface opacity-80" />
-
-      <section className="px-4 pb-10 pt-16 md:pb-14 md:pt-24">
-        <div className="mx-auto max-w-5xl">
-          <motion.p
-            className="section-label"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease }}
-          >
-            Writing
-          </motion.p>
-          <motion.h1
-            className="mb-4 text-4xl font-semibold tracking-tight text-foreground md:text-6xl"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.08, ease }}
-          >
-            Blog
-          </motion.h1>
-          <motion.p
-            className="mb-8 max-w-2xl text-lg font-light leading-relaxed text-muted-foreground"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.16, ease }}
-          >
-            Notes on web development, craft, and the things I&apos;m learning
-            along the way.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.24, ease }}
-          >
-            <BlogSearch
-              searchTerm={searchTerm}
-              onSearchChange={(e) => setSearchTerm(e.target.value)}
-              onSubmit={handleSearch}
-              loading={loading}
-            />
-          </motion.div>
-        </div>
-      </section>
+      <PageIntro
+        label="Writing"
+        title="Blog"
+        description="Notes on web development, craft, and the things I'm learning along the way."
+      >
+        <BlogSearch
+          searchTerm={searchTerm}
+          onSearchChange={(e) => setSearchTerm(e.target.value)}
+          onSubmit={handleSearch}
+          loading={loading}
+        />
+      </PageIntro>
 
       <section className="px-4 pb-24">
         <div className="mx-auto max-w-5xl">

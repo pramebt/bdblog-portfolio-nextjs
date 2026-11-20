@@ -3,62 +3,22 @@
 import { useState, useEffect } from 'react'
 import { useParams, notFound } from 'next/navigation'
 import Link from 'next/link'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-import { 
-  Calendar, 
-  User, 
-  ArrowLeft, 
-  Share2, 
-  FolderOpen,
-  Loader2,
-  AlertCircle,
-  Github,
-  ExternalLink,
-  Image as ImageIcon,
-  Briefcase,
-  User as UserIcon
-} from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import BlockPreview from '@/components/admin/blog/block-preview'
-import { motion } from "framer-motion"; 
-import { TracingBeam } from "@/components/ui/tracing-beam";
-const variants = {
-  initial: {
-    scaleY: 0.5,
-    opacity: 0,
-  },
-  animate: {
-    scaleY: 1,
-    opacity: 1,
-    transition: {
-      repeat: Infinity,
-      repeatType: "mirror",
-      duration: 1,
-      ease: "circIn",
-    },
-  },
-};
+import { motion } from 'motion/react'
+import { toast } from 'sonner'
+import { ArrowRight, ArrowUpRight, GithubLogo, ShareNetwork } from '@phosphor-icons/react/dist/ssr'
+import ContentBlocks, { parseBlocks } from '@/components/main/shared/ContentBlocks'
+import { BackLink, DetailError, DetailLoading } from '@/components/main/shared/DetailStates'
+import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/ui/scroll-reveal'
 
-const BarLoader = () => {
-  return (
-    <motion.div
-      transition={{
-        staggerChildren: 0.25,
-      }}
-      initial="initial"
-      animate="animate"
-      className="flex gap-1 justify-center"
-    >
-      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
-      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
-      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
-      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
-      <motion.div variants={variants} className="h-12 w-2 bg-foreground" />
-    </motion.div>
-  );
-};
+const ease = [0.16, 1, 0.3, 1]
+
+const formatDate = (dateString) =>
+  new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+
 const ProjectPage = () => {
   const params = useParams()
   const slug = params.slug
@@ -66,40 +26,35 @@ const ProjectPage = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  // Fetch project by slug
   useEffect(() => {
     const fetchProject = async () => {
       try {
         setLoading(true)
         setError('')
-        
+
         const response = await fetch(`/api/projects/${slug}`)
         const data = await response.json()
-        
+
         if (!response.ok) {
           if (response.status === 404) {
             notFound()
-            return 
+            return
           }
           throw new Error(data.error || 'Failed to fetch project')
         }
-        
+
         if (data.success) {
-          // Only show published projects to public
           if (!data.data.published) {
             notFound()
             return
           }
           setProject(data.data)
         }
-        
       } catch (err) {
         console.error('Error fetching project:', err)
         setError(err.message)
       } finally {
-        setTimeout(() => {
-          setLoading(false)
-        }, 6000) // รอ 3 วินาที
+        setLoading(false)
       }
     }
 
@@ -108,272 +63,190 @@ const ProjectPage = () => {
     }
   }, [slug])
 
-  // Format date
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('th-TH', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-  }
-
-  // Get project type info
-  const getProjectTypeInfo = (type) => {
-    if (type === 'PROFESSIONAL') {
-      return {
-        label: 'Professional Project',
-        icon: <Briefcase className="h-3 w-3" />
-      }
-    }
-    return {
-      label: 'Personal Project',
-      icon: <UserIcon className="h-3 w-3" />
-    }
-  }
-
-  // Share functionality
   const handleShare = async () => {
     if (navigator.share && project) {
       try {
         await navigator.share({
           title: project.title,
-          text: 'View this project',
-          url: window.location.href
+          text: project.title,
+          url: window.location.href,
         })
+        return
       } catch (err) {
-        console.log('Error sharing:', err)
-        // Fallback to copy URL
-        navigator.clipboard.writeText(window.location.href)
-        alert('Link copied!')
+        if (err?.name === 'AbortError') return
       }
-    } else {
-      // Fallback for browsers that don't support Web Share API
-      navigator.clipboard.writeText(window.location.href)
-      alert('Link copied!')
     }
+    await navigator.clipboard.writeText(window.location.href)
+    toast.success('Link copied')
   }
 
-  // Loading state
   if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <BarLoader />
-          <p className="text-muted-foreground">Loading project...</p>
-        </div>
-      </div>
-    )
+    return <DetailLoading label="Loading project" />
   }
 
-  // Error state
   if (error) {
-    return (
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-2xl mx-auto text-center py-12">
-            <AlertCircle className="h-16 w-16 mx-auto text-destructive mb-4" />
-            <h1 className="text-2xl font-bold mb-2">เกิดข้อผิดพลาด</h1>
-            <p className="text-muted-foreground mb-6">{error}</p>
-            <Button asChild>
-              <Link href="/projects">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to projects
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-    )
+    return <DetailError message={error} backHref="/projects" backLabel="Back to projects" />
   }
 
   if (!project) {
     return notFound()
   }
 
-  // Parse description blocks
-  let descriptionBlocks = []
-  try {
-    descriptionBlocks = JSON.parse(project.description)
-  } catch {
-    descriptionBlocks = [{ id: '1', type: 'paragraph', content: project.description }]
-  }
+  const descriptionBlocks = parseBlocks(project.description)
+  const typeLabel = project.type === 'PROFESSIONAL' ? 'Professional' : 'Personal'
+  const images = Array.isArray(project.images) ? project.images : []
 
-  const projectTypeInfo = getProjectTypeInfo(project.type)
+  const actions = (
+    <>
+      {project.liveUrl && (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+        >
+          Live demo
+          <ArrowUpRight size={14} weight="bold" />
+        </a>
+      )}
+      {project.githubUrl && (
+        <a
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-border/70 px-5 py-2.5 text-sm text-muted-foreground transition-all duration-300 hover:border-foreground/25 hover:text-foreground"
+        >
+          <GithubLogo size={16} weight="duotone" />
+          Source code
+        </a>
+      )}
+    </>
+  )
 
   return (
-    <TracingBeam className='px-5'>
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
-        <div className="mb-6">
-          <Button variant="ghost" asChild>
-            <Link href="/projects">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to projects
-            </Link>
-          </Button>
+    <article className="relative pb-24">
+      <div aria-hidden className="page-ambient" />
+
+      <header className="px-4 pb-10 pt-16 md:pb-14 md:pt-24">
+        <div className="mx-auto max-w-5xl">
+          <motion.div
+            className="mb-10"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease }}
+          >
+            <BackLink href="/projects" label="All projects" />
+          </motion.div>
+
+          <motion.p
+            className="section-label"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.04, ease }}
+          >
+            {typeLabel} project
+          </motion.p>
+          <motion.h1
+            className="mb-8 max-w-4xl text-4xl font-semibold tracking-tight text-foreground text-balance md:text-6xl"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease }}
+          >
+            {project.title}
+          </motion.h1>
+
+          <motion.div
+            className="flex flex-wrap items-center justify-between gap-4"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.18, ease }}
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              {project.author?.name && <span className="meta-pill">{project.author.name}</span>}
+              <span className="meta-pill">{formatDate(project.createdAt)}</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {actions}
+              <button
+                type="button"
+                onClick={handleShare}
+                aria-label="Share"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-border/70 text-muted-foreground transition-all duration-300 hover:border-foreground/25 hover:text-foreground"
+              >
+                <ShareNetwork size={16} weight="duotone" />
+              </button>
+            </div>
+          </motion.div>
         </div>
+      </header>
 
-        {/* Project */}
-        <article className="max-w-4xl mx-auto">
-          {/* Cover Image */}
-          {project.coverImage && (
-            <div className="mb-8">
-              <img
-                src={project.coverImage}
-                alt={project.title}
-                className="w-full h-[400px] object-cover rounded-lg shadow-lg"
-              />
-            </div>
-          )}
-
-          {/* Header */}
-          <header className="mb-8">
-            <div className="space-y-4">
-              {/* Project Type Badge */}
-              <div>
-                <Badge variant="secondary" className="w-fit text-sm font-medium">
-                  {projectTypeInfo.icon}
-                  <span className="ml-1.5">{projectTypeInfo.label}</span>
-                </Badge>
-              </div>
-              
-              {/* Title */}
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                {project.title}
-              </h1>
-              
-              {/* Meta Info */}
-              <div className="flex items-center justify-between flex-wrap gap-4">
-                <div className="flex items-center gap-6 text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    <span>{project.author.name}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <span>{formatDate(project.createdAt)}</span>
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex items-center gap-2">
-                  {project.githubUrl && (
-                    <Button variant="outline" size="sm" asChild>
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4 mr-2" />
-                        Source Code
-                      </a>
-                    </Button>
-                  )}
-                  {project.liveUrl && (
-                    <Button size="sm" asChild>
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className='text-white'>
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Live Demo
-                      </a>
-                    </Button>
-                  )}
-                  <Button variant="outline" size="sm" onClick={handleShare}>
-                    <Share2 className="h-4 w-4 mr-2" />
-                    แบ่งปัน
-                  </Button>
-                </div>
-              </div>
-
-              <Separator />
-            </div>
-          </header>
-
-          {/* Description */}
-          <div className="mb-12">
-            <div className="prose prose-lg max-w-none">
-              <BlockPreview blocks={descriptionBlocks} />
-            </div>
+      {project.coverImage && (
+        <motion.div
+          className="px-4"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.26, ease }}
+        >
+          <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-border/50 bg-muted/30">
+            <img src={project.coverImage} alt={project.title} className="aspect-[16/9] w-full object-cover" />
           </div>
+        </motion.div>
+      )}
 
-          {/* Project Gallery */}
-          {project.images && project.images.length > 0 && (
-            <div className="mb-12">
-              <div className="flex items-center gap-2 mb-6">
-                <ImageIcon className="h-5 w-5" />
-                <h2 className="text-2xl font-bold">Gallery</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {project.images.map((image, index) => (
-                  <div key={index} className="aspect-video overflow-hidden rounded-lg border">
-                    <img
-                      src={image}
-                      alt={`${project.title} screenshot ${index + 1}`}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
-                      onClick={() => window.open(image, '_blank')}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Footer */}
-          <footer className="space-y-6">
-            <Separator />
-            
-            {/* Author Info */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
-                  เกี่ยวกับผู้พัฒนา
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <User className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">{project.author.name}</h3>
-                    <p className="text-muted-foreground text-sm">
-                      นักพัฒนาเว็บที่หลงใหลในการสร้างสรรค์โปรเจคใหม่ๆ และแบ่งปันความรู้
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Navigation */}
-            <div className="flex justify-between items-center">
-              <Button asChild variant="outline">
-                <Link href="/projects">
-                  <FolderOpen className="h-4 w-4 mr-2" />
-                  ดูโปรเจคอื่นๆ
-                </Link>
-              </Button>
-              
-              <div className="flex gap-2">
-                {project.githubUrl && (
-                  <Button variant="outline" asChild>
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github className="h-4 w-4 mr-2" />
-                      Source Code
-                    </a>
-                  </Button>
-                )}
-                {project.liveUrl && (
-                  <Button asChild>
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className='text-white'>
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Live Demo
-                    </a>
-                  </Button>
-                )}
-              </div>
-            </div>
-          </footer>
-        </article>
+      <div className="px-4 pt-14 md:pt-20">
+        <div className="mx-auto max-w-3xl">
+          <p className="section-label">Overview</p>
+          <ContentBlocks blocks={descriptionBlocks} />
+        </div>
       </div>
-    </div>
-    </TracingBeam>
+
+      {images.length > 0 && (
+        <section className="px-4 pt-16 md:pt-24">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <p className="section-label">Gallery</p>
+              <h2 className="mb-10 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+                A closer look
+              </h2>
+            </ScrollReveal>
+            <StaggerContainer className="grid grid-cols-1 gap-4 md:grid-cols-2" staggerDelay={0.08}>
+              {images.map((image, index) => (
+                <StaggerItem key={image}>
+                  <a
+                    href={image}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group soft-card block overflow-hidden"
+                  >
+                    <div className="aspect-video overflow-hidden">
+                      <img
+                        src={image}
+                        alt={`${project.title} screenshot ${index + 1}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                    </div>
+                  </a>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </section>
+      )}
+
+      <div className="px-4 pt-16 md:pt-24">
+        <footer className="mx-auto flex max-w-5xl flex-col gap-6 border-t border-border/60 pt-10 sm:flex-row sm:items-center sm:justify-between">
+          <Link
+            href="/projects"
+            className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Explore more projects
+            <ArrowRight size={14} weight="bold" />
+          </Link>
+          <div className="flex flex-wrap items-center gap-2">{actions}</div>
+        </footer>
+      </div>
+    </article>
   )
 }
 

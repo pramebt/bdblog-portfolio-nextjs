@@ -3,13 +3,13 @@
 import { useState } from 'react'
 import { signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Loader2, Eye, EyeOff } from 'lucide-react'
+import { CircleNotch, Eye, EyeSlash, WarningCircle } from '@phosphor-icons/react/dist/ssr'
+
+const labelClass = 'font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-muted-foreground'
+const fieldClass =
+  'h-11 rounded-xl border-border/70 bg-background/70 px-4 placeholder:text-muted-foreground/60 transition-colors focus:border-foreground/25 focus:bg-background'
 
 export default function SignInForm() {
   const [email, setEmail] = useState('')
@@ -35,7 +35,6 @@ export default function SignInForm() {
       if (result?.error) {
         setError('Invalid email or password')
       } else {
-        // Check if user is admin
         const session = await getSession()
         if (session?.user?.role === 'ADMIN') {
           router.push('/admin')
@@ -51,87 +50,71 @@ export default function SignInForm() {
   }
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Admin Sign In</CardTitle>
-        <CardDescription className="text-center">
-          Enter your credentials to access the admin panel
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-          
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+    <div className="soft-card w-full max-w-md bg-card/80 p-8 hover:bg-card/80">
+      <p className="section-label">Admin</p>
+      <h1 className="mb-2 text-3xl font-semibold tracking-tight text-foreground">Sign in</h1>
+      <p className="mb-8 font-light leading-relaxed text-muted-foreground">
+        Enter your credentials to access the admin panel.
+      </p>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {error && (
+          <div className="flex items-center gap-3 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3">
+            <WarningCircle size={18} weight="duotone" className="shrink-0 text-destructive" />
+            <p className="text-sm text-destructive">{error}</p>
+          </div>
+        )}
+
+        <div className="space-y-2">
+          <Label htmlFor="email" className={labelClass}>Email</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="admin@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={isLoading}
+            variant="noRing"
+            className={fieldClass}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="password" className={labelClass}>Password</Label>
+          <div className="relative">
             <Input
-              id="email"
-              type="email"
-              placeholder="admin@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
               disabled={isLoading}
-              className="ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
+              variant="noRing"
+              className={`${fieldClass} pr-12`}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              disabled={isLoading}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {showPassword ? <EyeSlash size={18} weight="duotone" /> : <Eye size={18} weight="duotone" />}
+            </button>
           </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
-              <Input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={isLoading}
-                className="ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                onClick={() => setShowPassword(!showPassword)}
-                disabled={isLoading}
-              >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </div>
-          
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Signing in...
-              </>
-            ) : (
-              'Sign In'
-            )}
-          </Button>
-        </form>
-        
-        {/* <div className="mt-6 text-center text-sm">
-          <span className="text-muted-foreground">Don't have an account? </span>
-          <Link 
-            href="/auth/signup" 
-            className="text-primary hover:underline font-medium"
-          >
-            Sign up
-          </Link>
-        </div> */}
-      </CardContent>
-    </Card>
+        </div>
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50"
+        >
+          {isLoading && <CircleNotch size={16} weight="bold" className="animate-spin" />}
+          {isLoading ? 'Signing in…' : 'Sign in'}
+        </button>
+      </form>
+    </div>
   )
 }

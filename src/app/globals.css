@@ -199,12 +199,63 @@
       var(--background);
   }
 
+  /* Full-bleed glow behind page intros; parent must sit inside the @container main */
+  .page-ambient {
+    @apply pointer-events-none absolute left-1/2 -top-20 -z-10 h-[65vh] w-[100cqi] -translate-x-1/2;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, var(--surface-glow), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 85% 10%, oklch(0.8 0.03 200 / 0.15), transparent 50%);
+    mask-image: linear-gradient(to bottom, black 55%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent);
+  }
+
   .soft-card {
     @apply rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm transition-all duration-500 ease-out;
   }
 
   .soft-card:hover {
     @apply border-foreground/15 bg-card/90;
+  }
+
+  /* Cursor-following border + glow; position comes from --spot-x / --spot-y set by SpotlightCard */
+  .spotlight-card {
+    position: relative;
+    isolation: isolate;
+  }
+  .spotlight-card::before,
+  .spotlight-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+  }
+  .spotlight-card::before {
+    z-index: 3;
+    padding: 1px;
+    background: radial-gradient(
+      280px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      color-mix(in oklch, var(--foreground) 40%, transparent),
+      transparent 70%
+    );
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+  }
+  .spotlight-card::after {
+    z-index: 2;
+    background: radial-gradient(
+      480px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      var(--surface-glow),
+      transparent 60%
+    );
+  }
+  .spotlight-card:hover::before,
+  .spotlight-card:hover::after {
+    opacity: 1;
   }
 
   .meta-pill {

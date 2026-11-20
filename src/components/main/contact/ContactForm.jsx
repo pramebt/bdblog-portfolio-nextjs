@@ -3,9 +3,14 @@ import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { PaperPlaneRight } from '@phosphor-icons/react/dist/ssr'
-import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
+import { PaperPlaneTilt, CircleNotch } from '@phosphor-icons/react/dist/ssr'
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { toast } from 'sonner'
+
+const labelClass = 'font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-muted-foreground'
+const fieldClass =
+  'h-11 rounded-xl border-border/70 bg-background/70 px-4 placeholder:text-muted-foreground/60 transition-colors focus:border-foreground/25 focus:bg-background'
+
 const ContactForm = () => {
     const [isPending, setIsPending] = useState(false)
     const [formData, setFormData] = useState({
@@ -86,92 +91,99 @@ const ContactForm = () => {
         }
       }
   return (
-    <div className="space-y-8">
-      <div className="text-center lg:text-left">
-        <h2 className="text-3xl font-semibold mb-4 text-foreground">
-          Send Message
+    <ScrollReveal>
+      <div className="soft-card p-6 md:p-8">
+        <p className="section-label">Message</p>
+        <h2 className="mb-2 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+          Send a message
         </h2>
-        <p className="text-muted-foreground font-light leading-relaxed">
-          Fill out the form below and I'll get back to you within 24 hours.
+        <p className="mb-8 font-light leading-relaxed text-muted-foreground">
+          Fill out the form below and I&apos;ll get back to you within 24 hours.
         </p>
+
+        <form className="space-y-5" onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="firstName" className={labelClass}>First name</Label>
+              <Input
+                id="firstName"
+                placeholder="John"
+                variant="noRing"
+                className={fieldClass}
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="lastName" className={labelClass}>Last name</Label>
+              <Input
+                id="lastName"
+                placeholder="Doe"
+                variant="noRing"
+                className={fieldClass}
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email" className={labelClass}>Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="john@example.com"
+              variant="noRing"
+              className={fieldClass}
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="subject" className={labelClass}>Subject</Label>
+            <Input
+              id="subject"
+              placeholder="Hello, I'd like to chat"
+              variant="noRing"
+              className={fieldClass}
+              name="subject"
+              value={formData.subject}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="message" className={labelClass}>Message</Label>
+            <Textarea
+              id="message"
+              placeholder="Tell me what's on your mind or just say hello..."
+              rows={6}
+              className={`${fieldClass} h-auto resize-none py-3 focus-visible:ring-0 focus-visible:ring-offset-0`}
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isPending}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50"
+          >
+            {isPending ? (
+              <CircleNotch size={18} weight="bold" className="animate-spin" />
+            ) : (
+              <PaperPlaneTilt size={18} weight="duotone" />
+            )}
+            {isPending ? 'Sending…' : 'Send message'}
+          </button>
+        </form>
       </div>
-      
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="firstName" className="text-sm font-medium text-foreground">First Name</Label>
-            <Input 
-              id="firstName" 
-              placeholder="John" 
-              className="border-border/50 focus:border-primary bg-background/50 ring-0 focus:ring-0 focus-visible:ring-0 "
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="lastName" className="text-sm font-medium text-foreground">Last Name</Label>
-            <Input 
-              id="lastName" 
-              placeholder="Doe" 
-              className="border-border/50 focus:border-primary bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="email" className="text-sm font-medium text-foreground">Email</Label>
-          <Input 
-            id="email" 
-            type="email" 
-            placeholder="john@example.com" 
-            className="border-border/50 focus:border-primary bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-        </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="subject" className="text-sm font-medium text-foreground">Subject</Label>
-          <Input 
-            id="subject" 
-            placeholder="Hello, I'd like to chat" 
-            className="border-border/50 focus:border-primary bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
-            name="subject"
-            value={formData.subject}
-            onChange={handleInputChange}
-          />
-        </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="message" className="text-sm font-medium text-foreground">Message</Label>
-          <Textarea 
-            id="message" 
-            placeholder="Tell me what's on your mind or just say hello..."
-            rows={6}
-            className="border-border/50 focus:border-primary resize-none bg-background/50 focus:outline-none ring-0 focus:ring-0 focus-visible:ring-0 "
-            name="message"
-            value={formData.message}
-            onChange={handleInputChange}
-          />
-        </div>
-        
-        <HoverBorderGradient
-          containerClassName="rounded-full"
-          as="button"
-          type="submit"
-          className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 w-full justify-center"
-          disabled={isPending}
-        >
-          <PaperPlaneRight size={18} weight="duotone" />
-          <span>{isPending ? 'Sending...' : 'Send Message'}</span>
-        </HoverBorderGradient>
-      </form>
-    </div>
+    </ScrollReveal>
   )
 }
 

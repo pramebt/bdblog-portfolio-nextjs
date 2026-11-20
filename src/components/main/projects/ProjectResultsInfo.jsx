@@ -1,6 +1,8 @@
 'use client'
 
-const ProjectResultsInfo = ({ searchTerm, totalProjects, loading = false }) => {
+import ViewToggle from './ViewToggle'
+
+const ProjectResultsInfo = ({ searchTerm, totalProjects, loading = false, view = 'grid', onViewChange }) => {
   if (loading) return null
 
   return (
@@ -14,6 +16,8 @@ const ProjectResultsInfo = ({ searchTerm, totalProjects, loading = false }) => {
           <>{totalProjects} projects</>
         )}
       </p>
+
+      {onViewChange && <ViewToggle view={view} onViewChange={onViewChange} />}
     </div>
   )
 }

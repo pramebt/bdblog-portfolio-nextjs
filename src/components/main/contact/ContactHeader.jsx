@@ -1,17 +1,13 @@
 import React from 'react'
-import { ChatCircle } from '@phosphor-icons/react/dist/ssr'
+import PageIntro from '@/components/main/shared/PageIntro'
 
 const ContactHeader = () => {
   return (
-    <div className="text-center mb-20">
-      <h1 className="text-4xl md:text-6xl font-semibold mb-6 text-foreground">
-        Get In Touch
-      </h1>
-      <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
-        Have a question or just want to say hello? I'd love to hear from you. 
-        Send me a message and I'll get back to you soon.
-      </p>
-    </div>
+    <PageIntro
+      label="Contact"
+      title="Get in touch"
+      description="Have a question or just want to say hello? I'd love to hear from you. Send me a message and I'll get back to you soon."
+    />
   )
 }
 

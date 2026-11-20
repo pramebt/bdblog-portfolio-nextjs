@@ -1,6 +1,6 @@
 'use client'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { motion } from 'motion/react'
 
 const ProjectTabs = ({
   personalCount = 0,
@@ -17,32 +17,43 @@ const ProjectTabs = ({
   ]
 
   return (
-    <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
-      <TabsList className="mb-8 flex h-auto w-full flex-wrap justify-start gap-2 rounded-none bg-transparent p-0">
-        {tabs.map((tab) => (
-          <TabsTrigger
-            key={tab.value}
-            value={tab.value}
-            className="rounded-full border border-border/60 bg-transparent px-4 py-2 text-sm font-medium text-muted-foreground shadow-none transition-all data-[state=active]:border-foreground/20 data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-none"
-          >
-            {tab.label}
-            {tab.count > 0 && (
-              <span className="ml-2 font-mono text-[10px] opacity-70">{tab.count}</span>
-            )}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+    <div className="w-full">
+      <div
+        role="tablist"
+        aria-label="Project type"
+        className="mb-8 inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-border/60 bg-background/60 p-1 backdrop-blur-sm scrollbar-hide"
+      >
+        {tabs.map((tab) => {
+          const isActive = activeTab === tab.value
+          return (
+            <button
+              key={tab.value}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              onClick={() => !isActive && onTabChange?.(tab.value)}
+              className={`relative whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                isActive ? 'text-background' : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="project-tab-indicator"
+                  className="absolute inset-0 rounded-full bg-foreground"
+                  transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">
+                {tab.label}
+                <span className="ml-2 font-mono text-[10px] opacity-60">{tab.count}</span>
+              </span>
+            </button>
+          )
+        })}
+      </div>
 
-      <TabsContent value="all" className="mt-0">
-        {children}
-      </TabsContent>
-      <TabsContent value="PERSONAL" className="mt-0">
-        {children}
-      </TabsContent>
-      <TabsContent value="PROFESSIONAL" className="mt-0">
-        {children}
-      </TabsContent>
-    </Tabs>
+      <div role="tabpanel">{children}</div>
+    </div>
   )
 }
 
