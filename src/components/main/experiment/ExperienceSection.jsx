@@ -6,13 +6,22 @@ import { ScrollReveal, StaggerContainer, StaggerItem } from '@/components/ui/scr
 
 const experienceData = [
   {
+    title: 'Software Engineer',
+    company: 'D Solution Cloud Co., Ltd.',
+    period: 'Mar 2026 — Present',
+    location: 'Bangkok, Thailand',
+    logo: '/images/common/d-solution-cloud.webp',
+    description: 'Software engineering with Angular and PHP.',
+    skills: ['Angular', 'PHP']
+  },
+  {
     title: 'Frontend Developer',
     company: 'Freelance',
     period: 'Jun 2025 — Jul 2025',
     location: 'Remote',
     logo: '/images/common/freelance.webp',
     description: 'Freelance Project using React, React-Native, and Nextjs. Includes creating demo app such as ride-hailing. Also developed web platforms for car rental, lawyer landing page and backoffice systems for mentioned apps and websites.',
-    skills: ['React', 'Next.js', 'Node.js', 'TypeScript', 'PostgreSQL', 'Docker', 'AWS']
+    skills: ['React', 'Next.js', 'Node.js', 'TypeScript', 'PostgreSQL', 'Docker']
   },
   {
     title: 'Web Developer (Intern)',

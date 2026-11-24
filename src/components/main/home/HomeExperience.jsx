@@ -10,6 +10,7 @@ const experienceData = [
     period: 'Mar 2026 — Present',
     position: 'Software Engineer',
     company: 'D Solution Cloud Co., Ltd.',
+    location: 'Bangkok, Thailand',
     logo: '/images/common/d-solution-cloud.webp',
     description: 'Software engineering with Angular and PHP.',
     technologies: ['Angular', 'PHP'],
